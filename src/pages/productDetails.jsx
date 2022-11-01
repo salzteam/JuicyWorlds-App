@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import Navbar from '../components/Navbar'
-import NavbarMobile from '../components/NavbarMobile'
+import Navbar from '../components/Test'
+import NavbarLogout from "../components/Navbarlogout"
 import Footer from '../components/Footer'
 import styles from '../styles/ProductDetails.module.css'
 import arrow from "../assets/img/details/panah.png"
@@ -13,6 +13,7 @@ import Axios from "axios"
 
 class productDetails extends React.Component {
   state = {
+    navbar: <NavbarLogout/>,
     id: "",
     name: "",
     price: "",
@@ -63,6 +64,12 @@ class productDetails extends React.Component {
   // }
 
   componentDidMount(){
+    const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userinfo) {
+    this.setState({
+        navbar: <Navbar/>
+    })
+    }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
     Axios.get(url).then((res) => 
     // console.log(res.data.data)
@@ -104,14 +111,7 @@ class productDetails extends React.Component {
   render() {
     return (
       <>
-        <div className={styles.navbar}>
-          <div className={styles["navbar-pc"]}>
-            <Navbar/>
-          </div>
-          <div className={styles["navbar-mobile"]}>
-            <NavbarMobile/>
-          </div>
-        </div>
+          {this.state.navbar}
           <main className={styles.main}>
             <p className={styles.title} onClick={()=>{
               this.props.navigate(`/product`);

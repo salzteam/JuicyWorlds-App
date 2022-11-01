@@ -30,7 +30,7 @@ export class History extends Component {
   getData = (limit) => {
     const userinfo = JSON.parse(localStorage.getItem("userInfo"))
     if (!userinfo){
-      this.props.navigate("/login");
+      return this.props.navigate("/login");
     }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history?${limit}`
     Axios.get(url,{headers: {
@@ -70,11 +70,8 @@ export class History extends Component {
   render() {
     return (
       <>
-        <div className={styles["navbar-pc"]}>
+        <div>
           <Test />
-        </div>
-        <div className={styles["navbar-mobile"]}>
-          <NavbarMobile/>
         </div>
          <main className={styles.main}>
             <section className={styles.container}>

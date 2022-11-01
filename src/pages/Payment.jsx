@@ -21,7 +21,7 @@ export class Payment extends Component {
         subtotal: 0,
         tax: 0,
         shipping: 0,
-        total: 0
+        total: 0,
       };
       componentDidMount() {
         const userinfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -47,11 +47,8 @@ export class Payment extends Component {
                     user: results.data.data.profileData[0]
                 })
               });
-        }).catch((err) => {
-            console.log(err)
-        });
-    }
-    
+            })
+        }
       getSize = () => {
         if (this.state.product.size == "R") return "Reguler";
         if (this.state.product.size == "L") return "Large";
@@ -69,11 +66,8 @@ export class Payment extends Component {
   render() {
     return (
       <>
-        <div className={styles["navbar-pc"]}>
+        <div>
           <Navbar/>
-        </div>
-        <div className={styles["navbar-mobile"]}>
-          <NavbarMobile/>
         </div>
         <main className={styles.main}>
             <section className={styles.container}>

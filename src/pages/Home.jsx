@@ -45,9 +45,6 @@ class Home extends React.Component {
   return (
     <>
         {this.state.navbar}
-        <div className={styles["nav-ipad"]}>
-                <NavbarMobile/>
-            </div>
         <main class={styles["home-main"]}>
             <header class={styles["home-header"]}>
                 <section class={styles["details-header"]}>
