@@ -28,7 +28,7 @@ class Product extends React.Component {
     categoryPromo: "start-content",
     categoryAddOn: "next-content",
     searchParams: {
-      search: ""
+      filter: ""
     }
   }
 
@@ -56,7 +56,7 @@ class Product extends React.Component {
     return value
   }
   componentDidMount(){
-      // const url = `http://localhost:8080/api/v1/products?transactions=popular&page=1&limit=12`
+      // const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?transactions=popular&page=1&limit=12`
       // Axios.get(url).then((res) => 
       // this.setState({
       //   product: res.data.data.data
@@ -69,8 +69,19 @@ class Product extends React.Component {
       })
       }
   }
+  onSearchHandler = (search) => {
+    console.log(search)
+    this.setState(
+      (prevState) => ({
+        searchParams: { ...prevState.searchParams, filter: search },
+      }),
+      () => {
+        this.props.setSearchParams(this.state.searchParams);
+      }
+    );
+  };
   getData = (limit) => {
-    const url = `http://localhost:8080/api/v1/products?transactions=popular&${limit}`
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?transactions=popular&${limit}`
     Axios.get(url).then((res) => {
       this.setState({
         product: res.data.data.data,
@@ -101,23 +112,12 @@ class Product extends React.Component {
   }
 
   fetchDatas = (text) => {
-    const url = `http://localhost:8080/api/v1/products?${text.toString()}`
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?${text.toString()}`
     Axios.get(url).then((res) => 
     this.setState({
       product: res.data.data.data
     })).catch((err) => console.log(err))
   }
-  onSearchHandler = (search) => {
-    console.log(search)
-    this.setState(
-      (prevState) => ({
-        searchParams: { ...prevState.searchParams, search: search },
-      }),
-      () => {
-        this.props.setSearchParams(this.state.searchParams);
-      }
-    );
-  };
   costing= (price) => {
     return 'IDR ' +  parseFloat(price).toFixed().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
   }
@@ -251,7 +251,7 @@ class Product extends React.Component {
         <aside className={styles["right-content"]}>
           <ul>
             <li className={styles[this.state.categoryPromo]} onClick={() =>{
-              const urlpromo = `http://localhost:8080/api/v1/promo`
+              const urlpromo = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/promo`
               Axios.get(urlpromo).then((res) => 
               this.setState({
                 categoryPromo: "start-content",
@@ -262,9 +262,10 @@ class Product extends React.Component {
                 product: res.data.data.data,
                 tglnext: styles.hide,
                 tglprev: styles.hide,
-              })).catch((err) => console.log(err))}} >Favorite & Promo</li>
+              })).catch((err) => console.log(err))
+              this.onSearchHandler("promo")}} >Favorite & Promo</li>
             <li className={styles[this.state.categoryCoffee]} onClick={() =>{
-              const urlcoffee = `http://localhost:8080/api/v1/products?filter=coffee`
+              const urlcoffee = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?filter=coffee`
               Axios.get(urlcoffee).then((res) => 
               this.setState({
                 categoryPromo: "next-content",
@@ -276,9 +277,10 @@ class Product extends React.Component {
                 tglnext: styles.hide,
                 tglprev: styles.hide,
               })).catch((err) => console.log(err))
+              this.onSearchHandler("coffee")
             }}>Coffee</li>
             <li className={styles[this.state.categoryNonCoffee]} onClick={() => {
-                const urlnoncoffee = `http://localhost:8080/api/v1/products?filter=non%20coffee`
+                const urlnoncoffee = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?filter=non%20coffee`
                 Axios.get(urlnoncoffee).then((res) => 
                 
                 this.setState({
@@ -292,9 +294,10 @@ class Product extends React.Component {
                   tglprev: styles.hide,
                 }
                 )).catch((err) => console.log(err))
+                this.onSearchHandler("non coffee")
             }}>Non Coffee</li>
             <li className={styles[this.state.categoryFoods]} onClick={() => {
-                const urlfoods = `http://localhost:8080/api/v1/products?filter=foods`
+                const urlfoods = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?filter=foods`
                 Axios.get(urlfoods).then((res) => 
                 this.setState({
                   categoryPromo: "next-content",
@@ -306,6 +309,7 @@ class Product extends React.Component {
                   tglnext: styles.hide,
                   tglprev: styles.hide,
                 })).catch((err) => console.log(err))
+                this.onSearchHandler("foods")
             }}>Foods</li>
             <li className={styles[this.state.categoryAddOn]}>Add-on</li>
           </ul>
@@ -315,7 +319,6 @@ class Product extends React.Component {
                             ${styles["gap-Row"]} ${styles["position-settings"]}`}
             >
               {this.state.product.map((product) => {
-                console.log(product)
                 return <Card title={product.product_name} price={this.costing(product.price)} discount={this.checkDiscount(product.discount)} image={product.image} id={product.id} listCategory={this.getCategory()}/>
               })}
             </div>

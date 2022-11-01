@@ -9,7 +9,6 @@ import google from "../assets/img/iconGoogle.png";
 import withNavigate from "../helpers/withNavigate";
 import Axios from "axios";
 
-
 class Login extends React.Component {
   state = {
     shwPwd: false,
@@ -53,7 +52,8 @@ class Login extends React.Component {
               Forgot password?
             </Link>
             <div class={`${styles["btn"]} ${styles["login-btn"]}`} onClick={(e)=> {
-              const url = `http://localhost:8080/api/v1/auth/`
+              console.log(process.env.REACT_APP_BACKEND_HOST);
+              const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/auth/`
               const email = this.state.email
               const password = this.state.pwd
               Axios.post(url, {email, password}).then((response) => {

@@ -30,14 +30,14 @@ class Profile extends React.Component {
     if (!userinfo) {
       this.props.navigate("/login");
     }
-    const url = `http://localhost:8080/api/v1/users/${userinfo.id}`;
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/${userinfo.id}`;
     Axios.get(url, {
       headers: {
         "x-access-token": userinfo.token,
       },
     }).then((res) => {
       this.setState({
-        picture: `http://localhost:8080${res.data.data.profileUser[0].displaypicture}`,
+        picture: res.data.data.profileUser[0].displaypicture,
         username: res.data.data.profileUser[0].display_name,
         email: res.data.data.profileData[0].email
       },() => {

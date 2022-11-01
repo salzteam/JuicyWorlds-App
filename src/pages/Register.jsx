@@ -53,7 +53,7 @@ class Register extends React.Component {
               })
             }}/>
             <div class={`${styles["btn"]} ${styles["signup-btn"]}`} onClick={(e)=> {
-              const url = `http://localhost:8080/api/v1/users/register`
+              const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/register`
               const email = this.state.email
               const password = this.state.pwd
               const phone = this.state.phone

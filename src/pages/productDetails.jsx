@@ -63,7 +63,7 @@ class productDetails extends React.Component {
   // }
 
   componentDidMount(){
-    const url = `http://localhost:8080/api/v1/products/${this.props.params.id}`
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
     Axios.get(url).then((res) => 
     // console.log(res.data.data)
     this.setState({
@@ -119,7 +119,7 @@ class productDetails extends React.Component {
             <div className={`${styles["container-fluid"]} ${styles.margins}`}>
               <div className={`row ${styles.container}`}>
                 <div className={`col-6 ${styles["content-left"]}`}>
-                  <img src={`http://localhost:8080${this.state.image}`} alt="NOT FOUND"/>
+                  <img src={this.state.image} alt="NOT FOUND"/>
                   <div className={`col-12 ${styles["container-delivery"]}`}>
                     <p className={styles["title-delivery"]}>Delivery and Time</p>
                     <div className={`${styles["button-delivery"]}`}>
@@ -228,7 +228,7 @@ class productDetails extends React.Component {
                   </div>
                 </div>
                 <div className={`col-8 ${styles.checkout}`}>
-                  <img src={`http://localhost:8080${this.state.image}`} alt="NOT FOUND"/>
+                  <img src={this.state.image} alt="NOT FOUND"/>
                   <div className={styles.detailsqty}>
                     <p className={styles.stylecold}>{this.state.name}</p>
                     {this.showQty()}

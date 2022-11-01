@@ -21,7 +21,7 @@ class CardProduct extends React.Component {
         >
           <img
             className={styles["image-content"]}
-            src={`http://localhost:8080${image}`}
+            src={image}
             alt="NOT-FOUND"
           />
           <div className={styles[this.check(discount)]}>

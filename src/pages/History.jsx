@@ -32,7 +32,7 @@ export class History extends Component {
     if (!userinfo){
       this.props.navigate("/login");
     }
-    const url = `http://localhost:8080/api/v1/transactions/history?${limit}`
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history?${limit}`
     Axios.get(url,{headers: {
       "x-access-token": userinfo.token
     }}).then((res) => {
@@ -96,7 +96,7 @@ export class History extends Component {
                 <div className={`col-12 ${styles.anjas}`}>
                     <div className={`row ${styles.testing}`}>
                     {this.state.product.map((product) => {
-                      return <Card title={product.product_name} subtotal={this.costing(product.subtotal)} status={product.status_name} image={`http://localhost:8080${product.image}`} checked={this.state.isChecked}/>})}
+                      return <Card title={product.product_name} subtotal={this.costing(product.subtotal)} status={product.status_name} image={product.image} checked={this.state.isChecked}/>})}
                     </div>
                 </div>
                 </div>

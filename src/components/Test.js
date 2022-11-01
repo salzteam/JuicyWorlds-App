@@ -31,14 +31,14 @@ class NavbarMobile extends React.Component {
   componentDidMount() {
     const userinfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userinfo) {
-      const url = `http://localhost:8080/api/v1/users/${userinfo.id}`;
+      const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/${userinfo.id}`;
       Axios.get(url, {
         headers: {
           "x-access-token": userinfo.token,
         },
       }).then((res) => {
         this.setState({
-          display: `http://localhost:8080${res.data.data.profileUser[0].displaypicture}`,
+          display: res.data.data.profileUser[0].displaypicture,
         });
       });
     }
@@ -63,7 +63,7 @@ class NavbarMobile extends React.Component {
                 <Link to={"/product"} className={styles.a}>
                   <li>Product</li>
                 </Link>
-                <Link to={"/"} className={styles.a}>
+                <Link to={"/payment"} className={styles.a}>
                   <li>Your Cart</li>
                 </Link>
                 <Link to={"/history"} className={styles.a}>

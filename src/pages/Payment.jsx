@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Test'
 import NavbarMobile from '../components/NavbarMobile'
 import Footer from '../components/Footer'
 import styles from "../styles/Payment.module.css"
@@ -10,8 +10,55 @@ import debit from "../assets/img/payment/card.png"
 import bank from "../assets/img/payment/bank.png"
 import cod from "../assets/img/payment/cod.png"
 import withNavigate from "../helpers/withNavigate";
+import Axios from "axios"
 
 export class Payment extends Component {
+    state = {
+        address: "",
+        product: [],
+      };
+      componentDidMount() {
+        const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+        if (!userinfo) {
+          this.props.navigate("/login");
+        }
+        const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history/pending`;
+        console.log(url)
+        Axios.get(url, {
+          headers: {
+            "x-access-token": userinfo.token,
+          },
+        }).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
+    
+      getPENDING = () => {
+        this.state.product.map((product) => {
+          if (product.status_name === "PENDING")
+            this.setState({
+              product: [product],
+            });
+        });
+      };
+    
+      getSize = () => {
+        if (this.state.product.size == "R") return "Reguler";
+        if (this.state.product.size == "L") return "Large";
+        if (this.state.product.size == "XL") return "XL";
+      };
+    
+      costing = (price) => {
+        return (
+          "IDR " +
+          parseFloat(price)
+            .toFixed()
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+        );
+      };
+    
   render() {
     return (
       <>
@@ -55,8 +102,8 @@ export class Payment extends Component {
                 <aside className={styles["side-left"]}>
                     <p className={styles["title-order"]}>Order Summary</p>
                     <div className={styles["card-settings"]}>
-                        <Card/>
-                        <Card/>
+                        {this.state.product.map((product) => {
+                            return <Card title={product.product_name} price={this.costing(product.price)} image={product.image} size={this.getSize()} qty={product.qty}/>})}
                     </div>
                     <hr className={styles.hr}/>
                     <div className={styles["total-list"]}>
