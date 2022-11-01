@@ -30,11 +30,11 @@ export class History extends Component {
   getData = (limit) => {
     const userinfo = JSON.parse(localStorage.getItem("userInfo"))
     if (!userinfo){
-      this.props.navigate("/login")
+      return this.props.navigate("/login")
     }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history?${limit}`
     Axios.get(url,{headers: {
-      "x-access-token": userinfo
+      "x-access-token": userinfo.token
     }}).then((res) => {
       this.setState({
         product: res.data.data.data,
