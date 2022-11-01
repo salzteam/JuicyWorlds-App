@@ -11,6 +11,8 @@ import bank from "../assets/img/payment/bank.png"
 import cod from "../assets/img/payment/cod.png"
 import withNavigate from "../helpers/withNavigate";
 import Axios from "axios"
+import { Navigate } from "react-router-dom";
+
 
 export class Payment extends Component {
     state = {
@@ -23,8 +25,16 @@ export class Payment extends Component {
         shipping: 0,
         total: 0,
       };
-      componentDidMount() {
-        const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+
+      validate = () => {
+        const userinfo = JSON.parse(localStorage.getItem("userInfo"))
+        if (!userinfo){
+          return <Navigate to="/login"/>
+        }
+        return this.getDatas(userinfo)
+      }
+
+    getDatas = (userinfo) => {
         if (!userinfo) {
           this.props.navigate("/login");
         }
@@ -48,7 +58,8 @@ export class Payment extends Component {
                 })
               });
             })
-        }
+    }
+
       getSize = () => {
         if (this.state.product.size == "R") return "Reguler";
         if (this.state.product.size == "L") return "Large";
@@ -66,6 +77,7 @@ export class Payment extends Component {
   render() {
     return (
       <>
+        {this.validate()}
         <div>
           <Navbar/>
         </div>
