@@ -1,0 +1,71 @@
+.card {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    width: 100%;
+    max-width: 353px;
+    /* margin: auto; */
+    margin-left: 23px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.card img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.title {
+    color: #000000;
+    font-weight: 700;
+    font-size: 25px;
+    font-family: Poppins;
+}
+
+.price {
+    color: #895537;
+    font-size: 17px;
+}
+
+.content-title {
+    padding-left: 20px;
+}
+
+.check-box {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.check-box input {
+    width: 25px;
+    margin-bottom: 5px;
+}
+
+.check-box input[type=checkbox] {
+    accent-color: #6A4029;
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        width: 48%;
+    }
+
+}

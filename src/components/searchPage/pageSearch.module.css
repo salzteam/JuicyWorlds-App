@@ -1,0 +1,18 @@
+.gap-Row {
+    gap: 7%;
+}
+
+.position-settings {
+    margin-top: 130px !important;
+    margin-block: -10%;
+    justify-content: center;
+    gap: 50px;
+}
+
+.container {
+    padding: 20px 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}

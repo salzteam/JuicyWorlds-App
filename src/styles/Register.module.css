@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;800&display=swap');
+
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+
+body {
+    background-color: white;
+}
+
+.account {
+    color: #9F9F9F
+}
+
+.container {
+    display: flex;
+}
+
+.image-side {
+    background: url("../assets/img/bg.WebP");
+    background-size: cover;
+}
+
+.main-register {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-register {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.nav-image {
+    width: 3rem;
+    height: 100%;
+}
+
+.brand-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.sign-up {
+    color: #6A4029;
+    margin-right: 60px;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 45px;
+}
+
+.image-side,
+.main-register {
+    flex: 1;
+}
+
+.register-label {
+    font-weight: bold;
+    color: #4F5665
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+.register-input {
+    padding: 1rem;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 20px;
+    border: 1px solid #4F5665;
+}
+
+.btn {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.google-btn {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0px 6px 20px 0px #C4C4C4AB;
+}
+
+.google-btn:active {
+    background-color: #adadad;
+}
+
+.signup-btn:active {
+    background-color: #ffbb3369;
+}
+
+.login-btn:active {
+    background-color: #6a4029ad;
+}
+
+.google-btn img {
+    width: 27px;
+    height: 28px;
+}
+
+.signup-btn {
+    color: #6A4029;
+    font-weight: bold;
+    background-color: #FFBA33;
+    box-shadow: 0px 6px 20px 0px #FFBA3366;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+}
+
+.signup-btn p,
+.google-btn p {
+    margin-bottom: 0%;
+}
+
+.login-btn {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    user-select: none;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #6A4029;
+    box-shadow: 0px 6px 20px 0px #6A4029A1;
+}
+
+.divider {
+    display: flex;
+    justify-content: center;
+    padding: 0 10%;
+    margin: 2rem 0;
+    gap: 1rem;
+}
+
+.divider-line {
+    border-bottom: 2px solid #C4C4C4;
+    flex: 1;
+    height: 50%;
+}
+
+.footer-login,
+.footer-left {
+    display: flex;
+    margin-top: 1rem;
+    padding: 20px;
+    background-color: #F8F8F8;
+}
+
+.footer-left,
+.footer-right {
+    flex: 1;
+}
+
+.footer-left {
+    padding: 1rem;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product,
+.engage {
+    display: flex;
+}
+
+.about-left,
+.about-right {
+    color: #4F5665;
+    flex: 1;
+}
+
+.brand-footer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.about-footer {
+    color: #4F5665;
+    font-size: 16px;
+    margin: 10px;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+.footer-logo {
+    margin-top: 20px;
+}
+
+.about-engage,
+.about-product {
+    flex: 1
+}
+
+
+.about-content {
+    padding: 15px;
+}
+
+.about-title {
+    font-weight: bold;
+    color: #0B132A;
+    padding: 15px;
+}
+
+.copyright {
+    margin-top: 50px;
+    margin-left: 10px;
+    color: #AFB5C0;
+}
+
+.back-logo {
+    background-color: #6A4029;
+    padding: 15px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-left: 20px;
+    right: 9px;
+}
+
+.footer-logo {
+    display: flex;
+    margin-top: 20px;
+    position: relative;
+    width: 12%;
+    justify-content: space-between;
+}
+
+.logo-img {
+    cursor: pointer;
+    position: absolute;
+}
+
+.img-logo {
+    position: absolute;
+    bottom: -1px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.about-content:hover {
+    color: #FFBA33;
+    cursor: pointer;
+}
+
+.title-footer {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .image-side {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    .navbar {
+        padding: 1rem 3rem;
+        margin-bottom: 35px;
+    }
+}

@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Rubik:wght@300;400;700;800&display=swap');
+
+p {
+    margin-bottom: 0px;
+}
+
+.side-image {
+    background: url("../assets/img/forgot/bg.jpg");
+    background-size: cover;
+    margin-top: -2%;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.brand {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10%;
+    gap: 1rem;
+}
+
+.brand p {
+    font-family: Rubik;
+    font-weight: 700;
+    font-size: 25px;
+    color: #0B132A;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-container {
+    display: flex;
+    padding-top: 25px;
+    padding-left: 25px;
+    padding-bottom: 25px;
+}
+
+.footer-logo {
+    display: flex;
+    margin-top: 20px;
+    position: relative;
+    width: 12%;
+    justify-content: space-between;
+}
+
+.first-text {
+    line-height: 65px;
+    padding-top: 20%;
+    text-align: center;
+}
+
+.textForgot {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 52px;
+}
+
+.textForgot2 {
+    font-family: Poopins;
+    font-weight: 400;
+    font-size: 27px;
+}
+
+.btn {
+    width: 85%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.send {
+    background-color: #FFBA33;
+    width: 85%;
+    box-shadow: 0px 6px 20px 0px #FFBA3366;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.send p {
+    color: #6A4029;
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.input-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10%;
+}
+
+.input-btn input {
+    width: 85%;
+    height: 90px;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    padding-left: 20px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.resend {
+    background-color: #6A4029;
+    color: white;
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 25px;
+    margin-bottom: 20%;
+}
+
+.count-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 7% 0;
+    font-weight: 400;
+    font-size: 20px;
+    font-family: Poppins;
+}
+
+.time {
+    font-weight: 700 !important;
+}
+
+.footer {
+    justify-content: left !important;
+}
+
+.right {
+    margin: 0 auto;
+}
+
+.list-product {
+    list-style: none;
+    display: flex;
+    gap: 40%;
+    margin-right: 35%;
+}
+
+.list-product li {
+    margin-top: 20%;
+    width: 200% !important;
+}
+
+.about-content p {
+    margin-left: 9%;
+    color: #0B132A;
+    font-size: 18px;
+    font-family: Rubik;
+    font-weight: 500;
+}
+
+.back-logo {
+    background-color: #6A4029;
+    padding: 15px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-left: 20px;
+    right: 20px;
+    margin-bottom: 75%;
+}
+
+.footer-logo {
+    display: flex;
+    margin-top: 20px;
+    position: relative;
+    width: 12%;
+    justify-content: space-between;
+}
+
+.logo-img {
+    cursor: pointer;
+    position: absolute;
+}
+
+.about-footer {
+    color: #4F5665;
+    font-weight: 500;
+    font-family: Rubik;
+    font-size: 16px;
+    margin-top: 10%;
+}
+
+.left {
+    margin-top: -5%;
+}
+
+.copyright {
+    margin-top: 14px;
+    margin-left: 6px;
+    color: #AFB5C0;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: var(--bs-gutter-x, .75rem);
+    padding-left: var(--bs-gutter-x, .75rem);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .side-image {
+        display: none;
+    }
+
+    .right {
+        background: url("../assets/img/forgot/bg.jpg");
+        background-size: cover;
+        width: 100% !important;
+        margin-top: -4%;
+        color: white;
+    }
+
+    .brand p {
+        color: white;
+    }
+
+    .footer-container {
+        background-color: white;
+        padding: 2%;
+        color: black;
+    }
+
+    .footer-container .brand p {
+        color: #0B132A !important;
+    }
+
+    .container-fluid {
+        padding-right: 0%;
+        padding-left: 0%;
+    }
+
+    .resend {
+        margin-bottom: 10%;
+    }
+
+}

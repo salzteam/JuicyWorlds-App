@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Rubik:wght@300;400;800&display=swap');
+
+.footer-container {
+    justify-content: space-between;
+    margin-bottom: 80px;
+}
+
+.left-foot-content {
+    margin: 70px;
+}
+
+.about-detail {
+    margin-top: 20px;
+    width: 60%;
+}
+
+.about-detail p {
+    font-size: 16px;
+    color: #4F5665;
+}
+
+.sosmed-detail {
+    position: relative;
+    display: flex;
+    margin-top: 20px;
+    width: 20%;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.back-logo {
+    background-color: rgb(37, 23, 23);
+    padding: 15px;
+    position: relative;
+    left: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.img-logo {
+    position: absolute;
+    bottom: -1px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+
+.copyright {
+    font-size: 16px;
+    color: #AFB5C0;
+    margin-top: 40px;
+}
+
+.right-foot-content {
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.content-detail h2 {
+    font-size: 18px;
+    color: #0B132A;
+    font-weight: 500;
+}
+
+.content-detail>ol {
+    padding-left: 0px !important;
+}
+
+.content-detail>ol li {
+    font-size: 16px;
+    margin-top: 20px;
+    list-style: none;
+    color: #4F5665;
+}
+
+.content-detail ol li:hover {
+    color: #FFBA33;
+    cursor: pointer;
+}
+
+.logo-detail h2 {
+    color: #0B132A;
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.logo {
+    width: 2em;
+    height: 100%;
+    margin-right: 20px;
+}
+
+.logo-detail {
+    display: flex;
+    align-items: center;
+}
+
+.footer-container {
+    display: flex;
+}
+
+.side-content,
+.form-content,
+.left-foot-content,
+.right-foot-content {
+    flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .footer-container {
+        margin-bottom: 0px;
+    }
+
+    .left-foot-content {
+        margin: 20px;
+    }
+
+    .right-foot-content {
+        margin-top: 45px;
+    }
+
+    .about-detail {
+        width: 100%;
+    }
+
+    .sosmed-detail {
+        gap: 2rem;
+    }
+}

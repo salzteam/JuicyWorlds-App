@@ -1,0 +1,145 @@
+@media screen and (max-width: 768px) {
+    .navBar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mainbox {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .rightContent {
+        position: relative;
+        top: -70px;
+        left: 260px;
+    }
+
+    .midContent {
+        position: relative;
+        top: 40px;
+    }
+
+    .leftContent {
+        position: relative;
+        right: 278px;
+        top: 30px;
+    }
+
+    .rightContent {
+        margin-top: -6px !important;
+        padding-right: 50px;
+    }
+}
+
+.maincontainer {
+    max-width: 1440px;
+    margin: auto;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: inherit;
+    list-style: none;
+    gap: 7.5rem;
+    align-items: center;
+    color: #333;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.nav li:hover {
+    color: #6A4029;
+    transition: ease-in-out 0.1s;
+    -webkit-transition: ease-in-out 0.1s;
+    -moz-transition: ease-in-out 0.1s;
+    -ms-transition: ease-in-out 0.1s;
+    -o-transition: ease-in-out 0.1s;
+}
+
+.nav ol {
+    text-decoration: none;
+    font-weight: 700;
+    color: inherit;
+    animation: slideInFromLeft 1s ease-in;
+}
+
+.navigationBar div {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.navigationBar {
+    justify-content: space-between;
+    margin: auto;
+    text-align: center;
+}
+
+.navBar {
+    align-items: center;
+    font-size: large;
+    padding: 0px !important;
+}
+
+.leftContent>p {
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.icon1 {
+    margin-top: 3px;
+    width: 28px;
+    height: 28px;
+}
+
+.a {
+    text-decoration: none;
+}
+
+.a li {
+    color: #4F5665;
+}
+
+.leftContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btn-login {
+    text-decoration: none;
+    color: #0B132A;
+    padding-right: 50px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.btn-signup a {
+    font-family: 'Rubik', sans-serif;
+}
+
+.btn-signup {
+    text-decoration: none;
+    border: none;
+    color: #6A4029;
+    font-weight: 500;
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    width: 150px;
+    height: 45px;
+    border-radius: 50px;
+    background-color: #FFBA33;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+}
+
+.rightContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

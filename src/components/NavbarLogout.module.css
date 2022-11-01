@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;800&display=swap');
+
+.home-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 8%;
+    border-bottom: 0.2px solid #9F9F9F;
+    /* box-shadow: 0 4px 2px -4px #9F9F9F; */
+    width: 100%;
+}
+
+
+/* NAVBAR */
+.navBrand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navBrand img {
+    width: 50px;
+    margin-bottom: 3px;
+    height: 50px;
+}
+
+.navBrand p {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.navList a {
+    color: #4F5665;
+    text-decoration: none !important;
+}
+
+.navList ul {
+    color: #4F5665;
+    list-style: none;
+    display: flex;
+    margin-top: 10px;
+}
+
+.home {
+    font-weight: bold;
+    color: #6A4029;
+}
+
+.navList:hover li {
+    font-weight: normal;
+    color: #4f5665;
+}
+
+.navList .product,
+.navList li:hover {
+    font-weight: bold;
+    color: #6a4029;
+}
+
+.btn {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: center;
+}
+
+/* END NAVBAR */
+
+.btn a {
+    text-decoration: none;
+    color: #6A4029;
+}
+
+.btn-login {
+    text-decoration: none;
+    color: #0B132A;
+    padding-right: 50px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.btn-signup a {
+    font-family: 'Rubik', sans-serif;
+}
+
+.btn-signup {
+    text-decoration: none;
+    border: none;
+    color: #6A4029;
+    font-weight: 500;
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    width: 150px;
+    height: 45px;
+    border-radius: 50px;
+    background-color: #FFBA33;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+}
