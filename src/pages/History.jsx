@@ -6,7 +6,7 @@ import Card from "../components/Card/CardHistory"
 import styles from "../styles/History.module.css"
 import withNavigate from "../helpers/withNavigate";
 import Axios from "axios"
-
+import { Navigate } from "react-router-dom";
 
 export class History extends Component {
   state = {
@@ -30,7 +30,7 @@ export class History extends Component {
   getData = (limit) => {
     const userinfo = JSON.parse(localStorage.getItem("userInfo"))
     if (!userinfo){
-      return this.props.navigate("/login");
+      this.props.navigate("/login")
     }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history?${limit}`
     Axios.get(url,{headers: {
