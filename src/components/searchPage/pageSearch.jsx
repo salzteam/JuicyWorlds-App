@@ -13,7 +13,7 @@ export class pageSearch extends PureComponent {
         product: []
     }
     componentDidMount(){
-        const url = `http://localhost:8080/api/v1/products?${this.props.searchParams.toString()}`;
+        const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?${this.props.searchParams.toString()}`;
         axios.get(url).then((res)=>{
             this.setState({
                 product: res.data.data.data
