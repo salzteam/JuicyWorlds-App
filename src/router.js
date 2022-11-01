@@ -15,17 +15,25 @@ import Test from "./components/Navbarlogout";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home />, errorElement: <Error /> },
-  { path: "/login", element: <Login /> },
-  { path: "/register", element: <Register /> },
-  { path: "/profile", element: <Profile /> },
-  { path: "/product", element: <Product /> },
-  { path: "/forgot-password", element: <Forgot /> },
-  { path: "/product-details", element: <ProductDetails /> },
-  { path: "/product-details/:id", element: <ProductDetails /> },
-  { path: "/history", element: <History /> },
-  { path: "/payment", element: <Payment /> },
-  { path: "/search", element: <Search /> },
-  { path: "/test", element: <Test /> },
+  { path: "/login", element: <Login />, errorElement: <Error /> },
+  { path: "/register", element: <Register />, errorElement: <Error /> },
+  { path: "/profile", element: <Profile />, errorElement: <Error /> },
+  { path: "/product", element: <Product />, errorElement: <Error /> },
+  { path: "/forgot-password", element: <Forgot />, errorElement: <Error /> },
+  {
+    path: "/product-details",
+    element: <ProductDetails />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/product-details/:id",
+    element: <ProductDetails />,
+    errorElement: <Error />,
+  },
+  { path: "/history", element: <History />, errorElement: <Error /> },
+  { path: "/payment", element: <Payment />, errorElement: <Error /> },
+  { path: "/search", element: <Search />, errorElement: <Error /> },
+  { path: "/test", element: <Test />, errorElement: <Error /> },
 ]);
 
 export default router;
