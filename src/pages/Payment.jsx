@@ -16,6 +16,12 @@ export class Payment extends Component {
     state = {
         address: "",
         product: [],
+        userdata: [],
+        user: [],
+        subtotal: 0,
+        tax: 0,
+        shipping: 0,
+        total: 0
       };
       componentDidMount() {
         const userinfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -23,26 +29,28 @@ export class Payment extends Component {
           this.props.navigate("/login");
         }
         const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history/pending`;
-        console.log(url)
         Axios.get(url, {
           headers: {
             "x-access-token": userinfo.token,
           },
         }).then((res) => {
-            console.log(res)
+            this.setState({
+                product: res.data.data
+            })
+            Axios.get(`${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/${userinfo.id}`, {
+                headers: {
+                  "x-access-token": userinfo.token,
+                },
+              }).then((results) => {
+                this.setState({
+                    userdata: results.data.data.profileUser[0],
+                    user: results.data.data.profileData[0]
+                })
+              });
         }).catch((err) => {
             console.log(err)
         });
     }
-    
-      getPENDING = () => {
-        this.state.product.map((product) => {
-          if (product.status_name === "PENDING")
-            this.setState({
-              product: [product],
-            });
-        });
-      };
     
       getSize = () => {
         if (this.state.product.size == "R") return "Reguler";
@@ -58,7 +66,6 @@ export class Payment extends Component {
             .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
         );
       };
-    
   render() {
     return (
       <>
@@ -103,6 +110,7 @@ export class Payment extends Component {
                     <p className={styles["title-order"]}>Order Summary</p>
                     <div className={styles["card-settings"]}>
                         {this.state.product.map((product) => {
+                            
                             return <Card title={product.product_name} price={this.costing(product.price)} image={product.image} size={this.getSize()} qty={product.qty}/>})}
                     </div>
                     <hr className={styles.hr}/>
@@ -113,14 +121,14 @@ export class Payment extends Component {
                             <p>SHIPPING</p>
                         </div>
                         <div>
-                            <p>IDR 120.000</p>
-                            <p>IDR 20.000</p>
-                            <p>IDR 10.000</p>
+                            <p>IDR {this.state.subtotal}</p>
+                            <p>IDR {this.state.tax}</p>
+                            <p>IDR {this.state.shipping}</p>
                         </div>
                     </div>
                     <div className={styles["final-total"]}>
                         <p>TOTAL</p>
-                        <p>IDR 150.000</p>
+                        <p>IDR {this.state.total}</p>
                     </div>
                 </aside>
                 <aside className={styles["side-right"]}>
@@ -133,12 +141,12 @@ export class Payment extends Component {
                             <div className={styles["address-text"]}>
                                 <div className={styles.delivery}>
                                     <span className='me-1'>Delivery </span> 
-                                    <p>to Iskandar Street</p>
+                                    <p>{this.state.userdata.adress}</p>
                                 </div>
                                 <hr className={styles.hr}/>
-                                <p>Km 5 refinery road oppsite republic road, effurun, Jakarta</p>
+                                <p>{this.state.userdata.adress}</p>
                                 <hr className={styles.hr}/>
-                                <p>+62 81348287878</p>
+                                <p>{this.state.user.phone}</p>
                             </div>
                         </div>
                     </div>
