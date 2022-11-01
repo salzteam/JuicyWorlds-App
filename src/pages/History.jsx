@@ -34,7 +34,7 @@ export class History extends Component {
     }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history?${limit}`
     Axios.get(url,{headers: {
-      "x-access-token": userinfo.token
+      "x-access-token": userinfo
     }}).then((res) => {
       this.setState({
         product: res.data.data.data,
