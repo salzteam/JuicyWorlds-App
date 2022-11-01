@@ -29,9 +29,6 @@ export class History extends Component {
 
   getData = (limit) => {
     const userinfo = JSON.parse(localStorage.getItem("userInfo"))
-    if (!userinfo){
-      return this.props.navigate("/login")
-    }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history?${limit}`
     Axios.get(url,{headers: {
       "x-access-token": userinfo.token
@@ -64,12 +61,20 @@ export class History extends Component {
   })
   }
 
+  validate = () => {
+    const userinfo = JSON.parse(localStorage.getItem("userInfo"))
+    if (!userinfo){
+      return <Navigate to="/login"/>
+    }
+    return this.getData("page=1&limit=15")
+  }
+
   componentDidMount(){
-    this.getData("page=1&limit=15")
   }
   render() {
     return (
       <>
+        {this.validate()}
         <div>
           <Test />
         </div>
