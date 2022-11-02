@@ -92,8 +92,8 @@ class productDetails extends React.Component {
     })
     }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
-    Axios.get(url).then((res) =>
-    console.log(res) 
+    Axios.get(url).then((res) => {
+    console.log(res);
     // this.setState({
     //   id: res.data.data["0"].id,
     //   name: res.data.data["0"].product_name,
@@ -105,7 +105,7 @@ class productDetails extends React.Component {
     // },() => {
     //   console.log(this.state)
     // })
-    ).catch((err) => console.log(err))
+  }).catch((err) => console.log(err))
   }
 
   setCtg = (category) => {
