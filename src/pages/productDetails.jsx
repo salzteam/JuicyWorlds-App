@@ -95,12 +95,12 @@ class productDetails extends React.Component {
     Axios.get(url).then((res) => {
     console.log(res);
     this.setState({
-      id: res.data.data.dataProduct.id,
-      name: res.data.data.dataProduct.product_name,
-      price: res.data.data.dataProduct.price,
-      image: res.data.data.dataProduct.image,
-      desc: res.data.data.dataProduct.description,
-      ctg: res.data.data.dataProduct.category_name,
+      id: res.data.data.dataProduct["0"].id,
+      name: res.data.data.dataProduct["0"].product_name,
+      price: res.data.data.dataProduct["0"].price,
+      image: res.data.data.dataProduct["0"].image,
+      desc: res.data.data.dataProduct["0"].description,
+      ctg: res.data.data.dataProduct["0"].category_name,
       promo: res.data.data.dataPromo
     },() => {
       console.log(this.state.name)
