@@ -23,6 +23,7 @@ class productDetails extends React.Component {
     qty: "1",
     size: "Reguler",
     promo: [],
+    product: [],
     dinein : styles.dinein,
     door: styles.dooroff,
     pickup: styles.pickupoff,
@@ -94,12 +95,7 @@ class productDetails extends React.Component {
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
     Axios.get(url).then((res) => 
     this.setState({
-      id: res.data.data.dataProduct.id,
-      name: res.data.data.dataProduct.product_name,
-      price: res.data.data.dataProduct.price,
-      image: res.data.data.dataProduct.image,
-      desc: res.data.data.dataProduct.description,
-      ctg: res.data.data.dataProduct.category_name,
+      product: res.data.data.dataProduct,
       promo: res.data.data.dataPromo
     },() => {
       console.log(this.state)
@@ -155,7 +151,7 @@ class productDetails extends React.Component {
             <div className={`${styles["container-fluid"]} ${styles.margins}`}>
               <div className={`row ${styles.container}`}>
                 <div className={`col-6 ${styles["content-left"]}`}>
-                  <img src={this.state.image} alt="NOT FOUND"/>
+                  <img src={this.state.product.image} alt="NOT FOUND"/>
                   <div className={`col-12 ${styles["container-delivery"]}`}>
                     <p className={styles["title-delivery"]}>Delivery and Time</p>
                     <div className={`${styles["button-delivery"]}`}>
