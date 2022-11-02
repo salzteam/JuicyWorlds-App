@@ -92,20 +92,19 @@ class productDetails extends React.Component {
     })
     }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
-    Axios.get(url).then((res) => {
-    console.log(res);
-    // this.setState({
-    //   id: res.data.data["0"].id,
-    //   name: res.data.data["0"].product_name,
-    //   price: res.data.data["0"].price,
-    //   image: res.data.data["0"].image,
-    //   desc: res.data.data["0"].description,
-    //   ctg: res.data.data["0"].category_name,
-    //   promo: res.data.data.dataPromo
-    // },() => {
-    //   console.log(this.state)
-    // })
-  }).catch((err) => console.log(err))
+    Axios.get(url).then((res) => 
+    this.setState({
+      id: res.data.data.dataProduct.id,
+      name: res.data.data.dataProduct.product_name,
+      price: res.data.data.dataProduct.price,
+      image: res.data.data.dataProduct.image,
+      desc: res.data.data.dataProduct.description,
+      ctg: res.data.data.dataProduct.category_name,
+      promo: res.data.data.dataPromo
+    },() => {
+      console.log(this.state)
+    })
+    ).catch((err) => console.log(err))
   }
 
   setCtg = (category) => {
