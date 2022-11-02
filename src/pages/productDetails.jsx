@@ -10,6 +10,7 @@ import withSearchParams from "../helpers/withSearchParams";
 import withNavigate from "../helpers/withNavigate";
 import withRouteParams from "../helpers/withRouteParams";
 import Axios from "axios"
+import { Navigate } from "react-router-dom";
 
 
 class productDetails extends React.Component {
@@ -33,6 +34,12 @@ class productDetails extends React.Component {
     xl: styles.xl,
     created: [],
     userinfo:  JSON.parse(localStorage.getItem("userInfo"))
+  }
+
+  validate = () => {
+    if (!this.state.userinfo){
+      return <Navigate to="/login"/>
+    }
   }
 
   getRequset = () => {
@@ -140,6 +147,7 @@ class productDetails extends React.Component {
   render() {
     return (
       <>
+        {this.validate()}
           {this.state.navbar}
           <main className={styles.main}>
             <p className={styles.title} onClick={()=>{
