@@ -18,11 +18,11 @@ class productDetails extends React.Component {
     id: "",
     name: "",
     price: "",
+    image: "",
     desc: "",
     qty: "1",
     size: "Reguler",
     promo: [],
-    product: [],
     dinein : styles.dinein,
     door: styles.dooroff,
     pickup: styles.pickupoff,
@@ -94,12 +94,16 @@ class productDetails extends React.Component {
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
     Axios.get(url).then((res) => 
     this.setState({
-      product: res.data.data.dataProduct,
+      id: res.data.data.dataProduct.id,
+      name: res.data.data.dataProduct.product_name,
+      price: res.data.data.dataProduct.price,
+      image: res.data.data.dataProduct.image,
+      desc: res.data.data.dataProduct.description,
+      ctg: res.data.data.dataProduct.category_name,
       promo: res.data.data.dataPromo
     },() => {
-      console.log(this.state)
-    })
-    ).catch((err) => console.log(err))
+      console.log(this.state.name)
+    })).catch((err) => console.log(err))
   }
 
   setCtg = (category) => {
@@ -150,7 +154,7 @@ class productDetails extends React.Component {
             <div className={`${styles["container-fluid"]} ${styles.margins}`}>
               <div className={`row ${styles.container}`}>
                 <div className={`col-6 ${styles["content-left"]}`}>
-                  <img src={this.state.product.image} alt="NOT FOUND"/>
+                  <img src={this.state.image} alt="NOT FOUND"/>
                   <div className={`col-12 ${styles["container-delivery"]}`}>
                     <p className={styles["title-delivery"]}>Delivery and Time</p>
                     <div className={`${styles["button-delivery"]}`}>
@@ -259,7 +263,7 @@ class productDetails extends React.Component {
                   </div>
                 </div>
                 <div className={`col-8 ${styles.checkout}`}>
-                  <img src={this.state.product.image} alt="NOT FOUND"/>
+                  <img src={this.state.image} alt="NOT FOUND"/>
                   <div className={styles.detailsqty}>
                     <p className={styles.stylecold}>{this.state.name}</p>
                     {this.showQty()}
