@@ -71,7 +71,16 @@ body {
     color: #4F5665
 }
 
+.passwords {
+    position: absolute;
+    top: 187px;
+    right: 20px;
+    user-select: none;
+    cursor: pointer;
+}
+
 .register-form {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 80%;

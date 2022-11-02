@@ -16,6 +16,29 @@ class Register extends React.Component {
     pwd: "",
     phone: ""
   }
+
+  showPassword = () => {
+    if (!this.state.shwPwd) return "password"
+    return "text" 
+  }
+
+  iconShow = () => {
+    if (this.state.shwPwd) return "fa-regular fa-eye"
+    return "fa-regular fa-eye-slash"
+  }
+  toRegister = () => {
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/register`
+    const email = this.state.email
+    const password = this.state.pwd
+    const phone = this.state.phone
+    Axios.post(url, {email, password,phone}).then((response) => {
+      alert("DATA BERHASIL DIBUAT, SILAHKAN LOGIN")
+      this.props.navigate(`/login`);
+    }).catch((err) => {
+      alert("INVALID INPUT DATA")
+      console.log(err);
+    })
+  }
   render (){
   return (
     <div class={styles.container}>
@@ -37,33 +60,39 @@ class Register extends React.Component {
               this.setState({
                 email: e.target.value
               },()=>{
-                console.log(this.state);
               })
-            }} />
+            }} onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                this.toRegister()
+              }
+            }}/>
             <label class={styles["register-label"]}>Password:</label>
-            <input class={styles["register-input"]} type="password" placeholder="Enter your password" onChange={(e)=>{
+            <input class={styles["register-input"]} type={this.showPassword()} placeholder="Enter your password" onChange={(e)=>{
               this.setState({
                 pwd: e.target.value
               })
-            }} />
+            }}  onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                this.toRegister()
+              }
+            }}/>
+            <i class={`${this.iconShow()} ${styles.passwords}`} onClick={() => {
+                this.setState((prevState) => ({
+                  shwPwd: prevState.shwPwd ? false : true,
+                }));
+            }}></i>
             <label class={styles["register-label"]}>Phone Number:</label>
             <input class={styles["register-input"]} type="tel" placeholder="Enter your phone number" onChange={(e)=>{
               this.setState({
                 phone: e.target.value
               })
+            }}  onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                this.toRegister()
+              }
             }}/>
             <div class={`${styles["btn"]} ${styles["signup-btn"]}`} onClick={(e)=> {
-              const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/register`
-              const email = this.state.email
-              const password = this.state.pwd
-              const phone = this.state.phone
-              Axios.post(url, {email, password,phone}).then((response) => {
-                alert("DATA BERHASIL DIBUAT, SILAHKAN LOGIN")
-                this.props.navigate(`/login`);
-              }).catch((err) => {
-                alert("INVALID INPUT DATA")
-                console.log(err);
-              })
+              this.toRegister()
             }}>
               <p>Sign Up</p>
             </div>

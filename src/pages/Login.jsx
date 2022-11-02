@@ -15,9 +15,34 @@ class Login extends React.Component {
     email: "",
     pwd: ""
   }
+
+  showPassword = () => {
+    if (!this.state.shwPwd) return "password"
+    return "text" 
+  }
+
+  iconShow = () => {
+    if (this.state.shwPwd) return "fa-regular fa-eye"
+    return "fa-regular fa-eye-slash"
+  }
+
   saveToken = (token) => {
     return window.localStorage.setItem("x-access-token", token)
   }
+  toLogin = () => {
+    console.log(process.env.REACT_APP_BACKEND_HOST);
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/auth/`
+    const email = this.state.email
+    const password = this.state.pwd
+    Axios.post(url, {email, password}).then((response) => {
+      localStorage.setItem("userInfo", JSON.stringify(response.data.data))
+      this.props.navigate(`/`);
+    }).catch((err) => {
+      alert("INVALID EMAIL OR PASSWORD!")
+      console.log(err);
+    })
+  }
+
   render (){
   return (
     <div class={styles.container}>
@@ -39,31 +64,32 @@ class Login extends React.Component {
               this.setState({
                 email: e.target.value
               },()=>{
-                console.log(this.state);
               })
-            }} />
+            }} onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                this.toLogin()
+              }
+            }}/>
             <label class={styles["login-label"]}>Password:</label>
-            <input  class={styles["login-input"]}  type="password" placeholder="Enter your password" onChange={(e)=>{
+            <input  class={styles["login-input"]}  type={this.showPassword()} placeholder="Enter your password" onChange={(e)=>{
               this.setState({
                 pwd: e.target.value
               })
+            }} onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                this.toLogin()
+              }
             }}/>
+            <i class={`${this.iconShow()} ${styles.passwords}`} onClick={() => {
+                this.setState((prevState) => ({
+                  shwPwd: prevState.shwPwd ? false : true,
+                }));
+            }}></i>
             <Link to={"/forgot-password"} class={styles.forgot}>
               Forgot password?
             </Link>
             <div class={`${styles["btn"]} ${styles["login-btn"]}`} onClick={(e)=> {
-              console.log(process.env.REACT_APP_BACKEND_HOST);
-              const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/auth/`
-              const email = this.state.email
-              const password = this.state.pwd
-              Axios.post(url, {email, password}).then((response) => {
-                localStorage.setItem("userInfo", JSON.stringify(response.data.data))
-                console.log(response.data.data)
-                this.props.navigate(`/`);
-              }).catch((err) => {
-                alert("INVALID EMAIL OR PASSWORD!")
-                console.log(err);
-              })
+              this.toLogin()
             }}>
               <p>Login</p>
             </div>

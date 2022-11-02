@@ -79,7 +79,16 @@ body {
     flex: 1;
 }
 
+.passwords {
+    position: absolute;
+    top: 235px;
+    right: 20px;
+    user-select: none;
+    cursor: pointer;
+}
+
 .login-form {
+    position: relative;
     padding-top: 50px;
     display: flex;
     flex-direction: column;
