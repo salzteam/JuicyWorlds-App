@@ -10,7 +10,7 @@ import withSearchParams from "../helpers/withSearchParams";
 import withNavigate from "../helpers/withNavigate";
 import withRouteParams from "../helpers/withRouteParams";
 import Axios from "axios"
-import { Navigate } from "react-router-dom";
+
 
 class productDetails extends React.Component {
   state = {
@@ -92,20 +92,18 @@ class productDetails extends React.Component {
     })
     }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
-    Axios.get(url).then((res) => {
-    console.log(res);
+    Axios.get(url).then((res) => 
     this.setState({
-      id: res.data.data.dataProduct["0"].id,
-      name: res.data.data.dataProduct["0"].product_name,
-      price: res.data.data.dataProduct["0"].price,
-      image: res.data.data.dataProduct["0"].image,
-      desc: res.data.data.dataProduct["0"].description,
-      ctg: res.data.data.dataProduct["0"].category_name,
+      id: res.data.data.dataProduct.id,
+      name: res.data.data.dataProduct.product_name,
+      price: res.data.data.dataProduct.price,
+      image: res.data.data.dataProduct.image,
+      desc: res.data.data.dataProduct.description,
+      ctg: res.data.data.dataProduct.category_name,
       promo: res.data.data.dataPromo
     },() => {
       console.log(this.state.name)
-    })
-  }).catch((err) => console.log(err))
+    })).catch((err) => console.log(err))
   }
 
   setCtg = (category) => {
@@ -138,16 +136,9 @@ class productDetails extends React.Component {
     return <p className={styles.addbtn}>{this.state.qty}</p>
   }
 
-  validate = () => {
-    if (!this.state.userinfo){
-      return <Navigate to="/login"/>
-    }
-  }
-
   render() {
     return (
       <>
-          {this.validate()}
           {this.state.navbar}
           <main className={styles.main}>
             <p className={styles.title} onClick={()=>{
