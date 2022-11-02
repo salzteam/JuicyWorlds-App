@@ -260,7 +260,7 @@ class productDetails extends React.Component {
                   </div>
                 </div>
                 <div className={`col-8 ${styles.checkout}`}>
-                  <img src={this.state.image} alt="NOT FOUND"/>
+                  <img src={this.state.product.image} alt="NOT FOUND"/>
                   <div className={styles.detailsqty}>
                     <p className={styles.stylecold}>{this.state.name}</p>
                     {this.showQty()}
