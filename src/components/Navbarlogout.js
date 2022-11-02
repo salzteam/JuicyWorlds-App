@@ -42,7 +42,7 @@ class NavbarMobile extends React.Component {
           <Link className={styles["btn-login"]} to={"/login"}>
             Login
           </Link>
-          <Link to={"/login"}>
+          <Link to={"/register"}>
             <button className={styles["btn-signup"]}>Sign Up</button>
           </Link>
         </div>
