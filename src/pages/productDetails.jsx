@@ -102,8 +102,9 @@ class productDetails extends React.Component {
       ctg: res.data.data.dataProduct.category_name,
       promo: res.data.data.dataPromo
     },() => {
-      console.log(this.state.name)
-    })).catch((err) => console.log(err))
+      console.log(this.state)
+    })
+    ).catch((err) => console.log(err))
   }
 
   setCtg = (category) => {
