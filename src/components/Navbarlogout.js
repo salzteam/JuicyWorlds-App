@@ -7,43 +7,43 @@ import withNavigate from "../helpers/withNavigate";
 class NavbarMobile extends React.Component {
   render() {
     return (
-      <nav class={`${styles["nav-pc"]} ${styles["home-nav"]}`}>
-        <div class={styles.navBrand}>
+      <nav className={`${styles["nav-pc"]} ${styles["home-nav"]}`}>
+        <div className={styles.navBrand}>
           <Link to={"/"} aria-label="home">
             <img src={logo} alt="" />
           </Link>
           <p>Juicy Worlds</p>
         </div>
-        <div class={styles.navList}>
+        <div className={styles.navList}>
           <ul>
             <Link to={"/"} aria-label="home">
               <ul>
-                <li class={styles.home}>Home</li>
+                <li className={styles.home}>Home</li>
               </ul>
             </Link>
             <Link to={"/product"} aria-label="product">
               <ul>
-                <li class={styles["nav-text"]}>Product</li>
+                <li className={styles["nav-text"]}>Product</li>
               </ul>
             </Link>
             <Link to={"/payment"} aria-label="cart">
               <ul>
-                <li class={styles["nav-text"]}>Your Cart</li>
+                <li className={styles["nav-text"]}>Your Cart</li>
               </ul>
             </Link>
             <Link to={"/history"} aria-label="history">
               <ul>
-                <li class={styles["nav-text"]}>History</li>
+                <li className={styles["nav-text"]}>History</li>
               </ul>
             </Link>
           </ul>
         </div>
-        <div class={styles["btn-navbar"]}>
-          <Link class={styles["btn-login"]} to={"/login"}>
+        <div className={styles["btn-navbar"]}>
+          <Link className={styles["btn-login"]} to={"/login"}>
             Login
           </Link>
           <Link to={"/login"}>
-            <button class={styles["btn-signup"]}>Sign Up</button>
+            <button className={styles["btn-signup"]}>Sign Up</button>
           </Link>
         </div>
       </nav>
