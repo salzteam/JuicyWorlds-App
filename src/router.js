@@ -11,7 +11,7 @@ import History from "./pages/History";
 import Payment from "./pages/Payment";
 import Error from "./pages/Error";
 import Search from "./components/searchPage/pageSearch";
-import Test from "./components/Navbarlogout";
+import Test from "./components/ModalDialog";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home />, errorElement: <Error /> },

@@ -8,18 +8,33 @@ import logo from "../assets/img/logo.WebP";
 import google from "../assets/img/iconGoogle.png";
 import withNavigate from "../helpers/withNavigate";
 import Axios from "axios"
+import Modal from "../components/ModalDialog"
 
 class Register extends React.Component {
   state = {
     showPwd: false,
     email: "",
     pwd: "",
-    phone: ""
+    phone: "",
+    showModal: null,
+    errorModal: null
   }
 
   showPassword = () => {
     if (!this.state.shwPwd) return "password"
     return "text" 
+  }
+
+  showModal = () => {
+    this.setState({
+      showModal: <Modal title={"Register Success"} body={"CLICK NEXT TO LOGIN PAGE"} tos={"/login"}/>
+    })
+  }
+
+  errorModal = () => {
+    this.setState({
+      showModal: <Modal title={"Register Error"} body={"Invalid Input Data"} tos={"/"}/>
+    })
   }
 
   iconShow = () => {
@@ -32,10 +47,9 @@ class Register extends React.Component {
     const password = this.state.pwd
     const phone = this.state.phone
     Axios.post(url, {email, password,phone}).then((response) => {
-      alert("DATA BERHASIL DIBUAT, SILAHKAN LOGIN")
-      this.props.navigate(`/login`);
+      this.showModal()
     }).catch((err) => {
-      alert("INVALID INPUT DATA")
+      this.errorModal()
       console.log(err);
     })
   }
@@ -81,6 +95,7 @@ class Register extends React.Component {
                   shwPwd: prevState.shwPwd ? false : true,
                 }));
             }}></i>
+            {this.state.showModal}
             <label class={styles["register-label"]}>Phone Number:</label>
             <input class={styles["register-input"]} type="tel" placeholder="Enter your phone number" onChange={(e)=>{
               this.setState({
@@ -101,6 +116,7 @@ class Register extends React.Component {
               <p>Sign up with Google</p>
             </div>
           </form>
+          {}
           <div class={styles.divider}>
             <div class={styles["divider-line"]}></div>
             <p class={styles.account}> Already have an account? </p>

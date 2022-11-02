@@ -8,12 +8,27 @@ import logo from "../assets/img/logo.WebP";
 import google from "../assets/img/iconGoogle.png";
 import withNavigate from "../helpers/withNavigate";
 import Axios from "axios";
+import Modal from "../components/ModalDialog"
 
 class Login extends React.Component {
   state = {
     shwPwd: false,
     email: "",
-    pwd: ""
+    pwd: "",
+    showModal: null,
+    errorModal: null
+  }
+
+  showModal = () => {
+    this.setState({
+      showModal: <Modal title={"Login Success"} body={"HAPPY SHOPING"} tos={"/"}/>
+    })
+  }
+
+  errorModal = () => {
+    this.setState({
+      showModal: <Modal title={"Login Error"} body={"Wrong Input Email OR Password"} tos={"/login"}/>
+    })
   }
 
   showPassword = () => {
@@ -36,9 +51,14 @@ class Login extends React.Component {
     const password = this.state.pwd
     Axios.post(url, {email, password}).then((response) => {
       localStorage.setItem("userInfo", JSON.stringify(response.data.data))
-      this.props.navigate(`/`);
+      this.showModal()
+      setTimeout(() => {
+        this.props.navigate(`/`);
+      }, 1000)
+      // this.props.navigate(`/`);
     }).catch((err) => {
-      alert("INVALID EMAIL OR PASSWORD!")
+      this.errorModal()
+      // alert("INVALID EMAIL OR PASSWORD!")
       console.log(err);
     })
   }
@@ -58,6 +78,7 @@ class Login extends React.Component {
             </div>
             <p class={styles.login}>Login</p>
           </div>
+          {this.state.showModal}
           <form class={styles["login-form"]}>
             <label class={styles["login-label"]}>Email Address:</label>
             <input class={styles["login-input"]} type="text" placeholder="Enter your email" onChange={(e)=>{
