@@ -92,14 +92,15 @@ class productDetails extends React.Component {
     })
     }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
+    const urut = 0
     Axios.get(url).then((res) => 
     this.setState({
-      id: res.data.data.dataProduct["0"].id,
-      name: res.data.data.dataProduct["0"].product_name,
-      price: res.data.data.dataProduct["0"].price,
-      image: res.data.data.dataProduct["0"].image,
-      desc: res.data.data.dataProduct["0"].description,
-      ctg: res.data.data.dataProduct["0"].category_name,
+      id: res.data.data.dataProduct[urut].id,
+      name: res.data.data.dataProduct[urut].product_name,
+      price: res.data.data.dataProduct[urut].price,
+      image: res.data.data.dataProduct[urut].image,
+      desc: res.data.data.dataProduct[urut].description,
+      ctg: res.data.data.dataProduct[urut].category_name,
       promo: res.data.data.dataPromo
     },() => {
       console.log(res)
