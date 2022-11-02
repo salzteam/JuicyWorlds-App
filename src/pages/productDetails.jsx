@@ -18,7 +18,6 @@ class productDetails extends React.Component {
     id: "",
     name: "",
     price: "",
-    image: "",
     desc: "",
     qty: "1",
     size: "Reguler",
