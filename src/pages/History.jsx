@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Test from '../components/Test'
-import NavbarMobile from '../components/NavbarMobile'
 import Footer from '../components/Footer'
 import Card from "../components/Card/CardHistory"
 import styles from "../styles/History.module.css"
@@ -9,14 +8,18 @@ import Axios from "axios"
 import { Navigate } from "react-router-dom";
 
 export class History extends Component {
+
   state = {
     product: [],
     next: "",
     prev: "",
     isChecked: false,
     tglnext: styles.hide,
-    tglprev: styles.hide
+    tglprev: styles.hide,
+    userinfo:  JSON.parse(localStorage.getItem("userInfo"))
   }
+
+
   costing= (price) => {
     return 'IDR ' +  parseFloat(price).toFixed().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
   }
@@ -28,10 +31,9 @@ export class History extends Component {
   }
 
   getData = (limit) => {
-    const userinfo = JSON.parse(localStorage.getItem("userInfo"))
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history?${limit}`
     Axios.get(url,{headers: {
-      "x-access-token": userinfo.token
+      "x-access-token": this.state.userinfo.token
     }}).then((res) => {
       this.setState({
         product: res.data.data.data,
@@ -62,14 +64,15 @@ export class History extends Component {
   }
 
   validate = () => {
-    const userinfo = JSON.parse(localStorage.getItem("userInfo"))
-    if (!userinfo){
+    if (!this.state.userinfo){
       return <Navigate to="/login"/>
     }
-    return this.getData("page=1&limit=15")
   }
 
   componentDidMount(){
+    if (this.state.userinfo.token){
+      this.getData("page=1&limit=15")
+    }
   }
   render() {
     return (
@@ -97,6 +100,7 @@ export class History extends Component {
                 <div className="row">
                 <div className={`col-12 ${styles.anjas}`}>
                     <div className={`row ${styles.testing}`}>
+
                     {this.state.product.map((product) => {
                       return <Card title={product.product_name} subtotal={this.costing(product.subtotal)} status={product.status_name} image={product.image} checked={this.state.isChecked}/>})}
                     </div>

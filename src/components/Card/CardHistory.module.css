@@ -45,6 +45,8 @@
 }
 
 .content-title {
+    display: flex;
+    flex-direction: row;
     padding-left: 20px;
 }
 
@@ -54,18 +56,26 @@
 
 }
 
-.check-box input {
+.input {
     width: 25px;
-    margin-bottom: 5px;
+    margin-bottom: -100px;
 }
 
-.check-box input[type=checkbox] {
+.width {
+    width: 195px;
+}
+
+.input[type=checkbox] {
     accent-color: #6A4029;
 }
 
 @media screen and (max-width: 768px) {
     .card {
         width: 45%;
+    }
+
+    .input {
+        margin-right: 14%;
     }
 
 }

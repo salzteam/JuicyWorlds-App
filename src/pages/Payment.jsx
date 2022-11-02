@@ -20,45 +20,67 @@ export class Payment extends Component {
         product: [],
         userdata: [],
         user: [],
-        subtotal: 0,
-        tax: 0,
-        shipping: 0,
-        total: 0,
-      };
+        userinfo:  JSON.parse(localStorage.getItem("userInfo")),
+        payment: null
+      }
+
+    getRequset = () => {
+        this.state.product.map((product) => {
+            const Payment = this.state.payment
+            const status_id = "2"
+            const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/payment/${product.transaction_id}`
+            Axios.patch(url,{status_id : status_id,payment_id: Payment}, 
+            {headers: {"x-access-token": this.state.userinfo.token}}).then((results) => {
+            }).then((result) => {
+                this.setState({
+                    product: []
+                })
+            })
+        })
+    }
 
       validate = () => {
-        const userinfo = JSON.parse(localStorage.getItem("userInfo"))
-        if (!userinfo){
+        if (!this.state.userinfo){
           return <Navigate to="/login"/>
         }
-        return this.getDatas(userinfo)
+      }
+
+    componentDidMount(){
+        if (this.state.userinfo.token){
+          this.getDatas()
+        }
       }
 
     getDatas = (userinfo) => {
-        if (!userinfo) {
-          this.props.navigate("/login");
-        }
         const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/history/pending`;
         Axios.get(url, {
           headers: {
-            "x-access-token": userinfo.token,
+            "x-access-token": this.state.userinfo.token,
           },
         }).then((res) => {
             this.setState({
                 product: res.data.data
             })
-            Axios.get(`${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/${userinfo.id}`, {
+            Axios.get(`${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/${this.state.userinfo.token}`, {
                 headers: {
-                  "x-access-token": userinfo.token,
+                  "x-access-token": this.state.userinfo.token,
                 },
               }).then((results) => {
                 this.setState({
                     userdata: results.data.data.profileUser[0],
                     user: results.data.data.profileData[0]
+                }, () => {
+                    console.log(this.state);
                 })
               });
             })
     }
+
+    setGender(event) {
+        this.setState({
+            payment:event.target.value
+        })
+      }
 
       getSize = () => {
         if (this.state.product.size == "R") return "Reguler";
@@ -66,6 +88,12 @@ export class Payment extends Component {
         if (this.state.product.size == "XL") return "XL";
       };
     
+      getTotalPrice = (price, qty, discount, cost) => {
+        const finalDiscount = (parseInt(discount) / 100) * parseInt(price)
+        const finalPrice = (price  - finalDiscount + cost) * qty
+        return this.costing(finalPrice)
+      }
+
       costing = (price) => {
         return (
           "IDR " +
@@ -75,6 +103,9 @@ export class Payment extends Component {
         );
       };
   render() {
+    let subTotal = 0
+    let tax = 0
+    let shipping = 0
     return (
       <>
         {this.validate()}
@@ -116,8 +147,10 @@ export class Payment extends Component {
                     <p className={styles["title-order"]}>Order Summary</p>
                     <div className={styles["card-settings"]}>
                         {this.state.product.map((product) => {
-                            
-                            return <Card title={product.product_name} price={this.costing(product.price)} image={product.image} size={this.getSize()} qty={product.qty}/>})}
+                            subTotal += product.subtotal
+                            tax += parseInt(product.tax)
+                            shipping += parseInt(product.shipping)
+                            return <Card title={product.product_name} price={this.costing(product.subtotal)} image={product.image} size={this.getSize()} qty={product.qty}/>})}
                     </div>
                     <hr className={styles.hr}/>
                     <div className={styles["total-list"]}>
@@ -127,14 +160,14 @@ export class Payment extends Component {
                             <p>SHIPPING</p>
                         </div>
                         <div>
-                            <p>IDR {this.state.subtotal}</p>
-                            <p>IDR {this.state.tax}</p>
-                            <p>IDR {this.state.shipping}</p>
+                            <p>{this.costing(subTotal)}</p>
+                            <p>{this.costing(tax)}</p>
+                            <p>{this.costing(shipping)}</p>
                         </div>
                     </div>
                     <div className={styles["final-total"]}>
                         <p>TOTAL</p>
-                        <p>IDR {this.state.total}</p>
+                        <p>{this.costing(subTotal + tax + shipping)}</p>
                     </div>
                 </aside>
                 <aside className={styles["side-right"]}>
@@ -156,14 +189,14 @@ export class Payment extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className={styles["right-top"]}>
+                    <div className={styles["right-top"]} onChange={this.setGender.bind(this)}>
                         <div className={styles["title-top"]}>
                             <p className={styles["addres-title"]}>Payment method</p>
                         </div>
                         <div className={styles.bottom}>
                             <div className={styles["button-radio"]}>
                                 <div className={styles["card-button"]}>
-                                    <input type="radio" name='via' ></input>
+                                    <input type="radio" value="1" name='via' ></input>
                                     <div className={styles["logo-card"]}>
                                         <img src={debit} alt='card'/>
                                     </div>
@@ -173,7 +206,7 @@ export class Payment extends Component {
                                 <hr className={styles.hrRadio}/>
                             <div className={styles["button-radio"]}>
                                 <div className={styles["card-button"]}>
-                                    <input type="radio" name='via' ></input>
+                                    <input type="radio" value="2" name='via' ></input>
                                     <div className={styles["logo-card-bank"]}>
                                         <img src={bank} alt='card'/>
                                     </div>
@@ -183,7 +216,7 @@ export class Payment extends Component {
                                 <hr className={styles.hrRadio}/>
                             <div className={styles["button-radio-cod"]}>
                                 <div className={styles["card-button"]}>
-                                    <input type="radio" name='via' ></input>
+                                    <input type="radio" value="3" name='via' ></input>
                                     <div className={styles["logo-card-cod"]}>
                                         <img src={cod} alt='card'/>
                                     </div>
@@ -192,7 +225,9 @@ export class Payment extends Component {
                             </div>
                         </div>
                     </div>
-                    <p className={styles.btn}>Confirm and Pay</p>
+                    <p className={styles.btn} onClick={() => {
+                        this.getRequset()
+                    }}>Confirm and Pay</p>
                 </aside>
             </section>
         </main>

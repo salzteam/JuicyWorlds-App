@@ -11,6 +11,7 @@ import withNavigate from "../helpers/withNavigate";
 import withRouteParams from "../helpers/withRouteParams";
 import Axios from "axios"
 
+
 class productDetails extends React.Component {
   state = {
     navbar: <NavbarLogout/>,
@@ -21,6 +22,7 @@ class productDetails extends React.Component {
     desc: "",
     qty: "1",
     size: "Reguler",
+    promo: [],
     dinein : styles.dinein,
     door: styles.dooroff,
     pickup: styles.pickupoff,
@@ -28,40 +30,59 @@ class productDetails extends React.Component {
     no: styles.nooff,
     reguler: styles["reguler-select"],
     large: styles.large,
-    xl: styles.xl
+    xl: styles.xl,
+    created: [],
+    userinfo:  JSON.parse(localStorage.getItem("userInfo"))
+  }
+
+  getRequset = () => {
+    let size = ""
+    let delivery = ""
+    let qty = this.state.qty
+    let product_id = this.props.params.id
+    let sizeCost = 0
+    if (this.state.dinein === styles.dinein) delivery = "1"
+    if (this.state.door === styles.doorin) delivery = "2"
+    if (this.state.pickup === styles.pickupin) delivery = "3"
+    if (this.state.size === "Reguler") size = "1"
+    if (this.state.size === "Large") {size = "2" 
+    sizeCost = 4000}
+    if (this.state.size === "Xl") {size = "3"
+    sizeCost = 6000}
+    let discountValue = 0
+    if (this.state.promo !== 999) discountValue = this.state.promo.discount
+    let finalDiscount = 0
+    if(discountValue !== 0) finalDiscount = (parseInt(discountValue) / 100) * parseInt(this.state.price)
+    let subTotal = (parseInt(this.state.price) * parseInt(qty)) - finalDiscount + sizeCost
+    if(discountValue == 0) subTotal = (parseInt(this.state.price) * parseInt(qty)) + parseInt(sizeCost)
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/create`
+    Axios.post(url, {
+      size: size,
+      delivery: delivery,
+      qty: qty,
+      product_id: product_id,
+      status_id: "1",
+      subtotal: subTotal
+    }
+      , {headers: {
+        "x-access-token": this.state.userinfo.token
+      }
+    }).then((results) => {
+      this.setState({
+        created: results.data.data
+      },() => {
+      })
+    })
   }
 
   showQty = () => {
-    const size = this.state.size
-    const qty = this.state.qty
-    return <p>{`x${qty} (${size})`}</p>
+    let sizeName = "Reguler"
+    if (this.state.created.length === 0) return <p>{``}</p>
+    if (this.state.created.size === "2") sizeName = "Large"
+    if (this.state.created.size === "3") sizeName = "Xl"
+    return <p>{`x${this.state.created.qty} (${sizeName})`}</p>
   }
 
-  // getSize = (size) => {
-  //   for (const [key, value] of Object.entries(this.state.listqty)) {
-  //     if (size === key){
-  //       let number =  parseInt(value) + 1
-  //       this.setState({
-  //         key: number
-  //       }, () => {
-  //         console.log(this.state)
-  //       })
-  //     }
-  //   }
-  // }
-
-  // selectSize = () => {
-  //   for (const [key, value] of Object.entries(this.state)) {
-  //     const datas = `${key}: ${value}`
-  //     if (value === "ProductDetails_reguler-select__2ANyI" || value === "ProductDetails_large-select__8OT0Z" || value === "ProductDetails_xl-select__ebKiE" ){
-  //       this.setState({
-  //         size: key
-  //       }, () => {
-  //         console.log(this.state);
-  //       })
-  //     }
-  //   }
-  // }
 
   componentDidMount(){
     const userinfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -72,14 +93,15 @@ class productDetails extends React.Component {
     }
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
     Axios.get(url).then((res) => 
-    // console.log(res.data.data)
     this.setState({
-      id: res.data.data["0"].id,
-      name: res.data.data["0"].product_name,
-      price: res.data.data["0"].price,
-      image: res.data.data["0"].image,
-      desc: res.data.data["0"].description,
-      ctg: res.data.data["0"].category_name
+      id: res.data.data.dataProduct["0"].id,
+      name: res.data.data.dataProduct["0"].product_name,
+      price: res.data.data.dataProduct["0"].price,
+      image: res.data.data.dataProduct["0"].image,
+      desc: res.data.data.dataProduct["0"].description,
+      ctg: res.data.data.dataProduct["0"].category_name,
+      promo: res.data.data.dataPromo
+    },() => {
     })).catch((err) => console.log(err))
   }
 
@@ -106,6 +128,11 @@ class productDetails extends React.Component {
 
   costing= (price) => {
     return 'IDR ' +  parseFloat(price).toFixed().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+  }
+
+  nextCart = (target) => {
+    if (!target) return <p className={styles.addbtn}></p>
+    return <p className={styles.addbtn}>{this.state.qty}</p>
   }
 
   render() {
@@ -190,7 +217,7 @@ class productDetails extends React.Component {
                     <p className={styles.price}>{this.costing(this.state.price)}</p>
                   </div>
                   <p className={`${styles["styles.btn"]} ${styles.cart}`} onClick={() =>{
-                    this.selectSize()
+                    this.getRequset()
                   }}>Add to Cart</p>
                   <p className={`${styles["styles.btn"]} ${styles.staff}`}>Ask a Staff</p>
                 </div>

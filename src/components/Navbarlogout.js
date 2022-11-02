@@ -26,7 +26,7 @@ class NavbarMobile extends React.Component {
                 <li class={styles["nav-text"]}>Product</li>
               </ul>
             </Link>
-            <Link to={"/"} aria-label="cart">
+            <Link to={"/payment"} aria-label="cart">
               <ul>
                 <li class={styles["nav-text"]}>Your Cart</li>
               </ul>
