@@ -39,12 +39,6 @@ export class Payment extends Component {
         })
     }
 
-      validate = () => {
-        if (!this.state.userinfo){
-          return <Navigate to="/login"/>
-        }
-      }
-
     componentDidMount(){
         if (this.state.userinfo.token){
           this.getDatas()
@@ -108,7 +102,6 @@ export class Payment extends Component {
     let shipping = 0
     return (
       <>
-        {this.validate()}
         <div>
           <Navbar/>
         </div>

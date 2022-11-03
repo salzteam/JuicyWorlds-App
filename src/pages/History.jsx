@@ -63,12 +63,6 @@ export class History extends Component {
   })
   }
 
-  validate = () => {
-    if (!this.state.userinfo){
-      return <Navigate to="/login"/>
-    }
-  }
-
   componentDidMount(){
     if (this.state.userinfo.token){
       this.getData("page=1&limit=15")
@@ -77,7 +71,6 @@ export class History extends Component {
   render() {
     return (
       <>
-        {this.validate()}
         <div>
           <Test />
         </div>

@@ -9,6 +9,8 @@ import google from "../assets/img/iconGoogle.png";
 import withNavigate from "../helpers/withNavigate";
 import Axios from "axios";
 import Modal from "../components/ModalDialog"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Login extends React.Component {
   state = {
@@ -51,17 +53,29 @@ class Login extends React.Component {
     const password = this.state.pwd
     Axios.post(url, {email, password}).then((response) => {
       localStorage.setItem("userInfo", JSON.stringify(response.data.data))
-      this.showModal()
+      this.showToastMessageSucces()
       setTimeout(() => {
         this.props.navigate(`/`);
-      }, 1000)
+      }, 6000)
       // this.props.navigate(`/`);
     }).catch((err) => {
-      this.errorModal()
+      this.showToastMessageError()
+      // this.errorModal()
       // alert("INVALID EMAIL OR PASSWORD!")
       console.log(err);
     })
   }
+
+  showToastMessageError = () => {
+    toast.error('EMAIL OR PASSWORD IS WORNG !', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+};
+  showToastMessageSucces = () => {
+    toast.success('Login Success!', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+};
 
   render (){
   return (
@@ -78,7 +92,10 @@ class Login extends React.Component {
             </div>
             <p class={styles.login}>Login</p>
           </div>
-          {this.state.showModal}
+          <div>
+            <ToastContainer />
+        </div>
+          {/* {this.state.showModal} */}
           <form class={styles["login-form"]}>
             <label class={styles["login-label"]}>Email Address:</label>
             <input class={styles["login-input"]} type="text" placeholder="Enter your email" onChange={(e)=>{

@@ -38,11 +38,12 @@ class productDetails extends React.Component {
 
   validate = () => {
     if (!this.state.userinfo){
-      return <Navigate to="/login"/>
+      return this.props.navigate(`/login`);
     }
   }
 
   getRequset = () => {
+    this.validate()
     let size = ""
     let delivery = ""
     let qty = this.state.qty
@@ -79,7 +80,9 @@ class productDetails extends React.Component {
         created: results.data.data
       },() => {
       })
-    })
+    }).catch((err)=> [
+      console.log(err)
+    ])
   }
 
   showQty = () => {
@@ -147,7 +150,6 @@ class productDetails extends React.Component {
   render() {
     return (
       <>
-        {this.validate()}
           {this.state.navbar}
           <main className={styles.main}>
             <p className={styles.title} onClick={()=>{

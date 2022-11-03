@@ -9,6 +9,8 @@ import google from "../assets/img/iconGoogle.png";
 import withNavigate from "../helpers/withNavigate";
 import Axios from "axios"
 import Modal from "../components/ModalDialog"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Register extends React.Component {
   state = {
@@ -47,12 +49,26 @@ class Register extends React.Component {
     const password = this.state.pwd
     const phone = this.state.phone
     Axios.post(url, {email, password,phone}).then((response) => {
-      this.showModal()
+      this.showToastMessageSucces()
+      setTimeout(() => {
+        this.props.navigate(`/login`);
+      }, 6000)
     }).catch((err) => {
-      this.errorModal()
+      this.showToastMessageError()
       console.log(err);
     })
   }
+
+  showToastMessageError = () => {
+    toast.error('INVALID INPUT DATA !', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+};
+  showToastMessageSucces = () => {
+    toast.success('Register Success! go to page login', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+};
   render (){
   return (
     <div class={styles.container}>
@@ -68,6 +84,9 @@ class Register extends React.Component {
             </div>
             <p class={styles["sign-up"]}>Sign Up</p>
           </div>
+          <div>
+            <ToastContainer />
+        </div>
           <form class={styles["register-form"]}>
             <label class={styles["register-label"]}>Email Address:</label>
             <input class={styles["register-input"]} type="text" placeholder="Enter your email" onChange={(e)=>{
@@ -95,7 +114,7 @@ class Register extends React.Component {
                   shwPwd: prevState.shwPwd ? false : true,
                 }));
             }}></i>
-            {this.state.showModal}
+            {/* {this.state.showModal} */}
             <label class={styles["register-label"]}>Phone Number:</label>
             <input class={styles["register-input"]} type="tel" placeholder="Enter your phone number" onChange={(e)=>{
               this.setState({

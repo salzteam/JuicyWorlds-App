@@ -594,6 +594,10 @@
     padding: 0.9rem;
 }
 
+.cart:active {
+    background-color: #6a402985;
+}
+
 .staff {
     background-color: #FFBA33;
     font-size: 25px;
