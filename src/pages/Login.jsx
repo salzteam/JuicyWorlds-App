@@ -47,7 +47,6 @@ class Login extends React.Component {
     return window.localStorage.setItem("x-access-token", token)
   }
   toLogin = () => {
-    console.log(process.env.REACT_APP_BACKEND_HOST);
     const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/auth/`
     const email = this.state.email
     const password = this.state.pwd

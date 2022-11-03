@@ -432,7 +432,6 @@ body {
     border: 0;
     color: #6A4029;
     width: 19%;
-    margin-left: 40px;
     border-bottom: 3px solid#6A4029;
     font-size: 18px;
     text-align: center;
@@ -449,7 +448,12 @@ body {
 }
 
 .gap-Row {
-    gap: 7%;
+    gap: 5rem 4rem;
+
+}
+
+.cardPadding {
+    padding-left: 57px
 }
 
 .next-content {
@@ -771,6 +775,34 @@ body {
     -moz-border-radius: 25px;
     -ms-border-radius: 25px;
     -o-border-radius: 25px;
+}
+
+.loader-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    padding-bottom: 150px;
+}
+
+.spinner {
+    width: 64px;
+    height: 64px;
+    border: 8px solid;
+    border-color: #3d5af1 transparent #3d5af1 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @media screen and (max-width: 768px) {

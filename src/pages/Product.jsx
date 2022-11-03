@@ -1,4 +1,7 @@
 import React from "react";
+import Axios from "axios";
+import { connect } from "react-redux";
+
 import styles from "../styles/Product.module.css";
 import grandma from "../assets/img/image-46.png";
 import father from "../assets/img/father.png";
@@ -9,9 +12,9 @@ import Footer from '../components/Footer'
 import NavbarMobile from '../components/NavbarMobile'
 import withLocation from "../helpers/withLocation";
 import withSearchParams from "../helpers/withSearchParams";
-import Axios from "axios";
 import Test from '../components/Test'
 import NavbarLogout from "../components/Navbarlogout"
+import productsActions from "../redux/actions/product";
 
 class Product extends React.Component {
   state = {
@@ -61,7 +64,8 @@ class Product extends React.Component {
       // this.setState({
       //   product: res.data.data.data
       // })).catch((err) => console.log(err))
-      this.getData("page=1&limit=12")
+      // this.getData("page=1&limit=12")
+      this.props.dispatch(productsActions.getProductAction("page=1&limit=12"));
       const userinfo = JSON.parse(localStorage.getItem("userInfo"));
       if (userinfo) {
       this.setState({
@@ -251,76 +255,70 @@ class Product extends React.Component {
         <aside className={styles["right-content"]}>
           <ul>
             <li className={styles[this.state.categoryPromo]} onClick={() =>{
-              const urlpromo = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/promo`
-              Axios.get(urlpromo).then((res) => 
+              this.props.dispatch(productsActions.getPromoAction());
               this.setState({
                 categoryPromo: "start-content",
                 categoryFoods: "next-content",
                 categoryNonCoffee: "next-content",
                 categoryAddOn: "next-content",
                 categoryCoffee: "next-content",
-                product: res.data.data.data,
                 tglnext: styles.hide,
                 tglprev: styles.hide,
-              })).catch((err) => console.log(err))
+              })
               this.onSearchHandler("promo")}} >Favorite & Promo</li>
             <li className={styles[this.state.categoryCoffee]} onClick={() =>{
-              const urlcoffee = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?filter=coffee`
-              Axios.get(urlcoffee).then((res) => 
+              this.props.dispatch(productsActions.getCoffeAction());
               this.setState({
                 categoryPromo: "next-content",
                 categoryFoods: "next-content",
                 categoryNonCoffee: "next-content",
                 categoryAddOn: "next-content",
                 categoryCoffee: "start-content",
-                product: res.data.data.data,
                 tglnext: styles.hide,
                 tglprev: styles.hide,
-              })).catch((err) => console.log(err))
+              })
               this.onSearchHandler("coffee")
             }}>Coffee</li>
             <li className={styles[this.state.categoryNonCoffee]} onClick={() => {
-                const urlnoncoffee = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?filter=non%20coffee`
-                Axios.get(urlnoncoffee).then((res) => 
-                
-                this.setState({
-                  categoryPromo: "next-content",
-                  categoryFoods: "next-content",
-                  categoryNonCoffee: "start-content",
-                  categoryAddOn: "next-content",
-                  categoryCoffee: "next-content",
-                  product: res.data.data.data,
-                  tglnext: styles.hide,
-                  tglprev: styles.hide,
-                }
-                )).catch((err) => console.log(err))
+              this.props.dispatch(productsActions.getNoncoffeAction());
+              this.setState({
+                categoryPromo: "next-content",
+                categoryFoods: "next-content",
+                categoryNonCoffee: "start-content",
+                categoryAddOn: "next-content",
+                categoryCoffee: "next-content",
+                tglnext: styles.hide,
+                tglprev: styles.hide,
+              })
                 this.onSearchHandler("non coffee")
             }}>Non Coffee</li>
             <li className={styles[this.state.categoryFoods]} onClick={() => {
-                const urlfoods = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?filter=foods`
-                Axios.get(urlfoods).then((res) => 
-                this.setState({
-                  categoryPromo: "next-content",
-                  categoryFoods: "start-content",
-                  categoryNonCoffee: "next-content",
-                  categoryAddOn: "next-content",
-                  categoryCoffee: "next-content",
-                  product: res.data.data.data,
-                  tglnext: styles.hide,
-                  tglprev: styles.hide,
-                })).catch((err) => console.log(err))
+              this.props.dispatch(productsActions.getFoodsAction());
+              this.setState({
+                categoryPromo: "next-content",
+                categoryFoods: "start-content",
+                categoryNonCoffee: "next-content",
+                categoryAddOn: "next-content",
+                categoryCoffee: "next-content",
+                tglnext: styles.hide,
+                tglprev: styles.hide,
+              })
                 this.onSearchHandler("foods")
             }}>Foods</li>
             <li className={styles[this.state.categoryAddOn]}>Add-on</li>
           </ul>
-          <section className="container-fluid text-center">
+          <section className={`container-fluid text-center ${styles.cardPadding}`}>
             <div
-              className={`row list-content justify-content-center
-                            ${styles["gap-Row"]} ${styles["position-settings"]}`}
+              className={`row list-content ${styles["gap-Row"]} ${styles["position-settings"]}`}
             >
-              {this.state.product.map((product) => {
+              {!this.props.products.isLoading ? this.props.products.data.map((product) => {
                 return <Card title={product.product_name} price={this.costing(product.price)} discount={this.checkDiscount(product.discount)} image={product.image} id={product.id} listCategory={this.getCategory()}/>
-              })}
+              })
+            : 
+            <div className={styles["loader-container"]}>
+              <div className={styles.spinner}></div>
+            </div>
+            }
             </div>
             <div className={this.setPosition()}>
             <p className={this.state.tglprev}onClick={()=>{
@@ -349,4 +347,11 @@ class Product extends React.Component {
 
 const NewProduct = withSearchParams(withLocation(withNavigate(Product)));
 
-export default NewProduct;
+const mapStateToProps = (reduxState) => {
+  return {
+    products: reduxState.products,
+  };
+};
+
+
+export default  connect(mapStateToProps)(NewProduct);

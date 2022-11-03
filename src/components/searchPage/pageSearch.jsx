@@ -20,6 +20,14 @@ export class pageSearch extends PureComponent {
             })
         })
     }
+    componentDidUpdate(){
+      const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?${this.props.searchParams.toString()}`;
+      axios.get(url).then((res)=>{
+          this.setState({
+              product: res.data.data.data
+          })
+      })
+    }
     getCategory = () => {
         for (const [key, value] of Object.entries(this.state)) {
           const datas = `${key}: ${value}`

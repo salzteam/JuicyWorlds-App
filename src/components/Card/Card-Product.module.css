@@ -1,6 +1,5 @@
 .content-product {
     cursor: pointer;
-    margin-bottom: 10%;
     display: flex;
     flex-direction: column;
     border-radius: 30px;
@@ -11,6 +10,14 @@
     -moz-border-radius: 30px;
     -ms-border-radius: 30px;
     -o-border-radius: 30px;
+}
+
+.content-product:hover {
+    transform: translateY(-3%);
+    -webkit-transform: translateY(-3%);
+    -moz-transform: translateY(-3%);
+    -ms-transform: translateY(-3%);
+    -o-transform: translateY(-3%);
 }
 
 .image-content {

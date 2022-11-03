@@ -21,6 +21,11 @@ html {
   margin: 0 auto;
 }
 
+ol,
+ul {
+  padding-left: 0px;
+}
+
 .h1,
 .h2,
 .h3,

@@ -26,7 +26,9 @@ class NavbarMobile extends React.Component {
         this.props.setSearchParams(this.state.searchParams);
       }
     );
-    this.props.navigate(`/search?search=${search}`);
+    if (window.location.pathname !== "/search")
+      return this.props.navigate(`/search?search=${search}`);
+    // this.props.navigate(`/search?search=${search}`);
   };
   componentDidMount() {
     const userinfo = JSON.parse(localStorage.getItem("userInfo"));
