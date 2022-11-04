@@ -44,6 +44,7 @@ body {
     padding: 25px;
     display: flex;
     flex-direction: column;
+    width: 17rem;
     align-items: center;
 }
 
@@ -197,6 +198,7 @@ body {
 }
 
 .input-img-content {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -378,6 +380,7 @@ body {
 
 
 .icon {
+    cursor: pointer;
     margin-top: 7px;
     width: 20px;
     height: 22px;
@@ -628,6 +631,45 @@ input[type="file"] {
 
 .nav-pc {
     display: block;
+}
+
+.display {
+    display: none
+}
+
+
+.set-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.spinner {
+    width: 29px;
+    height: 29px;
+    border: 8px solid;
+    border-color: #3d5af1 transparent #3d5af1 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 

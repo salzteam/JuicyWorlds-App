@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import styles from "../styles/Register.module.css";
 import fb from "../assets/img/facebook.png";
 import twitter from "../assets/img/twitter.png";
@@ -11,6 +12,7 @@ import Axios from "axios"
 import Modal from "../components/ModalDialog"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {doRegisterAction} from "../redux/actions/register";
 
 class Register extends React.Component {
   state = {
@@ -43,24 +45,35 @@ class Register extends React.Component {
     if (this.state.shwPwd) return "fa-regular fa-eye"
     return "fa-regular fa-eye-slash"
   }
-  toRegister = () => {
-    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/register`
-    const email = this.state.email
-    const password = this.state.pwd
-    const phone = this.state.phone
-    Axios.post(url, {email, password,phone}).then((response) => {
+
+  componentDidUpdate(prevProps){
+    if (prevProps.Register.isError !== this.props.Register.isError){this.showToastMessageError(this.props.Register.err)}
+    if (prevProps.Register.isLoading !== this.props.Register.isLoading){this.loadingScreen()}
+    if (prevProps.Register.data !== this.props.Register.data){
       this.showToastMessageSucces()
       setTimeout(() => {
         this.props.navigate(`/login`);
       }, 6000)
-    }).catch((err) => {
-      this.showToastMessageError()
-      console.log(err);
-    })
+    }
   }
 
-  showToastMessageError = () => {
-    toast.error('INVALID INPUT DATA !', {
+  loadingScreen = () => {
+    if (this.props.Register.isLoading){
+      <div className={styles["loader-container"]}>
+          <div className={styles.spinner}></div>
+      </div>
+    }
+  }
+
+  toRegister = () => {
+    const email = this.state.email
+    const password = this.state.pwd
+    const phone = this.state.phone
+    this.props.dispatch(doRegisterAction(email,password,phone));
+  }
+
+  showToastMessageError = (msg) => {
+    toast.error(msg, {
         position: toast.POSITION.TOP_RIGHT
     });
 };
@@ -71,25 +84,25 @@ class Register extends React.Component {
 };
   render (){
   return (
-    <div class={styles.container}>
-      <aside class={styles["image-side"]}></aside>
-      <main class={styles["main-register"]}>
-        <section class={styles["section-register"]}>
-          <div class={styles.navbar}>
-            <div class={styles["brand-nav"]}>
+    <div className={styles.container}>
+      <aside className={styles["image-side"]}></aside>
+      <main className={styles["main-register"]}>
+        <section className={styles["section-register"]}>
+          <div className={styles.navbar}>
+            <div className={styles["brand-nav"]}>
               <Link to={"/"}>
-                <img class={styles["nav-image"]} src={logo} alt="" />
+                <img className={styles["nav-image"]} src={logo} alt="" />
               </Link>
               <h1>Juicy Worlds</h1>
             </div>
-            <p class={styles["sign-up"]}>Sign Up</p>
+            <p className={styles["sign-up"]}>Sign Up</p>
           </div>
           <div>
             <ToastContainer />
         </div>
-          <form class={styles["register-form"]}>
-            <label class={styles["register-label"]}>Email Address:</label>
-            <input class={styles["register-input"]} type="text" placeholder="Enter your email" onChange={(e)=>{
+          <form className={styles["register-form"]}>
+            <label className={styles["register-label"]}>Email Address:</label>
+            <input className={styles["register-input"]} type="text" placeholder="Enter your email" onChange={(e)=>{
               this.setState({
                 email: e.target.value
               },()=>{
@@ -99,8 +112,8 @@ class Register extends React.Component {
                 this.toRegister()
               }
             }}/>
-            <label class={styles["register-label"]}>Password:</label>
-            <input class={styles["register-input"]} type={this.showPassword()} placeholder="Enter your password" onChange={(e)=>{
+            <label className={styles["register-label"]}>Password:</label>
+            <input className={styles["register-input"]} type={this.showPassword()} placeholder="Enter your password" onChange={(e)=>{
               this.setState({
                 pwd: e.target.value
               })
@@ -109,14 +122,14 @@ class Register extends React.Component {
                 this.toRegister()
               }
             }}/>
-            <i class={`${this.iconShow()} ${styles.passwords}`} onClick={() => {
+            <i className={`${this.iconShow()} ${styles.passwords}`} onClick={() => {
                 this.setState((prevState) => ({
                   shwPwd: prevState.shwPwd ? false : true,
                 }));
             }}></i>
             {/* {this.state.showModal} */}
-            <label class={styles["register-label"]}>Phone Number:</label>
-            <input class={styles["register-input"]} type="tel" placeholder="Enter your phone number" onChange={(e)=>{
+            <label className={styles["register-label"]}>Phone Number:</label>
+            <input className={styles["register-input"]} type="tel" placeholder="Enter your phone number (08)" onChange={(e)=>{
               this.setState({
                 phone: e.target.value
               })
@@ -125,75 +138,77 @@ class Register extends React.Component {
                 this.toRegister()
               }
             }}/>
-            <div class={`${styles["btn"]} ${styles["signup-btn"]}`} onClick={(e)=> {
+            <div className={`${styles["btn"]} ${styles["signup-btn"]}`} onClick={(e)=> {
               this.toRegister()
             }}>
-              <p>Sign Up</p>
+              {this.props.Register.isLoading ?       <div className={styles["loader-container"]}>
+          <div className={styles.spinner}></div>
+      </div> : <p>Sign Up</p>}
             </div>
-            <div class={`${styles["btn"]} ${styles["google-btn"]}`}>
+            <div className={`${styles["btn"]} ${styles["google-btn"]}`}>
               <img src={google} alt="" />
               <p>Sign up with Google</p>
             </div>
           </form>
           {}
-          <div class={styles.divider}>
-            <div class={styles["divider-line"]}></div>
-            <p class={styles.account}> Already have an account? </p>
-            <div class={styles["divider-line"]}></div>
+          <div className={styles.divider}>
+            <div className={styles["divider-line"]}></div>
+            <p className={styles.account}> Already have an account? </p>
+            <div className={styles["divider-line"]}></div>
           </div>
-          <Link class={styles["login-btn"]} to={"/login"}>
+          <Link className={styles["login-btn"]} to={"/login"}>
             Login Here
           </Link>
         </section>
-        <footer class={styles["footer-login"]}>
-          <aside class={styles["footer-left"]}>
-            <div class={styles["brand-footer"]}>
-              <img class={styles["nav-image"]} src={logo} alt="" />
-              <p class={styles["title-footer"]}>Juicy Worlds</p>
+        <footer className={styles["footer-login"]}>
+          <aside className={styles["footer-left"]}>
+            <div className={styles["brand-footer"]}>
+              <img className={styles["nav-image"]} src={logo} alt="" />
+              <p className={styles["title-footer"]}>Juicy Worlds</p>
             </div>
-            <div class={styles["about-footer"]}>
+            <div className={styles["about-footer"]}>
               <p>
                 Juicy Worlds is a store that sells some good meals, and
                 especially coffee. We provide high quality beans
               </p>
             </div>
-            <div class={styles["footer-logo"]}>
-              <div class={styles["back-logo"]}>
-                <img class={styles["logo-img"]} src={fb} alt="" />
+            <div className={styles["footer-logo"]}>
+              <div className={styles["back-logo"]}>
+                <img className={styles["logo-img"]} src={fb} alt="" />
               </div>
-              <div class={styles["back-logo"]}>
+              <div className={styles["back-logo"]}>
                 {" "}
-                <img class={styles["logo-img"]} src={twitter} alt="" />
+                <img className={styles["logo-img"]} src={twitter} alt="" />
               </div>
-              <div class={styles["back-logo"]}>
-                <img class={styles["logo-img"]} src={ig} alt="" />
+              <div className={styles["back-logo"]}>
+                <img className={styles["logo-img"]} src={ig} alt="" />
               </div>
             </div>
-            <p class={styles.copyright}>&copy2022JuicyWorlds</p>
+            <p className={styles.copyright}>&copy2022JuicyWorlds</p>
           </aside>
-          <aside class={styles["footer-right"]}>
-            <p class={styles["about-title"]}>Product</p>
-            <div class={styles.product}>
-              <div class={styles["about-left"]}>
-                <p class={styles["about-content"]}>Download</p>
-                <p class={styles["about-content"]}>Locations</p>
-                <p class={styles["about-content"]}>Blog</p>
+          <aside className={styles["footer-right"]}>
+            <p className={styles["about-title"]}>Product</p>
+            <div className={styles.product}>
+              <div className={styles["about-left"]}>
+                <p className={styles["about-content"]}>Download</p>
+                <p className={styles["about-content"]}>Locations</p>
+                <p className={styles["about-content"]}>Blog</p>
               </div>
-              <div class={styles["about-right"]}>
-                <p class={styles["about-content"]}>Pricing</p>
-                <p class={styles["about-content"]}>Countries</p>
+              <div className={styles["about-right"]}>
+                <p className={styles["about-content"]}>Pricing</p>
+                <p className={styles["about-content"]}>Countries</p>
               </div>
             </div>
-            <p class={styles["about-title"]}>Engage</p>
-            <div class={styles.engage}>
-              <div class={styles["about-left"]}>
-                <p class={styles["about-content"]}>Coffe Shop?</p>
-                <p class={styles["about-content"]}>FAQ</p>
-                <p class={styles["about-content"]}>Terms of Service</p>
+            <p className={styles["about-title"]}>Engage</p>
+            <div className={styles.engage}>
+              <div className={styles["about-left"]}>
+                <p className={styles["about-content"]}>Coffe Shop?</p>
+                <p className={styles["about-content"]}>FAQ</p>
+                <p className={styles["about-content"]}>Terms of Service</p>
               </div>
-              <div class={styles["about-right"]}>
-                <p class={styles["about-content"]}>About Us</p>
-                <p class={styles["about-content"]}>Privacy Policy</p>
+              <div className={styles["about-right"]}>
+                <p className={styles["about-content"]}>About Us</p>
+                <p className={styles["about-content"]}>Privacy Policy</p>
               </div>
             </div>
           </aside>
@@ -204,4 +219,11 @@ class Register extends React.Component {
 }}
 const NewRegister = withNavigate(Register);
 
-export default NewRegister;
+const mapStateToProps = (reduxState) => {
+  return {
+    Register: reduxState.regist,
+  };
+};
+
+
+export default connect(mapStateToProps)(NewRegister);

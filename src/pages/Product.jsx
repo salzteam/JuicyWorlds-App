@@ -21,8 +21,6 @@ class Product extends React.Component {
     search: "",
     product: [],
     navbar: <NavbarLogout/>,
-    next: "",
-    prev: "",
     tglnext: styles.hide,
     tglprev: styles.hide,
     categoryFoods: "next-content",
@@ -66,6 +64,16 @@ class Product extends React.Component {
       // })).catch((err) => console.log(err))
       // this.getData("page=1&limit=12")
       this.props.dispatch(productsActions.getProductAction("page=1&limit=12"));
+      if (this.props.products.next){
+        this.setState({
+          tglnext: styles.next,
+        })
+      }
+      if (this.props.products.prev){
+        this.setState({
+          tglprev: styles.prev,
+        })
+      }
       const userinfo = JSON.parse(localStorage.getItem("userInfo"));
       if (userinfo) {
       this.setState({
@@ -85,34 +93,27 @@ class Product extends React.Component {
     );
   };
   getData = (limit) => {
-    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?transactions=popular&${limit}`
-    Axios.get(url).then((res) => {
-      this.setState({
-        product: res.data.data.data,
-        next: res.data.data.next,
-        prev: res.data.data.prev,
-      })
-      if(res.data.data.next !== null){
+    this.props.dispatch(productsActions.getProductAction(limit));
+      if(this.props.products.next){
         this.setState({
           tglnext: styles.next
         })
       }
-      if(res.data.data.prev !== null){
+      if(this.props.products.prev){
         this.setState({
           tglprev: styles.prev
         })
       }
-      if(res.data.data.next == null){
+      if(!this.props.products.next){
         this.setState({
           tglnext: styles.hide
         })
       }
-      if(res.data.data.prev == null){
+      if(!this.props.products.prev){
         this.setState({
           tglprev: styles.hide
         })
       }
-  })
   }
 
   fetchDatas = (text) => {
@@ -136,54 +137,6 @@ class Product extends React.Component {
         <div className={styles["navbar-pc"]}>
           {this.state.navbar}
         </div>
-      {/* <header className={`${styles["nav-pc"]} ${styles["product-header"]}`}>
-        <div className={styles.navBrand}>
-          <Link to={"/"}>
-            <img src={logo} alt="" />
-          </Link>
-          <p>Juicy Worlds</p>
-        </div>
-        <div className={styles.navList}>
-          <ul>
-            <Link to={"/"} className={styles["new-Navlist"]}>
-              <li className={styles["nav-text"]}>Home</li>
-            </Link>
-            <Link to={"/product"} className={styles["new-Navlist"]}>
-              <li className={styles.product}>Product</li>
-            </Link>
-            <Link to={"/"} className={styles["new-Navlist"]}>
-              <li className={styles["nav-text"]}>Your Cart</li>
-            </Link>
-            <Link to={"/history"} className={styles["new-Navlist"]}>
-              <li className={styles["nav-text"]}>History</li>
-            </Link>
-          </ul>
-        </div>
-        <div className={styles["Nav-Search"]}>
-          <i
-            className={`fa-solid fa-magnifying-glass ${styles["new-Navsearch"]}`}
-          ></i>
-          <input className={styles.search} id="searchProduct"type="text" placeholder="Search" onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              this.onSearchHandler(e.target.value);
-            }
-          }}/>
-        </div>
-        <div className={styles.navSide}>
-          <Link to={"/product"}>
-            <img className={styles["nav-chat"]} src={chat} alt="" />
-          </Link>
-          <Link to={"/profile"}>
-            <img className={styles["nav-profile"]} src={pp} alt="" />
-          </Link>
-          <div className={styles.content}>
-            <p>1</p>
-          </div>
-        </div>
-      </header>
-      <div className={styles["mobile-header"]}>
-        <NavbarMobile/>
-      </div> */}
       <main className={styles["product-main"]}>
         <aside className={styles["left-content"]}>
           <h2 className={styles["title-left-content"]}>Promo Today</h2>
@@ -262,8 +215,6 @@ class Product extends React.Component {
                 categoryNonCoffee: "next-content",
                 categoryAddOn: "next-content",
                 categoryCoffee: "next-content",
-                tglnext: styles.hide,
-                tglprev: styles.hide,
               })
               this.onSearchHandler("promo")}} >Favorite & Promo</li>
             <li className={styles[this.state.categoryCoffee]} onClick={() =>{
@@ -274,8 +225,6 @@ class Product extends React.Component {
                 categoryNonCoffee: "next-content",
                 categoryAddOn: "next-content",
                 categoryCoffee: "start-content",
-                tglnext: styles.hide,
-                tglprev: styles.hide,
               })
               this.onSearchHandler("coffee")
             }}>Coffee</li>
@@ -287,8 +236,6 @@ class Product extends React.Component {
                 categoryNonCoffee: "start-content",
                 categoryAddOn: "next-content",
                 categoryCoffee: "next-content",
-                tglnext: styles.hide,
-                tglprev: styles.hide,
               })
                 this.onSearchHandler("non coffee")
             }}>Non Coffee</li>
@@ -300,8 +247,6 @@ class Product extends React.Component {
                 categoryNonCoffee: "next-content",
                 categoryAddOn: "next-content",
                 categoryCoffee: "next-content",
-                tglnext: styles.hide,
-                tglprev: styles.hide,
               })
                 this.onSearchHandler("foods")
             }}>Foods</li>
@@ -312,6 +257,7 @@ class Product extends React.Component {
               className={`row list-content ${styles["gap-Row"]} ${styles["position-settings"]}`}
             >
               {!this.props.products.isLoading ? this.props.products.data.map((product) => {
+                console.log(product)
                 return <Card title={product.product_name} price={this.costing(product.price)} discount={this.checkDiscount(product.discount)} image={product.image} id={product.id} listCategory={this.getCategory()}/>
               })
             : 
@@ -322,12 +268,10 @@ class Product extends React.Component {
             </div>
             <div className={this.setPosition()}>
             <p className={this.state.tglprev}onClick={()=>{
-                console.log(this.state.prev)
-                this.getData(this.state.prev)
+                this.getData(this.props.products.prev)
               }}>PREV</p>
               <p className={this.state.tglnext} onClick={()=>{
-                console.log(this.state.next)
-                this.getData(this.state.next)
+                this.getData(this.props.products.prev)
               }}>NEXT</p>
             </div>
           </section>

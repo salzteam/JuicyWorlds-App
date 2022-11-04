@@ -1,44 +1,43 @@
 import actionStrings from "../actions/actionStrings";
 
 const initialState = {
-  data: [],
-  next: null,
-  prev: null,
+  dataProfile: [],
+  dataUser: [],
   isLoading: false,
   isError: false,
   err: null,
 };
 
-const productsReducer = (prevState = initialState, action) => {
+const profileReducer = (prevState = initialState, action) => {
   switch (action.type) {
-    case actionStrings.getProducts + actionStrings.pending:
+    case actionStrings.getProfile + actionStrings.pending:
       return {
         ...prevState,
         isLoading: true,
         isError: false,
       };
-    case actionStrings.getProducts + actionStrings.rejected:
+    case actionStrings.getProfile + actionStrings.rejected:
       const errorResponse = action.payload;
-      const errorMessage = errorResponse.data.msg;
+      const errorMessage = errorResponse.data;
       return {
         ...prevState,
         isError: true,
         isLoading: false,
         err: errorMessage,
       };
-    case actionStrings.getProducts + actionStrings.fulfilled:
+    case actionStrings.getProfile + actionStrings.fulfilled:
       const response = action.payload;
-      const result = response.data.data.data;
+      const resultProfile = response.data.data.profileData;
+      const resultUser = response.data.data.profileUser;
       return {
         ...prevState,
         isLoading: false,
-        data: result,
-        next: response.data.data.next,
-        prev: response.data.data.prev,
+        dataUser: resultProfile,
+        dataProfile: resultUser,
       };
     default:
       return prevState;
   }
 };
 
-export default productsReducer;
+export default profileReducer;

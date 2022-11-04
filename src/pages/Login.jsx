@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import styles from "../styles/Login.module.css";
 import fb from "../assets/img/facebook.png";
 import twitter from "../assets/img/twitter.png";
@@ -7,10 +8,10 @@ import ig from "../assets/img/instagram.png";
 import logo from "../assets/img/logo.WebP";
 import google from "../assets/img/iconGoogle.png";
 import withNavigate from "../helpers/withNavigate";
-import Axios from "axios";
 import Modal from "../components/ModalDialog"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {doLoginAction} from "../redux/actions/auth";
 
 class Login extends React.Component {
   state = {
@@ -47,26 +48,35 @@ class Login extends React.Component {
     return window.localStorage.setItem("x-access-token", token)
   }
   toLogin = () => {
-    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/auth/`
     const email = this.state.email
     const password = this.state.pwd
-    Axios.post(url, {email, password}).then((response) => {
-      localStorage.setItem("userInfo", JSON.stringify(response.data.data))
-      this.showToastMessageSucces()
-      setTimeout(() => {
-        this.props.navigate(`/`);
-      }, 6000)
-      // this.props.navigate(`/`);
-    }).catch((err) => {
-      this.showToastMessageError()
-      // this.errorModal()
-      // alert("INVALID EMAIL OR PASSWORD!")
-      console.log(err);
-    })
+    this.props.dispatch(doLoginAction(email,password));
+    // Axios.post(url, {email, password}).then((response) => {
+    //   localStorage.setItem("userInfo", JSON.stringify(response.data.data))
+    //   this.showToastMessageSucces()
+
+    //   // this.props.navigate(`/`);
+    // }).catch((err) => {
+    //   this.showToastMessageError()
+    //   // this.errorModal()
+    //   // alert("INVALID EMAIL OR PASSWORD!")
+    //   console.log(err);
+    // })
   }
 
-  showToastMessageError = () => {
-    toast.error('EMAIL OR PASSWORD IS WORNG !', {
+  componentDidUpdate(prevProps) {
+    if (prevProps.Login.isError !== this.props.Login.isError){this.errorNotif()}
+    if (prevProps.Login.isLoading !== this.props.Login.isLoading){this.loadingScreen()}
+    if (prevProps.Login.token !== this.props.Login.token){
+        this.showToastMessageSucces()
+        setTimeout(() => {
+          this.props.navigate(`/`);
+        }, 6000)
+    }
+    }
+
+  showToastMessageError = (text) => {
+    toast.error(text, {
         position: toast.POSITION.TOP_RIGHT
     });
 };
@@ -76,28 +86,44 @@ class Login extends React.Component {
     });
 };
 
+  loadingScreen = () => {
+    if (this.props.Login.isLoading){
+      <div className={styles["loader-container"]}>
+          <div className={styles.spinner}></div>
+      </div>
+    }
+  }
+  errorNotif = () => {
+    // console.log(this.props.Login.isError, this.props.Login.err);
+    if (this.props.Login.isError) return this.showToastMessageError(this.props.Login.err)
+  }
+  LoginNotif = () => {
+    if (!this.props.Login.isError && !this.props.Login.isLoading){
+      this.showToastMessageSucces()
+      localStorage.setItem("userInfo", JSON.stringify(this.props.Login.data))
+  }}
   render (){
   return (
-    <div class={styles.container}>
-      <div class={styles["image-side"]}></div>
-      <main class={styles["main-login"]}>
-        <section class={styles["login-section"]}>
-          <div class={styles.navbar}>
-            <div class={styles["brand-nav"]}>
+    <div className={styles.container}>
+      <div className={styles["image-side"]}></div>
+      <main className={styles["main-login"]}>
+        <section className={styles["login-section"]}>
+          <div className={styles.navbar}>
+            <div className={styles["brand-nav"]}>
               <Link to={"/"}>
-                <img class={styles["nav-image"]} src={logo} alt="" />
+                <img className={styles["nav-image"]} src={logo} alt="" />
               </Link>
               <h1>Juicy Worlds</h1>
             </div>
-            <p class={styles.login}>Login</p>
+            <p className={styles.login}>Login</p>
           </div>
           <div>
             <ToastContainer />
         </div>
           {/* {this.state.showModal} */}
-          <form class={styles["login-form"]}>
-            <label class={styles["login-label"]}>Email Address:</label>
-            <input class={styles["login-input"]} type="text" placeholder="Enter your email" onChange={(e)=>{
+          <form className={styles["login-form"]}>
+            <label className={styles["login-label"]}>Email Address:</label>
+            <input className={styles["login-input"]} type="text" placeholder="Enter your email" onChange={(e)=>{
               this.setState({
                 email: e.target.value
               },()=>{
@@ -107,8 +133,8 @@ class Login extends React.Component {
                 this.toLogin()
               }
             }}/>
-            <label class={styles["login-label"]}>Password:</label>
-            <input  class={styles["login-input"]}  type={this.showPassword()} placeholder="Enter your password" onChange={(e)=>{
+            <label className={styles["login-label"]}>Password:</label>
+            <input  className={styles["login-input"]}  type={this.showPassword()} placeholder="Enter your password" onChange={(e)=>{
               this.setState({
                 pwd: e.target.value
               })
@@ -117,85 +143,87 @@ class Login extends React.Component {
                 this.toLogin()
               }
             }}/>
-            <i class={`${this.iconShow()} ${styles.passwords}`} onClick={() => {
+            <i className={`${this.iconShow()} ${styles.passwords}`} onClick={() => {
                 this.setState((prevState) => ({
                   shwPwd: prevState.shwPwd ? false : true,
                 }));
             }}></i>
-            <Link to={"/forgot-password"} class={styles.forgot}>
+            <Link to={"/forgot-password"} className={styles.forgot}>
               Forgot password?
             </Link>
-            <div class={`${styles["btn"]} ${styles["login-btn"]}`} onClick={(e)=> {
+            <div className={`${styles["btn"]} ${styles["login-btn"]}`} onClick={(e)=> {
               this.toLogin()
             }}>
-              <p>Login</p>
+              {this.props.Login.isLoading ?       <div className={styles["loader-container"]}>
+          <div className={styles.spinner}></div>
+      </div> : <p>Login</p>}
             </div>
-            <div class={`${styles["btn"]} ${styles["google-btn"]}`}>
+            <div className={`${styles["btn"]} ${styles["google-btn"]}`}>
               <img src={google} alt="" />
               <p>Login with Google</p>
             </div>
           </form>
-          <div class={styles.divider}>
-            <div class={styles["divider-line"]}></div>
-            <p class={styles.account}> Don't have an account? </p>
-            <div class={styles["divider-line"]}></div>
+          <div className={styles.divider}>
+            <div className={styles["divider-line"]}></div>
+            <p className={styles.account}> Don't have an account? </p>
+            <div className={styles["divider-line"]}></div>
           </div>
           <Link
-            class={`${styles["btn"]} ${styles["signup-btn"]}`}
+            className={`${styles["btn"]} ${styles["signup-btn"]}`}
             to={"/register"}
           >
             Sign up here
           </Link>
         </section>
-        <footer class={styles["footer-login"]}>
-          <div class={styles["footer-left"]}>
-            <div class={styles["brand-footer"]}>
-              <img class={styles["nav-image"]} src={logo} alt="" />
-              <p class={styles["title-footer"]}>Juicy Worlds</p>
+        <footer className={styles["footer-login"]}>
+          <div className={styles["footer-left"]}>
+            <div className={styles["brand-footer"]}>
+              <img className={styles["nav-image"]} src={logo} alt="" />
+              <p className={styles["title-footer"]}>Juicy Worlds</p>
             </div>
-            <div class={styles["about-footer"]}>
+            <div className={styles["about-footer"]}>
               <p>
                 Juicy Worlds is a store that sells some good meals, and
                 especially coffee. We provide high quality beans
               </p>
             </div>
-            <div class={styles["footer-logo"]}>
-              <div class={styles["back-logo"]}>
-                <img class={styles["logo-img"]} src={fb} alt="" />
+            <div className={styles["footer-logo"]}>
+              <div className={styles["back-logo"]}>
+                <img className={styles["logo-img"]} src={fb} alt="" />
               </div>
-              <div class={styles["back-logo"]}>
+              <div className={styles["back-logo"]}>
                 {" "}
-                <img class={styles["logo-img"]} src={twitter} alt="" />
+                <img className={styles["logo-img"]} src={twitter} alt="" />
               </div>
-              <div class={styles["back-logo"]}>
-                <img class={styles["logo-img"]} src={ig} alt="" />
+              <div className={styles["back-logo"]}>
+                <img className={styles["logo-img"]} src={ig} alt="" />
               </div>
             </div>
-            <p class={styles.copyright}>&copy2022JuicyWorlds</p>
+            <p className={styles.copyright}>&copy2022JuicyWorlds</p>
           </div>
-          <div class={styles["footer-right"]}>
-            <p class={styles["about-title"]}>Product</p>
-            <div class={styles.product}>
-              <div class={styles["about-left"]}>
-                <p class={styles["about-content"]}>Download</p>
-                <p class={styles["about-content"]}>Locations</p>
-                <p class={styles["about-content"]}>Blog</p>
+          <div className={styles["footer-right"]}>
+            <p className={styles["about-title"]}>Product</p>
+            <div className={styles.product}>
+              <div className={styles["about-left"]}>
+                <p className={styles["about-content"]}>Download</p>
+                <p className={styles["about-content"]}>Locations</p>
+                <p className={styles["about-content"]}>Blog</p>
               </div>
-              <div class={styles["about-right"]}>
-                <p class={styles["about-content"]}>Pricing</p>
-                <p class={styles["about-content"]}>Countries</p>
+              <div className={styles["about-right"]}>
+                <p className={styles["about-content"]}>Pricing</p>
+                <p className={styles["about-content"]}>Countries</p>
               </div>
             </div>
-            <p class={styles["about-title"]}>Engage</p>
-            <div class={styles.engage}>
-              <div class={styles["about-left"]}>
-                <p class={styles["about-content"]}>Coffe Shop?</p>
-                <p class={styles["about-content"]}>FAQ</p>
-                <p class={styles["about-content"]}>Terms of Service</p>
+            <p className={styles["about-title"]}>Engage</p>
+            <div className={styles.engage}>
+              <div className={styles["about-left"]}>
+                <p className={styles["about-content"]}>Coffe Shop?</p>
+                <p className={styles["about-content"]}>FAQ</p>
+                <p className={styles["about-content"]}>Terms of Service</p>
               </div>
-              <div class={styles["about-right"]}>
-                <p class={styles["about-content"]}>About Us</p>
-                <p class={styles["about-content"]}>Privacy Policy</p>
+              <div className={styles["about-right"]}>
+                <p className={styles["about-content"]}>About Us</p>
+                <p className={styles["about-content"]}>Privacy Policy</p>
               </div>
             </div>
           </div>
@@ -207,4 +235,10 @@ class Login extends React.Component {
 
 const NewLogin = withNavigate(Login);
 
-export default NewLogin;
+const mapStateToProps = (reduxState) => {
+  return {
+    Login: reduxState.auth,
+  };
+};
+
+export default connect(mapStateToProps)(NewLogin);

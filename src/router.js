@@ -25,7 +25,6 @@ const router = createBrowserRouter([
         <Profile />
       </PrivateRoute>
     ),
-    errorElement: <Error />,
   },
   { path: "/product", element: <Product />, errorElement: <Error /> },
   { path: "/forgot-password", element: <Forgot />, errorElement: <Error /> },
