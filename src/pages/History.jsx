@@ -13,6 +13,7 @@ export class History extends Component {
     product: [],
     next: "",
     prev: "",
+    text: "Select All",
     isChecked: false,
     tglnext: styles.hide,
     tglprev: styles.hide,
@@ -63,9 +64,32 @@ export class History extends Component {
   })
   }
 
+  deleteData = () => {
+    this.state.product.map((product) => {
+      const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/delete/${product.transaction_id}`
+      Axios.delete(url,{headers: {
+        "x-access-token": this.state.userinfo.token
+      }}).then(()=>{
+        this.setState({
+          product: [],
+          tglnext: styles.hide,
+          tglprev: styles.hide
+        })
+      })
+    })
+  }
+
   componentDidMount(){
     if (this.state.userinfo.token){
       this.getData("page=1&limit=15")
+    }
+  }
+  setText = () => {
+    console.log(this.state.isChecked);
+    if (this.state.isChecked) {
+      return this.setState({
+        text: "Delete"
+      })
     }
   }
   render() {
@@ -75,7 +99,26 @@ export class History extends Component {
           <Test />
         </div>
          <main className={styles.main}>
-            <section className={styles.container}>
+        {!this.state.isChecked ? <p></p> :
+          <div className={styles.modal} data-keyword={true} backdrop={true}>
+              <p className={styles.title}>Are you sure want to delete the selected items?</p>
+              <div className={styles.btn}>
+                <p className={styles["btn-cancel"]} onClick={(e)=>{
+                  this.setState({
+                    text: "Select All",
+                    isChecked: false
+                  })
+                }}>Cancel</p>
+                <p className={styles["btn-delete"]} onClick={() => {
+                  this.deleteData()
+                  this.setState({
+                    text: "Select All",
+                    isChecked: false
+                  })
+                }}>Delete</p>
+              </div>
+            </div>}
+            <section className={`${styles.container} ${this.state.isChecked && styles.on}`}>
                 <div className={styles["title-settings"]}>
                     <p className={styles["title-history"]}>Let's see what you have bought!</p>
                     <p className={styles["second-history"]}>Select item to delete</p>
@@ -86,8 +129,10 @@ export class History extends Component {
                       if (this.state.isChecked == true) value = false
                       this.setState({
                         isChecked: value
+                      },()=> {
+                        this.setText()
                       })
-                    }}>Select All</p>
+                    }}>{this.state.text}</p>
                 </div>
                 <div className={styles["container-card"]}>
                 <div className="row">

@@ -39,8 +39,12 @@ class NavbarMobile extends React.Component {
           "x-access-token": userinfo.token,
         },
       }).then((res) => {
+        let dp =
+          "https://res.cloudinary.com/dwo9znbl6/image/upload/v1667575327/JuicyWorlds/default-profile-pic_tjjaqo.webp";
+        if (res.data.data.profileUser[0].displaypicture)
+          dp = res.data.data.profileUser[0].displaypicture;
         this.setState({
-          display: res.data.data.profileUser[0].displaypicture,
+          display: dp,
         });
       });
     }

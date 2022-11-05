@@ -646,6 +646,9 @@ input[type="file"] {
 }
 
 .loader-container {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -654,10 +657,10 @@ input[type="file"] {
 }
 
 .spinner {
-    width: 29px;
-    height: 29px;
+    width: 55px;
+    height: 55px;
     border: 8px solid;
-    border-color: #3d5af1 transparent #3d5af1 transparent;
+    border-color: #6a4029 transparent #ffba33 transparent;
     border-radius: 50%;
     animation: spin-anim 1.2s linear infinite;
 }
@@ -672,6 +675,144 @@ input[type="file"] {
     }
 }
 
+.errorMsg {
+    color: red;
+    font-size: Poppins;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.errorMsgDp {
+    color: red;
+    font-size: Poppins;
+    font-weight: 500;
+    font-size: 13px;
+    width: 12rem;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.modalPwd {
+    background-color: #683418;
+    position: fixed;
+    border-radius: 10px;
+    width: 73%;
+    height: 95vh;
+    z-index: 1;
+    left: 199px;
+    top: 19px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.iconPwd {
+    font-size: 35px;
+    display: flex;
+    color: #f7a400;
+    z-index: 1;
+    justify-content: flex-end;
+    padding-right: 20px;
+    padding-top: 10px;
+    cursor: pointer
+}
+
+.modal-middle {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 2rem
+}
+
+.modal-middle label {
+    color: white;
+    font-family: Poppins;
+    font-weight: 900;
+}
+
+.modal-bottom {
+    display: flex;
+    background-color: #f7a400;
+    width: 25%;
+    height: 43px;
+    font-family: Poppins;
+    margin-top: 30px;
+    font-weight: 700;
+    color: black;
+    border-radius: 13px;
+    left: 38%;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.modal-bottom:active {
+    background-color: #f7a5009f;
+}
+
+.btnPwd {
+    text-align: center;
+    display: flex;
+    justify-content: center
+}
+
+.modal-middle input {
+    outline: none;
+    width: 99%;
+    padding-left: 15px;
+    height: 50px;
+    border-radius: 10px;
+    font-family: Poppins;
+    font-weight: 400;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.show-modal {
+    opacity: 0.3;
+    background-color: grey;
+}
+
+.passwords {
+    position: absolute;
+    left: 56rem;
+    top: 9.2rem;
+    font-size: 20px;
+}
+
+.passwords2 {
+    position: absolute;
+    left: 56rem;
+    top: 17.9rem;
+    font-size: 20px;
+}
+
+.passwords3 {
+    position: absolute;
+    left: 56rem;
+    top: 26.5rem;
+    font-size: 20px;
+}
+
+
+.sukses {
+    color: lawngreen;
+    font-family: Poppins;
+    font-weight: 900;
+    text-align: center;
+}
+
+.error {
+    color: red;
+    font-family: Poppins;
+    font-weight: 900;
+    text-align: center;
+}
 
 @media screen and (max-width: 768px) {
     .nav-ipad {

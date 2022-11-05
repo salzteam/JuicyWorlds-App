@@ -346,6 +346,30 @@ input[name="via"] {
     -o-border-radius: 20px;
 }
 
+.btn-non-select {
+    margin-top: 38px;
+    width: 100%;
+    background-color: #6A4029;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: Poppins;
+    text-align: center;
+    box-shadow: 0px 10px 20px 0px #89553766;
+    padding: 20px;
+    user-select: none;
+    cursor: not-allowed;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.btn:active {
+    background-color: #442a1c;
+}
+
 .navbar-mobile {
     display: none;
 }
@@ -353,6 +377,58 @@ input[name="via"] {
 .navbar-pc {
     display: block;
 }
+
+.notfound {
+    display: flex;
+    justify-content: center;
+}
+
+.ntfound {
+    font-size: 26px;
+    font-weight: 600;
+    font-family: Poppins;
+    color: black;
+    width: 45%;
+    text-align: center;
+}
+
+.crds {
+    padding-top: 25px;
+    width: 100%;
+}
+
+.loader-container {
+    left: 37%;
+    position: relative;
+    top: 14%;
+    width: 21%;
+    align-items: center;
+    height: 124%;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+
+.spinner {
+    width: 64px;
+    height: 64px;
+    border: 8px solid;
+    z-index: 1;
+    border-color: #6a4029 transparent #ffba33 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 
 @media screen and (max-width: 768px) {
     .navbar-pc {

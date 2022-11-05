@@ -17,6 +17,8 @@ import { Navigate } from "react-router-dom";
 export class Payment extends Component {
     state = {
         address: "",
+        isLoading: true,
+        LoadingPayment: false,
         product: [],
         userdata: [],
         user: [],
@@ -33,6 +35,7 @@ export class Payment extends Component {
             {headers: {"x-access-token": this.state.userinfo.token}}).then((results) => {
             }).then((result) => {
                 this.setState({
+                    isLoading: false,
                     product: []
                 })
             })
@@ -62,9 +65,8 @@ export class Payment extends Component {
               }).then((results) => {
                 this.setState({
                     userdata: results.data.data.profileUser[0],
-                    user: results.data.data.profileData[0]
-                }, () => {
-                    console.log(this.state);
+                    user: results.data.data.profileData[0],
+                    isLoading: false
                 })
               });
             })
@@ -138,8 +140,13 @@ export class Payment extends Component {
             <section className={styles["container-side"]}>
                 <aside className={styles["side-left"]}>
                     <p className={styles["title-order"]}>Order Summary</p>
-                    <div className={styles["card-settings"]}>
-                        {this.state.product.map((product) => {
+                    <div className={!this.state.isLoading && this.state.product < 1 ? styles.crds :styles["card-settings"]}>
+                    {!this.state.isLoading && this.state.product < 1 && <div className={styles["notfound"]}><p className={styles.ntfound}>Woops! Nothing Transaction Pending Here</p></div>}
+                    {this.state.isLoading ? 
+                    (<div className={styles["loader-container"]}>
+                        <div className={styles.spinner}></div>
+                    </div>) :
+                        this.state.product.map((product) => {
                             subTotal += product.subtotal
                             tax += parseInt(product.tax)
                             shipping += parseInt(product.shipping)
@@ -218,7 +225,11 @@ export class Payment extends Component {
                             </div>
                         </div>
                     </div>
-                    <p className={styles.btn} onClick={() => {
+                    <p className={this.state.product.length > 0 ? styles.btn : styles["btn-non-select"]} onClick={() => {
+                        this.state.product.length > 0 &&
+                        this.setState({
+                            isLoading: true,
+                        }) &&
                         this.getRequset()
                     }}>Confirm and Pay</p>
                 </aside>

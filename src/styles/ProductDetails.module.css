@@ -659,6 +659,49 @@ input[type="time"]:focus:before {
     user-select: none !important;
 }
 
+.dark {
+    opacity: 1;
+}
+
+.postion-pending {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-container {
+    background-color: black;
+    opacity: 0.8;
+    position: fixed;
+    top: 27%;
+    width: 21%;
+    align-items: center;
+    height: 34%;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+
+.spinner {
+    width: 64px;
+    height: 64px;
+    border: 8px solid;
+    z-index: 1;
+    border-color: #6a4029 transparent #ffba33 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 @media screen and (max-width: 768px) {
     .navbar-pc {
         display: none;

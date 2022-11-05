@@ -1,7 +1,6 @@
 import React from "react";
 import Axios from "axios";
 import { connect } from "react-redux";
-
 import styles from "../styles/Product.module.css";
 import grandma from "../assets/img/image-46.png";
 import father from "../assets/img/father.png";
@@ -20,23 +19,14 @@ class Product extends React.Component {
   state = {
     search: "",
     product: [],
+    dropdown: false,
     navbar: <NavbarLogout/>,
-    tglnext: styles.hide,
-    tglprev: styles.hide,
     categoryFoods: "next-content",
     categoryCoffee: "next-content",
     categoryNonCoffee: "next-content",
     categoryPromo: "start-content",
     categoryAddOn: "next-content",
-    searchParams: {
-      filter: ""
-    }
-  }
-
-  setPosition = () => {
-    if(this.state.tglnext == styles.hide) return styles["bungkusan-left"]
-    if(this.state.tglprev == styles.hide) return styles["bungkusan-right"]
-    return styles.bungkusan
+    searchParams: {}
   }
 
   getCategory = () => {
@@ -64,16 +54,7 @@ class Product extends React.Component {
       // })).catch((err) => console.log(err))
       // this.getData("page=1&limit=12")
       this.props.dispatch(productsActions.getProductAction("page=1&limit=12"));
-      if (this.props.products.next){
-        this.setState({
-          tglnext: styles.next,
-        })
-      }
-      if (this.props.products.prev){
-        this.setState({
-          tglprev: styles.prev,
-        })
-      }
+      this.onTransactionHandler("popular")
       const userinfo = JSON.parse(localStorage.getItem("userInfo"));
       if (userinfo) {
       this.setState({
@@ -82,38 +63,49 @@ class Product extends React.Component {
       }
   }
   onSearchHandler = (search) => {
-    console.log(search)
     this.setState(
       (prevState) => ({
-        searchParams: { ...prevState.searchParams, filter: search },
+        searchParams: { filter: search },
       }),
       () => {
         this.props.setSearchParams(this.state.searchParams);
       }
     );
   };
+  onTransactionHandler = (search) => {
+    this.setState(
+      (prevState) => ({
+        searchParams: {transactions: search },
+      }),
+      () => {
+        this.props.setSearchParams(this.state.searchParams);
+      }
+    );
+  };
+  
+  onSorthHandler = (search) => {
+    this.setState(
+      (prevState) => ({
+        searchParams: { ...prevState.searchParams, sort: search },
+      }),
+      () => {
+        this.props.setSearchParams(this.state.searchParams);
+      }
+    );
+  };
+  onPricehHandler = (search) => {
+    this.setState(
+      (prevState) => ({
+        searchParams: { ...prevState.searchParams, price: search },
+      }),
+      () => {
+        this.props.setSearchParams(this.state.searchParams);
+      }
+    );
+  };
+  
   getData = (limit) => {
-    this.props.dispatch(productsActions.getProductAction(limit));
-      if(this.props.products.next){
-        this.setState({
-          tglnext: styles.next
-        })
-      }
-      if(this.props.products.prev){
-        this.setState({
-          tglprev: styles.prev
-        })
-      }
-      if(!this.props.products.next){
-        this.setState({
-          tglnext: styles.hide
-        })
-      }
-      if(!this.props.products.prev){
-        this.setState({
-          tglprev: styles.hide
-        })
-      }
+    this.props.dispatch(productsActions.getProductNextAction(limit));
   }
 
   fetchDatas = (text) => {
@@ -121,14 +113,15 @@ class Product extends React.Component {
     Axios.get(url).then((res) => 
     this.setState({
       product: res.data.data.data
-    })).catch((err) => console.log(err))
+    }))
   }
   costing= (price) => {
     return 'IDR ' +  parseFloat(price).toFixed().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.searchParams.toString() !== this.props.searchParams.toString()){  
-      this.fetchDatas(this.props.searchParams)
+    if (prevProps.searchParams.toString() !== this.props.searchParams.toString()){ 
+      // console.log(this.props.searchParams.toString());
+      this.props.dispatch(productsActions.getProductSelectAction(this.props.searchParams.toString(),"page=1&limit=12"));
   }}
   render (){
     const { setSearchParams, params } = this.props;
@@ -208,7 +201,7 @@ class Product extends React.Component {
         <aside className={styles["right-content"]}>
           <ul>
             <li className={styles[this.state.categoryPromo]} onClick={() =>{
-              this.props.dispatch(productsActions.getPromoAction());
+              this.props.dispatch(productsActions.getProductAction("page=1&limit=12"));
               this.setState({
                 categoryPromo: "start-content",
                 categoryFoods: "next-content",
@@ -216,7 +209,7 @@ class Product extends React.Component {
                 categoryAddOn: "next-content",
                 categoryCoffee: "next-content",
               })
-              this.onSearchHandler("promo")}} >Favorite & Promo</li>
+              this.onTransactionHandler("popular")}} >Favorite</li>
             <li className={styles[this.state.categoryCoffee]} onClick={() =>{
               this.props.dispatch(productsActions.getCoffeAction());
               this.setState({
@@ -250,14 +243,33 @@ class Product extends React.Component {
               })
                 this.onSearchHandler("foods")
             }}>Foods</li>
-            <li className={styles[this.state.categoryAddOn]}>Add-on</li>
+            <li className={styles[this.state.categoryAddOn]}onClick={() => {
+              this.props.dispatch(productsActions.getAddOnAction());
+              this.setState({
+                categoryPromo: "next-content",
+                categoryFoods: "next-content",
+                categoryNonCoffee: "next-content",
+                categoryAddOn: "start-content",
+                categoryCoffee: "next-content",
+              })
+                this.onSearchHandler("addon")
+            }}>Add-on</li>
           </ul>
+          <div className={styles["setting-dropdown"]} onClick={() => {this.setState((prevState) => ({dropdown: prevState.dropdown ? false :true}))}}>
+            <p className={styles.filters}>Filter &#8595;</p>
+            <div className={this.state.dropdown ? styles.list : styles["list-hide"]}>
+              <p onClick={()=>{this.onSorthHandler("newst")}}>Newst &#8617;</p>
+              <p onClick={() => {this.onSorthHandler("latest")}}>Latest &#8617;</p>
+              <p onClick={() => {this.onPricehHandler("cheap")}}>Cheap &#8617;</p>
+              <p onClick={() => {this.onPricehHandler("pricey")}}>Pricey &#8617;</p>
+            </div>
+          </div>
           <section className={`container-fluid text-center ${styles.cardPadding}`}>
             <div
               className={`row list-content ${styles["gap-Row"]} ${styles["position-settings"]}`}
             >
               {!this.props.products.isLoading ? this.props.products.data.map((product) => {
-                console.log(product)
+                if(product.id !== 999)
                 return <Card title={product.product_name} price={this.costing(product.price)} discount={this.checkDiscount(product.discount)} image={product.image} id={product.id} listCategory={this.getCategory()}/>
               })
             : 
@@ -266,12 +278,12 @@ class Product extends React.Component {
             </div>
             }
             </div>
-            <div className={this.setPosition()}>
-            <p className={this.state.tglprev}onClick={()=>{
-                this.getData(this.props.products.prev)
+            <div className={styles.bungkusan}>
+            <p className={this.props.products.tglprev}onClick={()=>{
+              if (this.props.products.tglprev !== styles.hide) return this.getData(!this.props.products.isLoading && this.props.products.prev)
               }}>PREV</p>
-              <p className={this.state.tglnext} onClick={()=>{
-                this.getData(this.props.products.prev)
+              <p className={this.props.products.tglnext} onClick={()=>{
+                if (this.props.products.tglnext !== styles.hide) return this.getData(!this.props.products.isLoading && this.props.products.next)
               }}>NEXT</p>
             </div>
           </section>

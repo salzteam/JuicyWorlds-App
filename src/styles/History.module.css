@@ -126,6 +126,86 @@
     -o-border-radius: 25px;
 }
 
+
+.modal {
+    background-color: white;
+    position: fixed;
+    padding: auto;
+    width: 50%;
+    left: 25%;
+    bottom: 25%;
+    height: 50%;
+    opacity: 1 !important;
+    z-index: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.title {
+    color: black;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 40px;
+}
+
+.on {
+    opacity: 0.6;
+}
+
+.btn {
+    padding-top: 64px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 10rem;
+    font-weight: 700;
+    font-family: Poppins;
+    font-size: 25px;
+}
+
+.btn-cancel {
+    color: #6A4029;
+    border: 3px solid #6A4029;
+    border-radius: 20px;
+    width: 9rem;
+    user-select: none;
+    padding: 10px 0px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.btn-delete {
+    color: white;
+    background-color: #6A4029;
+    border: 3px solid #6A4029;
+    border-radius: 20px;
+    width: 9rem;
+    padding: 10px 0px;
+    user-select: none;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.btn-delete:active {
+    background-color: #6a4029b0;
+}
+
+.btn-cancel:active {
+    background-color: #3d3c3bb0;
+}
+
 @media screen and (max-width: 768px) {
     .title-history {
         font-size: 37px;

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React, { Fragment } from 'react'
+import { connect } from "react-redux";
 import Navbar from '../components/Test'
 import NavbarLogout from "../components/Navbarlogout"
 import Footer from '../components/Footer'
@@ -9,9 +9,8 @@ import withLocation from "../helpers/withLocation";
 import withSearchParams from "../helpers/withSearchParams";
 import withNavigate from "../helpers/withNavigate";
 import withRouteParams from "../helpers/withRouteParams";
-import Axios from "axios"
-import { Navigate } from "react-router-dom";
-
+import productsActions from "../redux/actions/product";
+import {createTransactionAction} from "../redux/actions/transactions"
 
 class productDetails extends React.Component {
   state = {
@@ -58,13 +57,12 @@ class productDetails extends React.Component {
     if (this.state.size === "Xl") {size = "3"
     sizeCost = 6000}
     let discountValue = 0
-    if (this.state.promo !== 999) discountValue = this.state.promo.discount
+    if (this.props.products.promo !== 999) discountValue = this.props.products.promo.discount
     let finalDiscount = 0
-    if(discountValue !== 0) finalDiscount = (parseInt(discountValue) / 100) * parseInt(this.state.price)
-    let subTotal = (parseInt(this.state.price) * parseInt(qty)) - finalDiscount + sizeCost
-    if(discountValue == 0) subTotal = (parseInt(this.state.price) * parseInt(qty)) + parseInt(sizeCost)
-    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/create`
-    Axios.post(url, {
+    if(discountValue !== 0) finalDiscount = (parseInt(discountValue) / 100) * parseInt(this.props.products.price)
+    let subTotal = (parseInt(this.props.products.price) * parseInt(qty)) - finalDiscount + sizeCost
+    if(discountValue == 0) subTotal = (parseInt(this.props.products.price) * parseInt(qty)) + parseInt(sizeCost)
+    const data = {
       size: size,
       delivery: delivery,
       qty: qty,
@@ -72,25 +70,28 @@ class productDetails extends React.Component {
       status_id: "1",
       subtotal: subTotal
     }
-      , {headers: {
-        "x-access-token": this.state.userinfo.token
-      }
-    }).then((results) => {
-      this.setState({
-        created: results.data.data
-      },() => {
-      })
-    }).catch((err)=> [
-      console.log(err)
-    ])
+    this.props.dispatch(createTransactionAction(data, this.state.userinfo.token));
+    // const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/transactions/create`
+    // Axios.post(url, 
+    //   , {headers: {
+    //     "x-access-token": this.state.userinfo.token
+    //   }
+    // }).then((results) => {
+    //   this.setState({
+    //     created: results.data.data
+    //   },() => {
+    //   })
+    // }).catch((err)=> [
+    //   console.log(err)
+    // ])
   }
 
   showQty = () => {
     let sizeName = "Reguler"
-    if (this.state.created.length === 0) return <p>{``}</p>
-    if (this.state.created.size === "2") sizeName = "Large"
-    if (this.state.created.size === "3") sizeName = "Xl"
-    return <p>{`x${this.state.created.qty} (${sizeName})`}</p>
+    if (!this.props.transaction.data) return <p>{``}</p>
+    if (this.props.transaction.data.size === "2") sizeName = "Large"
+    if (this.props.transaction.data.size === "3") sizeName = "Xl"
+    return <p>{`x${this.props.transaction.data.qty} (${sizeName})`}</p>
   }
 
 
@@ -100,21 +101,35 @@ class productDetails extends React.Component {
     this.setState({
         navbar: <Navbar/>
     })
-    }
-    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
-    Axios.get(url).then((res) => 
-    this.setState({
-      id: res.data.data.dataProduct.id,
-      name: res.data.data.dataProduct.product_name,
-      price: res.data.data.dataProduct.price,
-      image: res.data.data.dataProduct.image,
-      desc: res.data.data.dataProduct.description,
-      ctg: res.data.data.dataProduct.category_name,
-      promo: res.data.data.dataPromo
-    },() => {
-      console.log(this.state)
-    })
-    ).catch((err) => console.log(err))
+  }
+    // const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${this.props.params.id}`
+    // Axios.get(url).then((res) => 
+    // this.setState({
+    //   id: res.data.data.dataProduct.id,
+    //   name: res.data.data.dataProduct.product_name,
+    //   price: res.data.data.dataProduct.price,
+    //   image: res.data.data.dataProduct.image,
+    //   desc: res.data.data.dataProduct.description,
+    //   ctg: res.data.data.dataProduct.category_name,
+    //   promo: res.data.data.dataPromo
+    // },() => {
+    //   console.log(this.state)
+    // })
+    // ).catch((err) => console.log(err))
+    // this.props.products.data.map((product) => {
+    //   if (product.id === this.props.params.id){
+    //     this.setState({
+    //       id: product.id,
+    //       name: product.product_name,
+    //       price: product.price,
+    //       image: product.image,
+    //       desc: product.description,
+    //       ctg: product.category_name,
+    //     },() => {console.log(this.state)})
+    //   }
+    // })
+    this.props.dispatch(productsActions.getPromoProductAction(this.props.params.id));
+    // console.log(this.props.products)
   }
 
   setCtg = (category) => {
@@ -150,15 +165,19 @@ class productDetails extends React.Component {
   render() {
     return (
       <>
+      {this.props.transaction.isLoading && <div className={styles["postion-pending"]}><div className={styles["loader-container"]}>
+          <div className={styles.spinner}></div>
+        </div></div> }
           {this.state.navbar}
+            <div className={styles.dark}>
           <main className={styles.main}>
             <p className={styles.title} onClick={()=>{
               this.props.navigate(`/product`);
-            }}> {this.setCtg(this.state.ctg)} <span className={styles.span}> &gt; {this.state.name}</span></p>
+            }}> {this.setCtg(this.props.products.ctg)} <span className={styles.span}> &gt; {this.props.products.name}</span></p>
             <div className={`${styles["container-fluid"]} ${styles.margins}`}>
               <div className={`row ${styles.container}`}>
                 <div className={`col-6 ${styles["content-left"]}`}>
-                  <img src={this.state.image} alt="NOT FOUND"/>
+                  <img src={this.props.products.image} alt="NOT FOUND"/>
                   <div className={`col-12 ${styles["container-delivery"]}`}>
                     <p className={styles["title-delivery"]}>Delivery and Time</p>
                     <div className={`${styles["button-delivery"]}`}>
@@ -207,8 +226,8 @@ class productDetails extends React.Component {
                   </div>
                 </div>
                 <div className={`col-6 ${styles["content-right"]}`}>
-                  <p className={styles["cold-brew"]}>{this.state.name}</p>
-                  <p className={styles.aboutproduct}>{this.state.desc}</p>
+                  <p className={styles["cold-brew"]}>{this.props.products.name}</p>
+                  <p className={styles.aboutproduct}>{this.props.products.desc}</p>
                   <p className={styles.deliveryonly}> Delivery only on <span className={styles["span-delivery"]}>Monday to friday </span>at<span className={styles["span-delivery"]}> 1 - 7 pm</span></p> 
                   <div className={`col-12 ${styles.buttonadd}`}>
                     <div className={`col-2 ${styles.plusminus}`}>
@@ -226,7 +245,7 @@ class productDetails extends React.Component {
                         }}>+</p>
                       </div>
                     </div>
-                    <p className={styles.price}>{this.costing(this.state.price)}</p>
+                    <p className={styles.price}>{this.costing(this.props.products.price)}</p>
                   </div>
                   <p className={`${styles["styles.btn"]} ${styles.cart}`} onClick={() =>{
                     this.getRequset()
@@ -267,9 +286,9 @@ class productDetails extends React.Component {
                   </div>
                 </div>
                 <div className={`col-8 ${styles.checkout}`}>
-                  <img src={this.state.image} alt="NOT FOUND"/>
+                  <img src={this.props.products.image} alt="NOT FOUND"/>
                   <div className={styles.detailsqty}>
-                    <p className={styles.stylecold}>{this.state.name}</p>
+                    <p className={styles.stylecold}>{this.props.products.name}</p>
                     {this.showQty()}
                   </div>
                   <div className={styles["checkout-left"]}>
@@ -284,6 +303,7 @@ class productDetails extends React.Component {
               </div>
             </div>
           </main>
+            </div>
           <Footer/>
       </>
     )
@@ -292,4 +312,11 @@ class productDetails extends React.Component {
 
 const NewproductDetails = withLocation(withSearchParams(withRouteParams(withNavigate(productDetails))));
 
-export default NewproductDetails
+const mapStateToProps = (reduxState) => {
+  return {
+    products: reduxState.products,
+    transaction: reduxState.transaction
+  };
+};
+
+export default connect(mapStateToProps)(NewproductDetails)

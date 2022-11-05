@@ -9,13 +9,15 @@ import productsReducer from "./reducers/product";
 import authReducer from "./reducers/auth";
 import registerReducer from "./reducers/register";
 import profileReducer from "./reducers/profile";
+import transactionReducer from "./reducers/transactions";
 
-const middleware = applyMiddleware(rpm, logger);
+const middleware = applyMiddleware(rpm);
 const reducers = combineReducers({
   products: productsReducer,
   auth: authReducer,
   regist: registerReducer,
   profile: profileReducer,
+  transaction: transactionReducer,
 });
 const store = createStore(reducers, middleware);
 
