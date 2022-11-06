@@ -136,6 +136,7 @@ class productDetails extends React.Component {
     if (category === "foods") return category = "Foods"
     if (category === "non coffee") return category = "Non Coffee"
     if (category === "coffee") return category = "Coffee"
+    if (category === "addon") return category = "Add-On"
   }
 
   addqty = () => {
@@ -160,6 +161,11 @@ class productDetails extends React.Component {
   nextCart = (target) => {
     if (!target) return <p className={styles.addbtn}></p>
     return <p className={styles.addbtn}>{this.state.qty}</p>
+  }
+
+  getAdmin = () => {
+    if (this.state.userinfo.role === "admin") return "Edit Product"
+    return "Ask a Staff"
   }
 
   render() {
@@ -250,7 +256,10 @@ class productDetails extends React.Component {
                   <p className={`${styles["styles.btn"]} ${styles.cart}`} onClick={() =>{
                     this.getRequset()
                   }}>Add to Cart</p>
-                  <p className={`${styles["styles.btn"]} ${styles.staff}`}>Ask a Staff</p>
+                  <p className={`${styles["styles.btn"]} ${styles.staff}`} onClick={() => {
+                    const check = this.getAdmin()
+                    if (check === "Edit Product") return this.props.navigate(`/product/editproduct/${this.props.params.id}`)
+                  }}>{this.getAdmin()}</p>
                 </div>
               </div>
             </div>
@@ -286,10 +295,12 @@ class productDetails extends React.Component {
                   </div>
                 </div>
                 <div className={`col-8 ${styles.checkout}`}>
-                  <img src={this.props.products.image} alt="NOT FOUND"/>
-                  <div className={styles.detailsqty}>
-                    <p className={styles.stylecold}>{this.props.products.name}</p>
-                    {this.showQty()}
+                  <div className={styles.chart}>
+                    <img src={this.props.products.image} alt="NOT FOUND"/>
+                    <div className={styles.detailsqty}>
+                      <p className={styles.stylecold}>{this.props.products.name}</p>
+                      {this.showQty()}
+                    </div>
                   </div>
                   <div className={styles["checkout-left"]}>
                     <p>Checkout</p>

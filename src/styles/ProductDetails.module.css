@@ -598,6 +598,11 @@
     background-color: #6a402985;
 }
 
+.chart {
+    display: flex;
+    flex-direction: row;
+}
+
 .staff {
     background-color: #FFBA33;
     font-size: 25px;
@@ -619,7 +624,11 @@
 }
 
 .detailsqty {
-    margin-left: -25%;
+    margin-left: 2%;
+}
+
+.detailsqty p {
+    width: 110%;
 }
 
 .navbar-mobile {

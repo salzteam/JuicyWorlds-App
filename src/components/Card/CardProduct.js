@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../../components/Card/Card-Product.module.css";
 import withNavigate from "../../helpers/withNavigate";
+import pencil from "../../assets/img/Vector22.png";
 
 class CardProduct extends React.Component {
   check = (discount) => {
@@ -10,15 +11,25 @@ class CardProduct extends React.Component {
     return "label-promo";
   };
   render() {
-    const { title, price, discount, image, id } = this.props;
+    const { title, price, discount, image, id, isEdit } = this.props;
     return (
       <>
         <div
-          className={`col-md-2 p-4 align-content-center position-relative ${styles["content-product"]}`}
+          className={`col-md-2 p-4 align-content-center position-relative ${
+            isEdit ? styles["content-product-none"] : styles["content-product"]
+          }`}
           onClick={() => {
             this.props.navigate(`/product-details/${id}`);
           }}
         >
+          <div
+            className={isEdit ? styles.pencil : styles["pencil-none"]}
+            onClick={() => {
+              this.props.navigate(`/product/editproduct/${id}`);
+            }}
+          >
+            <img src={pencil} alt="pencil" />
+          </div>
           <img
             className={styles["image-content"]}
             src={image}

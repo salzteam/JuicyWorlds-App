@@ -7,6 +7,7 @@ import chat from "../assets/img/chat.png";
 import withNavigate from "../helpers/withNavigate";
 import withSearchParams from "../helpers/withSearchParams";
 import Axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 class NavbarMobile extends React.Component {
   state = {
@@ -17,20 +18,55 @@ class NavbarMobile extends React.Component {
       search: "",
     },
   };
+  componentDidUpdate(prevState) {
+    // console.log(this.state.searchParams);
+  }
   onSearchHandler = (search) => {
-    this.setState(
-      (prevState) => ({
-        searchParams: { ...prevState.searchParams, search: search },
-      }),
-      () => {
-        this.props.setSearchParams(this.state.searchParams);
+    // console.log(this.props.searchParams.toString());
+    const urlPrev = new URL(window.location.href);
+    let params = new URLSearchParams(urlPrev.search);
+    if (!urlPrev.searchParams.get("search")) {
+      params.append("search", search);
+      if (window.location.pathname !== "/product") {
+        return this.props.navigate(
+          `/product?transactions=popular&search=${search}`
+        );
+        // return this.props.setSearchParams(params);
       }
-    );
-    if (window.location.pathname !== "/search")
-      return this.props.navigate(`/search?search=${search}`);
+      this.props.setSearchParams(params);
+    }
+    params.delete("search");
+    params.append("search", search);
+    this.props.setSearchParams(params);
+    // this.setState(
+    //   (prevState) => ({
+    //     searchParams: { ...prevState.searchParams, search: search },
+    //   }),
+    //   () => {
+    //     this.props.setSearchParams(this.state.searchParams);
+    //   }
+    // );
+    // if (window.location.pathname !== "/search")
+    //   return this.props.navigate(`/search?search=${search}`);
     // this.props.navigate(`/search?search=${search}`);
   };
   componentDidMount() {
+    if (this.props.searchParams.toString() === "transactions=popular") {
+      this.setState({
+        searchParams: { transactions: "popular" },
+      });
+    }
+    if (
+      this.props.searchParams.toString() === "filter=coffee" ||
+      this.props.searchParams.toString() === "filter=non+coffee" ||
+      this.props.searchParams.toString() === "filter=foods" ||
+      this.props.searchParams.toString() === "filter=addon"
+    ) {
+      this.setState({
+        searchParams: { filter: this.props.searchParams.get("filter") },
+      });
+    }
+
     const userinfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userinfo) {
       const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/${userinfo.id}`;
@@ -39,10 +75,10 @@ class NavbarMobile extends React.Component {
           "x-access-token": userinfo.token,
         },
       }).then((res) => {
-        let dp =
-          "https://res.cloudinary.com/dwo9znbl6/image/upload/v1667575327/JuicyWorlds/default-profile-pic_tjjaqo.webp";
-        if (res.data.data.profileUser[0].displaypicture)
-          dp = res.data.data.profileUser[0].displaypicture;
+        let dp = res.data.data.profileUser[0].displaypicture;
+        if (!res.data.data.profileUser[0].displaypicture)
+          dp =
+            "https://res.cloudinary.com/dwo9znbl6/image/upload/v1667575327/JuicyWorlds/default-profile-pic_tjjaqo.webp";
         this.setState({
           display: dp,
         });

@@ -35,6 +35,22 @@ const getPromoProduct = (id) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${id}`;
   return Axios.get(url);
 };
+const createProduct = (data, token) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products`;
+  return Axios.post(url, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
+const editProduct = (data, token, id) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${id}`;
+  return Axios.patch(url, data, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
 
 export {
   getProduct,
@@ -46,4 +62,6 @@ export {
   getProductNext,
   getAddOn,
   getProductSelect,
+  createProduct,
+  editProduct,
 };

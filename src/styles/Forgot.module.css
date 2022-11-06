@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Rubik:wght@300;400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;400&family=Rubik:wght@300;400;700;800&display=swap');
 
 p {
     margin-bottom: 0px;
@@ -43,6 +43,14 @@ p {
     padding-bottom: 25px;
 }
 
+.footer-padding {
+    display: flex;
+    padding-top: 25px;
+    padding-left: 25px;
+    padding-bottom: 25px;
+    padding-top: 172px;
+}
+
 .footer-logo {
     display: flex;
     margin-top: 20px;
@@ -64,7 +72,8 @@ p {
 }
 
 .textForgot2 {
-    font-family: Poopins;
+    font-family: Poppins;
+    color: black;
     font-weight: 400;
     font-size: 27px;
 }
@@ -79,6 +88,20 @@ p {
     user-select: none;
 }
 
+.hide {
+    display: none;
+}
+
+.btn-none {
+    width: 85%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: not-allowed;
+    user-select: none;
+}
+
 .send {
     background-color: #FFBA33;
     width: 85%;
@@ -88,6 +111,10 @@ p {
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
+}
+
+.send:active {
+    background-color: #ffbb33b0;
 }
 
 .send p {

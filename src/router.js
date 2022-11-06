@@ -9,10 +9,13 @@ import Forgot from "./pages/Forgot";
 import ProductDetails from "./pages/productDetails";
 import History from "./pages/History";
 import Payment from "./pages/Payment";
+import AddPromo from "./pages/AddPromo";
+import AddProduct from "./pages/AddProduct";
 import Error from "./pages/Error";
 import Search from "./components/searchPage/pageSearch";
 import Test from "./components/ModalDialog";
 import PrivateRoute from "./components/PrivateRoute";
+import EditProduct from "./pages/EditProduct";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home />, errorElement: <Error /> },
@@ -52,6 +55,33 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Payment />
+      </PrivateRoute>
+    ),
+    errorElement: <Error />,
+  },
+  {
+    path: "/product/addpromo",
+    element: (
+      <PrivateRoute allowedRoles={["admin"]}>
+        <AddPromo />
+      </PrivateRoute>
+    ),
+    errorElement: <Error />,
+  },
+  {
+    path: "/product/addproduct",
+    element: (
+      <PrivateRoute allowedRoles={["admin"]}>
+        <AddProduct />
+      </PrivateRoute>
+    ),
+    errorElement: <Error />,
+  },
+  {
+    path: "/product/editproduct/:id",
+    element: (
+      <PrivateRoute allowedRoles={["admin"]}>
+        <EditProduct />
       </PrivateRoute>
     ),
     errorElement: <Error />,

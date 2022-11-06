@@ -498,7 +498,38 @@ body {
     -o-border-radius: 15px;
 }
 
+.admin {
+    color: #6A4029;
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 25px;
+    text-decoration: underline;
+    padding-left: 40px;
+    padding-top: 1rem;
+    cursor: pointer;
+}
 
+.admin p {
+    cursor: pointer;
+}
+
+.admin-promo {
+    color: #6A4029;
+    padding-right: 20rem;
+    text-align: left;
+    font-family: Poppins;
+    padding-right: 8rem;
+    font-weight: 700;
+    font-size: 25px;
+    text-decoration: underline;
+    padding-top: 38%;
+    width: 21rem;
+}
+
+.admin-promo p {
+    cursor: pointer;
+    margin-bottom: 5px;
+}
 
 .col-md-2:hover {
     transform: translateY(-7%);

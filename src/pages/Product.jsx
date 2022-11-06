@@ -20,6 +20,7 @@ class Product extends React.Component {
     search: "",
     product: [],
     dropdown: false,
+    isEdit: false,
     navbar: <NavbarLogout/>,
     categoryFoods: "next-content",
     categoryCoffee: "next-content",
@@ -84,6 +85,10 @@ class Product extends React.Component {
   };
   
   onSorthHandler = (search) => {
+    const urlPrev = new URL(window.location.href);
+    let params = new URLSearchParams(urlPrev.search);
+    params.append("sort", search);
+    this.props.setSearchParams(params);
     this.setState(
       (prevState) => ({
         searchParams: { ...prevState.searchParams, sort: search },
@@ -124,6 +129,9 @@ class Product extends React.Component {
       this.props.dispatch(productsActions.getProductSelectAction(this.props.searchParams.toString(),"page=1&limit=12"));
   }}
   render (){
+    const userinfo =  JSON.parse(localStorage.getItem("userInfo"))
+    let admin = null
+    if (userinfo && userinfo.role === "admin") admin = userinfo.role
     const { setSearchParams, params } = this.props;
     return(
     <>
@@ -197,6 +205,11 @@ class Product extends React.Component {
               </ol>
             </section>
           </section>
+          {admin && 
+          <div className={styles["admin-promo"]}>
+            <p>Edit promo</p>
+            <p>Add new promo</p>
+          </div>}
         </aside>
         <aside className={styles["right-content"]}>
           <ul>
@@ -260,17 +273,18 @@ class Product extends React.Component {
             <div className={this.state.dropdown ? styles.list : styles["list-hide"]}>
               <p onClick={()=>{this.onSorthHandler("newst")}}>Newst &#8617;</p>
               <p onClick={() => {this.onSorthHandler("latest")}}>Latest &#8617;</p>
-              <p onClick={() => {this.onPricehHandler("cheap")}}>Cheap &#8617;</p>
               <p onClick={() => {this.onPricehHandler("pricey")}}>Pricey &#8617;</p>
+              <p onClick={() => {this.onPricehHandler("cheap")}}>Cheap &#8617;</p>
             </div>
           </div>
           <section className={`container-fluid text-center ${styles.cardPadding}`}>
             <div
               className={`row list-content ${styles["gap-Row"]} ${styles["position-settings"]}`}
-            >
+            > 
+            {this.props.products.isError && <p>DATA NOT FOUND!</p>}
               {!this.props.products.isLoading ? this.props.products.data.map((product) => {
                 if(product.id !== 999)
-                return <Card title={product.product_name} price={this.costing(product.price)} discount={this.checkDiscount(product.discount)} image={product.image} id={product.id} listCategory={this.getCategory()}/>
+                return <Card key={product.id} title={product.product_name} price={this.costing(product.price)} discount={this.checkDiscount(product.discount)} image={product.image} id={product.id} listCategory={this.getCategory()} isEdit={this.state.isEdit} />
               })
             : 
             <div className={styles["loader-container"]}>
@@ -290,9 +304,13 @@ class Product extends React.Component {
           <section className={styles["bottom-list-pc"]}>
             <p>*the price has been cutted by discount appears</p>
           </section>
-          <section className={styles["bottom-list-mb"]}>
-            <p>*the price has been cutted by discount appears</p>
-          </section>
+          {admin &&
+            <div className={styles.admin}>
+              <p onClick={() => {this.setState((prevState) => ({isEdit: prevState.isEdit?false:true}))}}>Edit product</p>
+              <p onClick={() => {
+                this.props.navigate("/product/addproduct")
+              }}>Add new product</p>
+            </div>}
         </aside>
       </main>
       <Footer/>

@@ -18,6 +18,7 @@ export class Payment extends Component {
     state = {
         address: "",
         isLoading: true,
+        message: "Woops! Nothing Transaction Pending Here",
         LoadingPayment: false,
         product: [],
         userdata: [],
@@ -141,7 +142,7 @@ export class Payment extends Component {
                 <aside className={styles["side-left"]}>
                     <p className={styles["title-order"]}>Order Summary</p>
                     <div className={!this.state.isLoading && this.state.product < 1 ? styles.crds :styles["card-settings"]}>
-                    {!this.state.isLoading && this.state.product < 1 && <div className={styles["notfound"]}><p className={styles.ntfound}>Woops! Nothing Transaction Pending Here</p></div>}
+                    {!this.state.isLoading && this.state.product < 1 && <div className={styles["notfound"]}><p className={styles.ntfound}>{this.state.message}</p></div>}
                     {this.state.isLoading ? 
                     (<div className={styles["loader-container"]}>
                         <div className={styles.spinner}></div>
@@ -226,11 +227,12 @@ export class Payment extends Component {
                         </div>
                     </div>
                     <p className={this.state.product.length > 0 ? styles.btn : styles["btn-non-select"]} onClick={() => {
-                        this.state.product.length > 0 &&
+                        if (this.state.product.length > 0) {
                         this.setState({
                             isLoading: true,
-                        }) &&
-                        this.getRequset()
+                            message: "Payment Success!"
+                        }) 
+                        this.getRequset()}
                     }}>Confirm and Pay</p>
                 </aside>
             </section>

@@ -6,6 +6,7 @@ const initialState = {
   err: null,
   data: null,
   token: null,
+  forgot: [],
 };
 
 const authReducer = (prevState = initialState, action) => {
@@ -17,6 +18,12 @@ const authReducer = (prevState = initialState, action) => {
         isError: false,
       };
     case actionStrings.doLogout + actionStrings.pending:
+      return {
+        ...prevState,
+        isLoading: true,
+        isError: false,
+      };
+    case actionStrings.forgot + actionStrings.pending:
       return {
         ...prevState,
         isLoading: true,
@@ -40,6 +47,16 @@ const authReducer = (prevState = initialState, action) => {
         isLoading: false,
         err: errorMessageLogout.response.data.message,
       };
+    case actionStrings.forgot + actionStrings.rejected:
+      const errorResponseForgot = action.payload;
+      console.log(errorResponseForgot);
+      // const errorMessageForgot = errorResponseLogout;
+      return {
+        ...prevState,
+        isError: true,
+        isLoading: false,
+        // err: errorMessageLogout.response.data.message,
+      };
     case actionStrings.doLogin + actionStrings.fulfilled:
       const responseLogin = action.payload;
       const resultLogin = responseLogin.data.data;
@@ -57,6 +74,14 @@ const authReducer = (prevState = initialState, action) => {
         isLoading: false,
         data: null,
         token: null,
+      };
+    case actionStrings.forgot + actionStrings.fulfilled:
+      const responseForgot = action.payload;
+      console.log(responseForgot);
+      return {
+        ...prevState,
+        isLoading: false,
+        forgot: null,
       };
     default:
       return prevState;

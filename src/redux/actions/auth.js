@@ -1,5 +1,5 @@
 import actionStrings from "./actionStrings";
-import { doLogin, doLogout } from "../../http/auth";
+import { doLogin, doLogout, forgot } from "../../http/auth";
 
 export const doLoginAction = (email, password) => {
   return {
@@ -8,9 +8,15 @@ export const doLoginAction = (email, password) => {
   };
 };
 
-export const doLogoutAction = (token) => {
+export const doLogoutAction = (data, token) => {
   return {
     type: actionStrings.doLogout,
-    payload: doLogout(token),
+    payload: doLogout(data, token),
+  };
+};
+export const forgotAction = (data) => {
+  return {
+    type: actionStrings.forgot,
+    payload: forgot(data),
   };
 };

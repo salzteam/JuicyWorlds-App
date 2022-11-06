@@ -8,6 +8,8 @@ import {
   getPromoProduct,
   getProductSelect,
   getAddOn,
+  createProduct,
+  editProduct,
 } from "../../http/product";
 
 const getProductAction = (limit) => {
@@ -64,6 +66,18 @@ const getPromoProductAction = (id) => {
     payload: getPromoProduct(id),
   };
 };
+const createProductAction = (data, token) => {
+  return {
+    type: actionStrings.createProduct,
+    payload: createProduct(data, token),
+  };
+};
+const editProductAction = (data, token, id) => {
+  return {
+    type: actionStrings.editProduct,
+    payload: editProduct(data, token, id),
+  };
+};
 
 const productAction = {
   getProductAction,
@@ -75,6 +89,8 @@ const productAction = {
   getProductNextAction,
   getAddOnAction,
   getProductSelectAction,
+  createProductAction,
+  editProductAction,
 };
 
 export default productAction;
