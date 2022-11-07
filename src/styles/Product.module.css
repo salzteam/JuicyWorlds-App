@@ -518,6 +518,7 @@ body {
 
 .admin-promo {
     color: #6A4029;
+    user-select: none;
     padding-right: 20rem;
     text-align: left;
     font-family: Poppins;

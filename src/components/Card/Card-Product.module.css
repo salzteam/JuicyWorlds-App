@@ -102,6 +102,7 @@
     border-radius: 50px;
     z-index: 1;
     display: flex;
+    user-select:none;
     justify-content: center;
     left: 8rem;
     top: -3rem;

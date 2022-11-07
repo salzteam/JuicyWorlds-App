@@ -20,6 +20,7 @@ class Product extends React.Component {
     product: [],
     dropdown: false,
     isEdit: false,
+    isEditPromo: false,
     navbar: <NavbarLogout/>,
     categoryFoods: "next-content",
     categoryCoffee: "next-content",
@@ -150,8 +151,9 @@ class Product extends React.Component {
           </p>
           <div className={styles["promo-ipad"]}>
             {this.props.promo.isError && <p>DATA NOT FOUND!</p>}
+            {console.log(this.props.promo.data)}
               {!this.props.promo.isLoading ? this.props.promo.data.map((promo, index) => {
-                if(promo.discount !== 0 && promo.title !== "testing") return <CardPromo key={index} id={promo.id} image={promo.imagepp} bgcolor={promo.bgcolor} title={promo.title} desc={promo.description}/>
+                if(promo.discount !== 0 && promo.title !== "testing") return <CardPromo key={index} id={promo.id} image={promo.imagepp} bgcolor={promo.bgcolor} title={promo.title} desc={promo.description} isEdit={this.state.isEditPromo}/>
               })
             : 
             <div className={styles["loader-container"]}>
@@ -175,7 +177,7 @@ class Product extends React.Component {
           </section>
           {admin && 
           <div className={styles["admin-promo"]}>
-            <p>Edit promo</p>
+            <p onClick={() => {this.setState((prevState) => ({isEditPromo: prevState.isEditPromo?false:true}))}}>Edit promo</p>
             <Link className={styles.link} to={"/product/addpromo"}>
               <p >Add new promo</p>
             </Link>

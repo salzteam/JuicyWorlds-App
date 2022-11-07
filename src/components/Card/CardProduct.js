@@ -19,7 +19,7 @@ class CardProduct extends React.Component {
             isEdit ? styles["content-product-none"] : styles["content-product"]
           }`}
           onClick={() => {
-            this.props.navigate(`/product-details/${id}`);
+            if (!isEdit) return this.props.navigate(`/product-details/${id}`);
           }}
         >
           <div

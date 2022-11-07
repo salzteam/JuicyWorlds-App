@@ -17,6 +17,7 @@ import Search from "./components/searchPage/pageSearch";
 import Test from "./components/ModalDialog";
 import PrivateRoute from "./components/PrivateRoute";
 import EditProduct from "./pages/EditProduct";
+import EditPromo from "./pages/EditPromo";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home />, errorElement: <Error /> },
@@ -92,6 +93,15 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute allowedRoles={["admin"]}>
         <EditProduct />
+      </PrivateRoute>
+    ),
+    errorElement: <Error />,
+  },
+  {
+    path: "/product/editpromo/:id",
+    element: (
+      <PrivateRoute allowedRoles={["admin"]}>
+        <EditPromo />
       </PrivateRoute>
     ),
     errorElement: <Error />,
