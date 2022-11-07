@@ -10,12 +10,19 @@ import {
   getAddOn,
   createProduct,
   editProduct,
+  getProductAll,
 } from "../../http/product";
 
 const getProductAction = (limit) => {
   return {
     type: actionStrings.getProducts,
     payload: getProduct(limit),
+  };
+};
+const getProductAllAction = () => {
+  return {
+    type: actionStrings.getAllProducts,
+    payload: getProductAll(),
   };
 };
 const getProductSelectAction = (params, limit) => {
@@ -91,6 +98,7 @@ const productAction = {
   getProductSelectAction,
   createProductAction,
   editProductAction,
+  getProductAllAction,
 };
 
 export default productAction;

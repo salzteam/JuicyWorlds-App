@@ -4,6 +4,10 @@ const getProduct = (limit) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?transactions=popular&${limit}`;
   return Axios.get(url);
 };
+const getProductAll = () => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products`;
+  return Axios.get(url);
+};
 const getProductSelect = (params, limit) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products?${params}&${limit}`;
   return Axios.get(url);
@@ -64,4 +68,5 @@ export {
   getProductSelect,
   createProduct,
   editProduct,
+  getProductAll,
 };

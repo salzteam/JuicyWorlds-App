@@ -6,6 +6,7 @@ const initialState = {
   promo: [],
   dataCreate: [],
   dataEdit: [],
+  dataAll: [],
   id: "",
   name: "",
   price: "",
@@ -21,6 +22,7 @@ const initialState = {
   err: null,
   errCreate: null,
   errEdit: null,
+  errgetall: null,
 };
 
 const productsReducer = (prevState = initialState, action) => {
@@ -44,6 +46,12 @@ const productsReducer = (prevState = initialState, action) => {
         isError: false,
       };
     case actionStrings.editProduct + actionStrings.pending:
+      return {
+        ...prevState,
+        isLoading: true,
+        isError: false,
+      };
+    case actionStrings.getAllProducts + actionStrings.pending:
       return {
         ...prevState,
         isLoading: true,
@@ -76,6 +84,15 @@ const productsReducer = (prevState = initialState, action) => {
         isError: true,
         isLoading: false,
         errCreate: errorMessageCreate,
+      };
+    case actionStrings.getAllProducts + actionStrings.rejected:
+      const errs = action.payload;
+      const errResponse = errs.response.data.message;
+      return {
+        ...prevState,
+        isError: true,
+        isLoading: false,
+        errgetall: errResponse,
       };
     case actionStrings.editProduct + actionStrings.rejected:
       const errorResponseEdit = action.payload;
@@ -134,6 +151,14 @@ const productsReducer = (prevState = initialState, action) => {
         ...prevState,
         isLoading: false,
         dataEdit: resultEdits,
+      };
+    case actionStrings.getAllProducts + actionStrings.fulfilled:
+      const resall = action.payload;
+      const resalla = resall.data.data;
+      return {
+        ...prevState,
+        isLoading: false,
+        dataAll: resalla,
       };
     default:
       return prevState;

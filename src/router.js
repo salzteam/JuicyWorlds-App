@@ -9,6 +9,7 @@ import Forgot from "./pages/Forgot";
 import ProductDetails from "./pages/productDetails";
 import History from "./pages/History";
 import Payment from "./pages/Payment";
+import Order from "./pages/Order";
 import AddPromo from "./pages/AddPromo";
 import AddProduct from "./pages/AddProduct";
 import Error from "./pages/Error";
@@ -55,6 +56,15 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Payment />
+      </PrivateRoute>
+    ),
+    errorElement: <Error />,
+  },
+  {
+    path: "/order",
+    element: (
+      <PrivateRoute allowedRoles={["admin"]}>
+        <Order />
       </PrivateRoute>
     ),
     errorElement: <Error />,

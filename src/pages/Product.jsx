@@ -1,19 +1,18 @@
 import React from "react";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "../styles/Product.module.css";
-import grandma from "../assets/img/image-46.png";
-import father from "../assets/img/father.png";
-import prof from "../assets/img/prof.png";
 import withNavigate from "../helpers/withNavigate";
 import Card from "../components/Card/CardProduct"
+import CardPromo from "../components/Card/CardPromo"
 import Footer from '../components/Footer'
-import NavbarMobile from '../components/NavbarMobile'
 import withLocation from "../helpers/withLocation";
 import withSearchParams from "../helpers/withSearchParams";
 import Test from '../components/Test'
 import NavbarLogout from "../components/Navbarlogout"
 import productsActions from "../redux/actions/product";
+import {promoAction} from "../redux/actions/promo";
 
 class Product extends React.Component {
   state = {
@@ -33,7 +32,7 @@ class Product extends React.Component {
   getCategory = () => {
     for (const [key, value] of Object.entries(this.state)) {
       const datas = `${key}: ${value}`
-      if (value == "start-content") return datas
+      if (value === "start-content") return datas
     }
   }
 
@@ -55,6 +54,7 @@ class Product extends React.Component {
       // })).catch((err) => console.log(err))
       // this.getData("page=1&limit=12")
       this.props.dispatch(productsActions.getProductAction("page=1&limit=12"));
+      this.props.dispatch(promoAction());
       this.onTransactionHandler("popular")
       const userinfo = JSON.parse(localStorage.getItem("userInfo"));
       if (userinfo) {
@@ -63,6 +63,11 @@ class Product extends React.Component {
       })
       }
   }
+
+  // componentDidUpdate(prevProps){
+  //   if (prevProps.promo.data !== this.props.promo.data) return 
+  // }
+
   onSearchHandler = (search) => {
     this.setState(
       (prevState) => ({
@@ -132,7 +137,6 @@ class Product extends React.Component {
     const userinfo =  JSON.parse(localStorage.getItem("userInfo"))
     let admin = null
     if (userinfo && userinfo.role === "admin") admin = userinfo.role
-    const { setSearchParams, params } = this.props;
     return(
     <>
         <div className={styles["navbar-pc"]}>
@@ -145,51 +149,15 @@ class Product extends React.Component {
             Coupons will be updated every weeks. Check them out!{" "}
           </p>
           <div className={styles["promo-ipad"]}>
-            <section className={styles["mother-border"]}>
-              <div className={styles["mother-icon"]}>
-                <img src={grandma} alt="" />
-              </div>
-              <div className={styles["mother-title"]}>
-                <p className={styles["happy-title"]}>HAPPY MOTHER'S DAY! </p>
-                <p className={styles["get-title"]}>
-                  Get one of our favorite menu for free!
-                </p>
-              </div>
-            </section>
-            <section className={styles["father-border"]}>
-              <div className={styles["father-icon"]}>
-                <img src={father} alt="" />
-              </div>
-              <div className={styles["father-title"]}>
-                <p className={styles["happy-title"]}>
-                  Get a cup of coffee for free on sunday morning
-                </p>
-                <p className={styles["get-title-father"]}>Only at 7 to 9 AM</p>
-              </div>
-            </section>
-            <section className={styles["mother-border2"]}>
-              <div className={styles["mother-icon"]}>
-                <img src={grandma} alt="" />
-              </div>
-              <div className={styles["mother-title"]}>
-                <p className={styles["happy-title"]}>HAPPY MOTHER'S DAY! </p>
-                <p className={styles["get-title"]}>
-                  Get one of our favorite menu for free!
-                </p>
-              </div>
-            </section>
-            <section className={styles["prof-border"]}>
-              <div className={styles["prof-icon"]}>
-                <img src={prof} alt="" />
-              </div>
-              <div className={styles["prof-title"]}>
-                <p className={styles["happy-title-prof"]}>HAPPY HALLOWEEN!</p>
-                <p className={styles["get-title-prof"]}>
-                  Do you like chicken wings? Get 1 free only if you buy pinky
-                  promise
-                </p>
-              </div>
-            </section>
+            {this.props.promo.isError && <p>DATA NOT FOUND!</p>}
+              {!this.props.promo.isLoading ? this.props.promo.data.map((promo, index) => {
+                if(promo.discount !== 0 && promo.title !== "testing") return <CardPromo key={index} id={promo.id} image={promo.imagepp} bgcolor={promo.bgcolor} title={promo.title} desc={promo.description}/>
+              })
+            : 
+            <div className={styles["loader-container"]}>
+              <div className={styles.spinner}></div>
+            </div>
+            }
           </div>
           <p className={`${styles.btn} ${styles["Apply-btn"]}`}>Apply Coupon</p>
           <br />
@@ -208,7 +176,10 @@ class Product extends React.Component {
           {admin && 
           <div className={styles["admin-promo"]}>
             <p>Edit promo</p>
-            <p>Add new promo</p>
+            <Link className={styles.link} to={"/product/addpromo"}>
+              <p >Add new promo</p>
+            </Link>
+            {/* <p onClick={this.props.navigate("/product/addpromo")}>Add new promo</p> */}
           </div>}
         </aside>
         <aside className={styles["right-content"]}>
@@ -324,6 +295,7 @@ const NewProduct = withSearchParams(withLocation(withNavigate(Product)));
 const mapStateToProps = (reduxState) => {
   return {
     products: reduxState.products,
+    promo:  reduxState.promo
   };
 };
 

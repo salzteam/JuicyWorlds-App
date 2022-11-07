@@ -268,7 +268,15 @@ class Profile extends React.Component {
                     this.setState({
                       isEdit:false,
                       newPicture: null,
-                      pictrue: null,
+                      deletepictrue: null,
+                      newEmail: null,
+                      newAddress: null,
+                      newPhone: null,
+                      newDisplayname: null,
+                      newFirstName: null,
+                      newLastName: null,
+                      newBorn: null,
+                      newGender: null,
                     })
                   }}>Cancel</button> 
                 </div> }

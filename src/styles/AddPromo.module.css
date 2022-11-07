@@ -22,13 +22,10 @@
 }
 
 .photo-promo {
-    background-color: #dddddd;
-    padding: 5rem 5rem;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
-}
-
-.photo-promo img {
-    width: 5rem;
+    margin-bottom: 25px;
 }
 
 .take-picture,
@@ -40,7 +37,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 5rem 0 2rem;
+    padding: 1rem 0 0rem;
 }
 
 .left-content form .expire-date {
@@ -62,6 +59,11 @@ form .input-title {
     color: #6A4029;
 }
 
+.title{
+    cursor: pointer;
+    user-select: none
+}
+
 .left-content form input {
     height: 3rem;
     width: 100%;
@@ -70,7 +72,16 @@ form .input-title {
     padding: 2rem;
     font-size: 1.2rem;
     font-weight: 400;
-    color: #9F9F9F;
+    color: black;
+}
+.color {
+    height: 3rem !important;
+    border-radius: 10px !important;
+    padding: 6px!important;
+    font-size: 1.2rem !important;
+    font-weight: 400 !important;
+    color: #9F9F9F !important;
+    -webkit-border-radius: 10px !important;
 }
 
 .right-content form .promo-details {
@@ -89,7 +100,7 @@ form .input-title {
     padding: 2rem 1rem;
     font-size: 1.2rem;
     font-weight: 400;
-    color: #9F9F9F;
+    color: black;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
@@ -148,4 +159,107 @@ form .input-title {
 
 .cancel-btn:active {
     background-color: #7c7c7c59;
+}
+
+.arrows {
+    padding-top: 6px;
+    font-size: 15px !important;
+    display: flex;
+}
+
+.none {
+    display: none;
+}
+
+.list-dropdown {
+    position: absolute;
+    overflow: scroll;
+    background-color: white;
+    max-height: 50vh;
+    width: 22rem;
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 20px;
+    color: black;
+    left: 7.4rem;
+    bottom: -36rem;
+    text-align: left;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid #9F9F9F;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
+.list-dropdown p {
+    cursor: pointer;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #9F9F9F;
+}
+
+.list-dropdown p:hover {
+    color: #f5ab18;
+}
+
+.box-dropdown {
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 20px;
+    border-radius: 15px;
+    border: 1px solid #9F9F9F;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
+.box-dropdown p {
+    color: #9F9F9F;
+}
+
+.loader-container {
+    position: fixed;
+    top: 50%;
+    bottom: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+
+.spinner {
+    width: 55px;
+    height: 55px;
+    border: 8px solid;
+    border-color: #6a4029 transparent #ffba33 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+}
+
+.err {
+    text-align: center;
+    color: red;
+    font-family: Poppins;
+    font-weight: 500;
+}
+
+
+@keyframes spin-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

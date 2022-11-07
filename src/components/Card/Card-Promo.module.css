@@ -1,0 +1,48 @@
+.mother-icon img {
+    width: 83px;
+    height: 92px;
+}
+
+.mother-border {
+    display: flex;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 20px;
+    width: 335px;
+    height: 109px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.mother-title {
+    margin-top: 3px;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    line-height: 30px;
+}
+
+.get-title {
+    font-family: Poppins;
+    line-height: 20px;
+    width: 90%;
+    text-align: left;
+    font-weight: normal;
+    color: black;
+}
+
+.happy-title {
+    color: black;
+    font-weight: bold;
+    font-family: Poppins;
+    text-align: left
+}
+
+.display {
+    display: none;
+}

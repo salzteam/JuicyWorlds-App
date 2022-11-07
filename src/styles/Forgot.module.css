@@ -43,11 +43,18 @@ p {
     padding-bottom: 25px;
 }
 
+.logolink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 1rem;
+}
+
 .footer-padding {
     display: flex;
     padding-top: 25px;
     padding-left: 25px;
-    padding-bottom: 25px;
+    padding-bottom: 41px;
     padding-top: 172px;
 }
 
@@ -153,6 +160,10 @@ p {
     margin-bottom: 20%;
 }
 
+.resend:active {
+    background-color: #532c16;
+}
+
 .count-text {
     display: flex;
     flex-direction: column;
@@ -245,6 +256,58 @@ p {
     padding-left: var(--bs-gutter-x, .75rem);
     margin-right: auto;
     margin-left: auto;
+}
+
+.loader-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.spinner {
+    width: 29px;
+    height: 29px;
+    border: 8px solid;
+    border-color: #3d5af1 transparent #3d5af1 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.passwords {
+    position: absolute;
+    top: 29.7rem;
+    font-size: 20px;
+    right: 89px;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.passwordss {
+    position: absolute;
+    top: 37rem;
+    font-size: 20px;
+    right: 85px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.err {
+    text-align: center;
+    width: 90%;
+    color: red;
 }
 
 @media screen and (max-width: 768px) {

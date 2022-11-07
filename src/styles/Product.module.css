@@ -450,11 +450,14 @@ body {
 
 .gap-Row {
     gap: 5rem 4rem;
+}
 
+.link{
+    color: #6A4029 !important;
 }
 
 .cardPadding {
-    padding-left: 40px
+    padding-left: 20px;
 }
 
 .next-content {
