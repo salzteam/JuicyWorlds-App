@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import styles from "../styles/test.module.css";
 import logo from "../assets/img/logo.WebP";
 import search from "../assets/img/search.png";
@@ -9,7 +8,6 @@ import withNavigate from "../helpers/withNavigate";
 import withSearchParams from "../helpers/withSearchParams";
 import Axios from "axios";
 import { useSearchParams } from "react-router-dom";
-import { doProfileAction } from "../redux/actions/profile";
 
 class NavbarMobile extends React.Component {
   state = {
@@ -22,6 +20,9 @@ class NavbarMobile extends React.Component {
       search: "",
     },
   };
+  componentDidUpdate(prevState) {
+    // console.log(this.state.searchParams);
+  }
   onSearchHandler = (search) => {
     // console.log(this.props.searchParams.toString());
     const urlPrev = new URL(window.location.href);
@@ -73,38 +74,24 @@ class NavbarMobile extends React.Component {
         searchParams: { filter: this.props.searchParams.get("filter") },
       });
     }
-    const userinfo = JSON.parse(localStorage.getItem("userInfo"));
 
+    const userinfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userinfo) {
-      this.props.dispatch(doProfileAction(userinfo.id, userinfo));
-      // const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/${userinfo.id}`;
-      // Axios.get(url, {
-      //   headers: {
-      //     "x-access-token": userinfo.token,
-      //   },
-      // }).then((res) => {
-      //   let dp = this.props.Profile.image
-      //   let dp = res.data.data.profileUser[0].displaypicture;
-      //   if (!res.data.data.profileUser[0].displaypicture)
-      //     dp =
-      //       "https://res.cloudinary.com/dwo9znbl6/image/upload/v1667575327/JuicyWorlds/default-profile-pic_tjjaqo.webp";
-      //   this.setState({
-      //     display: dp,
-      //   });
-      // });
-    }
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.Profile !== this.props.Profile) {
-      let dp = this.props.Profile.dataProfile[0].displaypicture;
-      if (!this.props.Profile.dataProfile[0].displaypicture)
-        dp =
-          "https://res.cloudinary.com/dwo9znbl6/image/upload/v1667575327/JuicyWorlds/default-profile-pic_tjjaqo.webp";
-      this.setState({
-        display: dp,
+      const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/${userinfo.id}`;
+      Axios.get(url, {
+        headers: {
+          "x-access-token": userinfo.token,
+        },
+      }).then((res) => {
+        let dp = res.data.data.profileUser[0].displaypicture;
+        if (!res.data.data.profileUser[0].displaypicture)
+          dp =
+            "https://res.cloudinary.com/dwo9znbl6/image/upload/v1667575327/JuicyWorlds/default-profile-pic_tjjaqo.webp";
+        this.setState({
+          display: dp,
+        });
       });
     }
-    // console.log(this.state.searchParams);
   }
   render() {
     const { image } = this.props;
@@ -215,10 +202,4 @@ class NavbarMobile extends React.Component {
 
 const NewNavbarMobile = withSearchParams(withNavigate(NavbarMobile));
 
-const mapStateToProps = (reduxState) => {
-  return {
-    Profile: reduxState.profile,
-  };
-};
-
-export default connect(mapStateToProps)(NewNavbarMobile);
+export default NewNavbarMobile;
