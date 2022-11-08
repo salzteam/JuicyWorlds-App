@@ -839,4 +839,18 @@ input[type="file"] {
     .user-text {
         margin-bottom: 10px;
     }
+
+    .modalPwd {
+        left: 110px;
+        top: 16px;
+    }
+
+    .modal-bottom {
+        left: 36%;
+        margin-top: -4px;
+    }
+
+    .right-input {
+        margin-left: 68px;
+    }
 }

@@ -107,6 +107,7 @@ const productsReducer = (prevState = initialState, action) => {
     case actionStrings.getProducts + actionStrings.fulfilled:
       const response = action.payload;
       const result = response.data.data.data;
+      // console.log(result);
       let toNext = styles.hide;
       let toPrev = styles.hide;
       if (response.data.data.next) toNext = styles.next;

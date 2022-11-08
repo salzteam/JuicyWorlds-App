@@ -16,13 +16,31 @@ import Error from "./pages/Error";
 import Search from "./components/searchPage/pageSearch";
 import Test from "./components/ModalDialog";
 import PrivateRoute from "./components/PrivateRoute";
+import NonLogin from "./components/NonLogin";
 import EditProduct from "./pages/EditProduct";
 import EditPromo from "./pages/EditPromo";
+import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home />, errorElement: <Error /> },
-  { path: "/login", element: <Login />, errorElement: <Error /> },
-  { path: "/register", element: <Register />, errorElement: <Error /> },
+  {
+    path: "/login",
+    element: (
+      <NonLogin>
+        <Login />
+      </NonLogin>
+    ),
+    errorElement: <Error />,
+  },
+  {
+    path: "/register",
+    element: (
+      <NonLogin>
+        <Register />
+      </NonLogin>
+    ),
+    errorElement: <Error />,
+  },
   {
     path: "/profile",
     element: (
@@ -102,6 +120,15 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute allowedRoles={["admin"]}>
         <EditPromo />
+      </PrivateRoute>
+    ),
+    errorElement: <Error />,
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute allowedRoles={["admin"]}>
+        <Dashboard />
       </PrivateRoute>
     ),
     errorElement: <Error />,

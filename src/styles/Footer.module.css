@@ -5,7 +5,10 @@
 }
 
 .left-foot-content {
-    margin: 70px;
+    padding-bottom: 70px;
+    padding-top: 70px;
+    padding-left: 32px;
+    padding-right: 246px;
 }
 
 .about-detail {

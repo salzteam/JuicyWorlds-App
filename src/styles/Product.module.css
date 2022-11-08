@@ -452,7 +452,7 @@ body {
     gap: 5rem 4rem;
 }
 
-.link{
+.link {
     color: #6A4029 !important;
 }
 
@@ -974,7 +974,7 @@ body {
     }
 
     .right-content {
-        padding-left: 0%;
+        padding-left: 5%;
         padding-top: 3%;
         padding-right: 4%;
     }
@@ -1088,5 +1088,26 @@ body {
     .prof-border,
     .father-border {
         margin: 0px;
+    }
+
+    .admin-promo {
+        padding-top: 0px;
+        padding-right: 0rem;
+        justify-content: space-around;
+        width: 100% !important;
+        display: flex;
+    }
+
+    .filters {
+        width: 15% !important;
+    }
+
+    .gap-Row {
+        gap: 5rem 3rem;
+    }
+
+    .admin {
+        display: flex;
+        justify-content: space-around;
     }
 }

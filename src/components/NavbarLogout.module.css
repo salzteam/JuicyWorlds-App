@@ -4,10 +4,10 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding-left: 5%;
+    /* padding-left: 5%; */
     padding-top: 2%;
     padding-bottom: 2%;
-    padding-right: 8%;
+    /* padding-right: 8%; */
     border-bottom: 0.2px solid #9F9F9F;
     /* box-shadow: 0 4px 2px -4px #9F9F9F; */
     width: 100%;
@@ -104,4 +104,29 @@
     -moz-border-radius: 50px;
     -ms-border-radius: 50px;
     -o-border-radius: 50px;
+}
+
+@media screen and (max-width: 768px) {
+    .btn-navbar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-login {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+
+    .navList ul {
+        font-size: 14px;
+    }
+
+    .navBrand p {
+        width: 53%;
+    }
+
+    .home-nav {
+        padding-right: 1rem;
+    }
 }

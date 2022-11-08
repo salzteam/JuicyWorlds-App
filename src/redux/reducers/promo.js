@@ -43,7 +43,7 @@ const promoReducer = (prevState = initialState, action) => {
       };
     case actionStrings.getPromo + actionStrings.fulfilled:
       const response = action.payload;
-      console.log(response);
+      // console.log(response);
       const result = response.data.data.data;
       return {
         ...prevState,

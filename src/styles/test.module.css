@@ -154,6 +154,12 @@
     width: 28px;
     height: 28px;
 }
+.icon2 {
+    margin-right: 34px;
+    margin-top: 3px;
+    width: 28px;
+    height: 28px;
+}
 
 .new-Navsearch {
     margin-left: 5px;
@@ -200,5 +206,12 @@
     position: absolute;
     right: 149px;
     top: 47px;
+    cursor: pointer;
+}
+
+.onSearch {
+    margin-top: 25px;
+    margin-right: 35px;
+    align-items: center;
     cursor: pointer;
 }

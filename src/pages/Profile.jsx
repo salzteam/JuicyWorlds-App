@@ -11,10 +11,12 @@ import {doProfileAction, doUpdateProfileAction, doUpdateUserAction, changepwdAct
 class Profile extends React.Component {
   state = {
     isEdit: false,
+    isLogout: false,
     editPwd: false,
     shwPwd: false,
     shwPwd2: false,
     shwPwd3: false,
+    logout: false,
     pictrue: "https://res.cloudinary.com/dwo9znbl6/image/upload/v1667575327/JuicyWorlds/default-profile-pic_tjjaqo.webp",
     oldPwd: null,
     newPwd: null,
@@ -57,6 +59,7 @@ class Profile extends React.Component {
     if (prevProps.Logout.token !== this.props.Logout.token){return this.props.navigate("/login")}
     const userinfo = JSON.parse(localStorage.getItem("userInfo"));
     if (prevProps.Profile.data !== this.props.Profile.data){return this.props.dispatch(doProfileAction(userinfo.id, userinfo));}
+    if (this.state.logout) return this.props.navigate("/login")
   }
   // onEdit = () => {
   //   this.state.isEdit ? placeholder="test":disabled="disabled"
@@ -283,8 +286,11 @@ class Profile extends React.Component {
                   <button className={`${styles.logout} ${styles["width-pc"]}`} onClick={()=>{
                     const userinfo=  JSON.parse(localStorage.getItem("userInfo"))
                     this.props.dispatch(doLogoutAction(userinfo.token));
-                    this.navigate("/login")
-                  }}>Log out</button>
+                    if (!this.props.logout.isLoading && this.setState({isLogout: false, logout:true}));
+                  }}>{this.state.isLogout ?
+                    <div className={styles["loader-container"]}>
+                        <div className={styles.spinner}></div>
+                    </div> : "Log out"}</button>
               </aside>
               <aside className={styles["content-input"]}>
                 <div className={styles["img-content"]} onClick={()=>{

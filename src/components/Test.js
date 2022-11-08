@@ -50,6 +50,12 @@ class NavbarMobile extends React.Component {
     //   return this.props.navigate(`/search?search=${search}`);
     // this.props.navigate(`/search?search=${search}`);
   };
+  getRole = () => {
+    const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+    let admin = null;
+    if (userinfo && userinfo.role === "admin") return (admin = userinfo.role);
+    return admin;
+  };
   componentDidMount() {
     if (this.props.searchParams.toString() === "transactions=popular") {
       this.setState({
@@ -105,15 +111,29 @@ class NavbarMobile extends React.Component {
                 <Link to={"/product"} className={styles.a}>
                   <li>Product</li>
                 </Link>
-                <Link to={"/payment"} className={styles.a}>
-                  <li>Your Cart</li>
+                <Link
+                  to={this.getRole() === "admin" ? "/order" : "/payment"}
+                  className={styles.a}
+                >
+                  <li>{this.getRole() == "admin" ? "Orders" : "Your Cart"}</li>
                 </Link>
-                <Link to={"/history"} className={styles.a}>
-                  <li>History</li>
+                <Link
+                  to={this.getRole() === "admin" ? "/dashboard" : "/history"}
+                  className={styles.a}
+                >
+                  <li>
+                    {this.getRole() === "admin" ? "Dashboard" : "History"}
+                  </li>
                 </Link>
               </ol>
             </div>
-            <div className={styles.rightContent}>
+            <div
+              className={
+                this.state.searchToogle == "pembungkus-block"
+                  ? styles.onSearch
+                  : styles.rightContent
+              }
+            >
               <div className={styles[this.state.searchToogle]}>
                 <div className={styles["Nav-Search"]}>
                   <i
@@ -152,7 +172,15 @@ class NavbarMobile extends React.Component {
                   });
                 }}
               />
-              <img className={styles.icon1} src={chat} alt="" />
+              <img
+                className={
+                  this.state.searchToogle === "pembungkus-block"
+                    ? styles.icon2
+                    : styles.icon1
+                }
+                src={chat}
+                alt=""
+              />
               <Link to={"/profile"}>
                 <img className={styles.pp} src={this.state.display} alt="" />
               </Link>

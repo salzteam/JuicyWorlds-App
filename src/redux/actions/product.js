@@ -26,6 +26,7 @@ const getProductAllAction = () => {
   };
 };
 const getProductSelectAction = (params, limit) => {
+  console.log(params);
   return {
     type: actionStrings.getProducts,
     payload: getProductSelect(params, limit),

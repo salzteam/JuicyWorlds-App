@@ -93,11 +93,11 @@ class Product extends React.Component {
   onSorthHandler = (search) => {
     const urlPrev = new URL(window.location.href);
     let params = new URLSearchParams(urlPrev.search);
-    params.append("sort", search);
+    params.append("sortby", search);
     this.props.setSearchParams(params);
     this.setState(
       (prevState) => ({
-        searchParams: { ...prevState.searchParams, sort: search },
+        searchParams: { ...prevState.searchParams, sortby: search },
       }),
       () => {
         this.props.setSearchParams(this.state.searchParams);
@@ -151,7 +151,6 @@ class Product extends React.Component {
           </p>
           <div className={styles["promo-ipad"]}>
             {this.props.promo.isError && <p>DATA NOT FOUND!</p>}
-            {console.log(this.props.promo.data)}
               {!this.props.promo.isLoading ? this.props.promo.data.map((promo, index) => {
                 if(promo.discount !== 0 && promo.title !== "testing") return <CardPromo key={index} id={promo.id} image={promo.imagepp} bgcolor={promo.bgcolor} title={promo.title} desc={promo.description} isEdit={this.state.isEditPromo}/>
               })
@@ -244,7 +243,7 @@ class Product extends React.Component {
           <div className={styles["setting-dropdown"]} onClick={() => {this.setState((prevState) => ({dropdown: prevState.dropdown ? false :true}))}}>
             <p className={styles.filters}>Filter &#8595;</p>
             <div className={this.state.dropdown ? styles.list : styles["list-hide"]}>
-              <p onClick={()=>{this.onSorthHandler("newst")}}>Newst &#8617;</p>
+              <p onClick={()=>{this.onSorthHandler("newest")}}>Newst &#8617;</p>
               <p onClick={() => {this.onSorthHandler("latest")}}>Latest &#8617;</p>
               <p onClick={() => {this.onPricehHandler("pricey")}}>Pricey &#8617;</p>
               <p onClick={() => {this.onPricehHandler("cheap")}}>Cheap &#8617;</p>

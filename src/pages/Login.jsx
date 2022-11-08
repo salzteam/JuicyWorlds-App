@@ -69,11 +69,19 @@ class Login extends React.Component {
     if (prevProps.Login.isLoading !== this.props.Login.isLoading){this.loadingScreen()}
     if (prevProps.Login.token !== this.props.Login.token){
         this.showToastMessageSucces()
-        setTimeout(() => {
-          this.props.navigate(`/`);
-        }, 6000)
+        this.handleTimeout()
     }
     }
+
+  componentWillUnmount(){
+    this.handleTimeout()
+  }
+
+  handleTimeout = () => {
+    setTimeout(() => {
+      this.props.navigate(`/`);
+    }, 1000)
+  }
 
   showToastMessageError = (text) => {
     toast.error(text, {

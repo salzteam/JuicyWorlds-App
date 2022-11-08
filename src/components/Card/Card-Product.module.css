@@ -14,6 +14,7 @@
 .content-product {
     cursor: pointer;
     display: flex;
+    width: 19%;
     flex-direction: column;
     border-radius: 30px;
     align-items: center;
@@ -35,7 +36,7 @@
 
 .image-content {
     top: -57px;
-    left: 5px;
+    left: 15px;
     width: 136px;
     position: absolute;
     height: 135px;
@@ -72,12 +73,10 @@
 .title {
     margin-top: 60px;
     color: #000000;
-    padding-right: 100px;
     font-family: Poppins;
     font-weight: 900;
     font-size: 22px;
     line-height: 23px;
-    margin-left: 105%;
     height: 95%;
 }
 
@@ -102,7 +101,7 @@
     border-radius: 50px;
     z-index: 1;
     display: flex;
-    user-select:none;
+    user-select: none;
     justify-content: center;
     left: 8rem;
     top: -3rem;
@@ -136,5 +135,14 @@
         margin-top: 25px;
         padding-right: 0px;
         margin-left: 0px;
+    }
+
+    .col-md-2 {
+        flex: 0 0 auto;
+        width: 19.666667%;
+    }
+
+    .content-product-none {
+        width: 8.2rem;
     }
 }
