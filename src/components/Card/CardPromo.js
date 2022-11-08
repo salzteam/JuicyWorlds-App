@@ -15,7 +15,7 @@ export class CardPromo extends React.Component {
           <div
             className={isEdit ? styles.pencil : styles["pencil-none"]}
             onClick={() => {
-              this.props.navigate(`/product/editpromo/${id}`);
+              this.props.navigate(`/product/edit-promo/${id}`);
             }}
           >
             <img src={pencil} alt="pencil" />
