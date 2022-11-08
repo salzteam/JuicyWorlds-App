@@ -177,7 +177,7 @@ class Product extends React.Component {
           {admin && 
           <div className={styles["admin-promo"]}>
             <p onClick={() => {this.setState((prevState) => ({isEditPromo: prevState.isEditPromo?false:true}))}}>Edit promo</p>
-            <Link className={styles.link} to={"/product/addpromo"}>
+            <Link className={styles.link} to={"/product/add-promo"}>
               <p >Add new promo</p>
             </Link>
             {/* <p onClick={this.props.navigate("/product/addpromo")}>Add new promo</p> */}
@@ -280,7 +280,7 @@ class Product extends React.Component {
             <div className={styles.admin}>
               <p onClick={() => {this.setState((prevState) => ({isEdit: prevState.isEdit?false:true}))}}>Edit product</p>
               <p onClick={() => {
-                this.props.navigate("/product/addproduct")
+                this.props.navigate("/product/add-product")
               }}>Add new product</p>
             </div>}
         </aside>
