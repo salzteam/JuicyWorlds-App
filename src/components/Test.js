@@ -12,6 +12,8 @@ import { useSearchParams } from "react-router-dom";
 class NavbarMobile extends React.Component {
   state = {
     searchbtn: "search",
+    pictrue:
+      "https://res.cloudinary.com/dwo9znbl6/image/upload/v1667575327/JuicyWorlds/default-profile-pic_tjjaqo.webp",
     searchToogle: "pembungkus-none",
     display: "",
     searchParams: {
@@ -182,7 +184,13 @@ class NavbarMobile extends React.Component {
                 alt=""
               />
               <Link to={"/profile"}>
-                <img className={styles.pp} src={this.state.display} alt="" />
+                <img
+                  className={styles.pp}
+                  src={
+                    this.state.display ? this.state.display : this.state.pictrue
+                  }
+                  alt=""
+                />
               </Link>
             </div>
           </div>
