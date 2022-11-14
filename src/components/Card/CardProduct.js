@@ -25,7 +25,7 @@ class CardProduct extends React.Component {
           <div
             className={isEdit ? styles.pencil : styles["pencil-none"]}
             onClick={() => {
-              this.props.navigate(`/product/edit-product/${id}`);
+              this.props.navigate(`/product/${id}/edit`);
             }}
           >
             <img src={pencil} alt="pencil" />

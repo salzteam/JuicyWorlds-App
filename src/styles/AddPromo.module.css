@@ -59,7 +59,7 @@ form .input-title {
     color: #6A4029;
 }
 
-.title{
+.title {
     cursor: pointer;
     user-select: none
 }
@@ -74,10 +74,11 @@ form .input-title {
     font-weight: 400;
     color: black;
 }
+
 .color {
     height: 3rem !important;
     border-radius: 10px !important;
-    padding: 6px!important;
+    padding: 6px !important;
     font-size: 1.2rem !important;
     font-weight: 400 !important;
     color: #9F9F9F !important;
@@ -253,6 +254,11 @@ form .input-title {
     font-weight: 500;
 }
 
+.productTitle {
+    color: black !important;
+    /* font-weight: 500; */
+    font-family: "Poppins";
+}
 
 @keyframes spin-anim {
     0% {
@@ -262,4 +268,121 @@ form .input-title {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.modal {
+    position: fixed;
+    z-index: 2;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    position: relative;
+    height: 37rem;
+    width: 62rem;
+    background-color: #ffffff;
+    text-align: center;
+    border-radius: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    overflow: auto;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    right: 2rem;
+    font-size: 35px;
+    top: 1rem;
+    cursor: pointer;
+}
+
+.modal-header,
+.modal-footer {
+    padding: 10px;
+}
+
+.modal-title {
+    margin: 0px;
+    font-size: 35px;
+    font-weight: bold;
+    font-family: "Poppins";
+}
+
+.modal-body {
+    font-size: 30px;
+    font-family: "Poppins";
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: left;
+    padding-left: 2rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+
+.content {
+    width: 28rem;
+    gap: 1rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    /* background-color: red; */
+    box-shadow: 0 0 3px #9F9F9F;
+    box-shadow: 0px 30px 60px 0px #3939391A;
+    border-radius: 15px;
+    user-select: none;
+    cursor: pointer;
+    justify-content: space-around;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
+.content:hover {
+    transform: translateY(-5%);
+    -webkit-transform: translateY(-5%);
+    -moz-transform: translateY(-5%);
+    -ms-transform: translateY(-5%);
+    -o-transform: translateY(-5%);
+}
+
+.content img {
+    width: 70px;
+    height: 70px;
+}
+
+.content-title {
+    text-align: left;
+    line-height: 2rem;
+}
+
+.second {
+    color: #4F5665;
+    font-size: 20px;
+}
+
+.title-bot {
+    display: flex;
+    justify-content: space-between;
+}
+
+.price {
+    font-size: 20px;
 }

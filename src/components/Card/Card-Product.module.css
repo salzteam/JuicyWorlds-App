@@ -1,4 +1,5 @@
 .content-product-none {
+    width: 162.5px;
     display: flex;
     flex-direction: column;
     border-radius: 30px;
@@ -12,6 +13,7 @@
 }
 
 .content-product {
+    width: 165px;
     cursor: pointer;
     display: flex;
     width: 19%;

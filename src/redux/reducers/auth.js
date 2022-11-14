@@ -16,18 +16,21 @@ const authReducer = (prevState = initialState, action) => {
         ...prevState,
         isLoading: true,
         isError: false,
+        err: null,
       };
     case actionStrings.doLogout + actionStrings.pending:
       return {
         ...prevState,
         isLoading: true,
         isError: false,
+        err: null,
       };
     case actionStrings.forgot + actionStrings.pending:
       return {
         ...prevState,
         isLoading: true,
         isError: false,
+        err: null,
       };
     case actionStrings.doLogin + actionStrings.rejected:
       const errorResponseLogin = action.payload;

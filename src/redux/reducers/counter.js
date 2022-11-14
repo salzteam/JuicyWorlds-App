@@ -3,33 +3,54 @@ import actionStrings from "../actions/actionStrings";
 // (prevState, action) => {}
 
 const initialState = {
-  // default value
-  number: 0,
+  size: null,
+  qty: null,
+  name: null,
+  image: null,
+  price: null,
+  size_id: null,
+  subTotal: null,
+  delivery_id: null,
+  subTotal: null,
+  shippihg: null,
+  sizeCost: null,
+  tax: null,
+  product_id: null,
 };
 
-const counterReducer = (prevState = initialState, action) => {
+const cartReducer = (prevState = initialState, action) => {
   // lakukan pengondisian untuk masing masing action
   switch (action.type) {
-    case actionStrings.counterUp:
+    case actionStrings.addCart:
       //   const newCounter = prevState.number + 1;
+      const size = action.size;
+      const qty = action.qty;
+      const name = action.name;
+      const image = action.image;
+      const price = action.price;
+      const size_id = action.size_id;
+      const subTotal = action.subTotal;
+      const delivery = action.delivery;
+      const delivery_id = action.delivery_id;
+      const sizeCost = action.sizeCost;
+      const id = action.id;
       return {
-        ...prevState,
-        number: prevState.number + 1,
-      };
-    case actionStrings.counterDown:
-      //   const newCounter = prevState.number - 1;
-      return {
-        ...prevState,
-        number: prevState.number === 0 ? 0 : prevState.number - 1,
-      };
-    case actionStrings.counterReset:
-      return {
-        ...prevState,
-        number: initialState.number,
+        size: size,
+        qty: qty,
+        name: name,
+        image: image,
+        price: price,
+        size_id: size_id,
+        subTotal: subTotal,
+        shippihg: delivery,
+        sizeCost: sizeCost,
+        tax: 0,
+        delivery_id: delivery_id,
+        product_id: id,
       };
     default:
       return prevState;
   }
 };
 
-export default counterReducer;
+export default cartReducer;

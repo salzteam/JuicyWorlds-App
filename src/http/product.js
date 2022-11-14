@@ -55,6 +55,14 @@ const editProduct = (data, token, id) => {
     },
   });
 };
+const deleteProduct = (token, id) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/products/${id}`;
+  return Axios.delete(url, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
 
 export {
   getProduct,
@@ -69,4 +77,5 @@ export {
   createProduct,
   editProduct,
   getProductAll,
+  deleteProduct,
 };

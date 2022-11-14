@@ -12,6 +12,8 @@ import { useSearchParams } from "react-router-dom";
 class NavbarMobile extends React.Component {
   state = {
     searchbtn: "search",
+    setLogout: false,
+    isLogout: false,
     pictrue:
       "https://res.cloudinary.com/dwo9znbl6/image/upload/v1667575327/JuicyWorlds/default-profile-pic_tjjaqo.webp",
     searchToogle: "pembungkus-none",
@@ -21,7 +23,16 @@ class NavbarMobile extends React.Component {
     },
   };
   componentDidUpdate(prevState) {
+    // if (prevState.logout !== this.state.logout) return this.getData();
     // console.log(this.state.searchParams);
+    const userinfo = JSON.parse(localStorage.getItem("userInfo")) || null;
+    if (!userinfo) {
+      if (
+        window.location.pathname.includes("/new") ||
+        window.location.pathname.includes("/edit")
+      )
+        return this.props.navigate("/login");
+    }
   }
   onSearchHandler = (search) => {
     // console.log(this.props.searchParams.toString());
@@ -74,7 +85,9 @@ class NavbarMobile extends React.Component {
         searchParams: { filter: this.props.searchParams.get("filter") },
       });
     }
-
+    this.getData();
+  }
+  getData = () => {
     const userinfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userinfo) {
       const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/users/${userinfo.id}`;
@@ -92,11 +105,60 @@ class NavbarMobile extends React.Component {
         });
       });
     }
-  }
+  };
+  doLogout = (token) => {
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/api/v1/auth/`;
+    return Axios.delete(url, {
+      headers: { "x-access-token": token },
+    }).then((result) => {
+      localStorage.removeItem("userInfo");
+      this.setState({ isLogout: false, setLogout: false });
+    });
+  };
   render() {
     const { image } = this.props;
+    const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+    let admin = null;
+    if (userinfo && userinfo.role === "admin") admin = userinfo.role;
     return (
       <div className={styles.maincontainer}>
+        {this.state.setLogout && (
+          <div className={styles.modalLogout}>
+            <div className={styles["modal-content"]}>
+              <div className={styles["modal-header"]}>
+                <p className={styles["modal-title"]}>Logout</p>
+              </div>
+              <div className={styles["modal-body"]}>
+                Are you sure want to log out?
+              </div>
+              <div className={styles["modal-footer"]}>
+                <button
+                  className={styles.button}
+                  onClick={() => {
+                    this.setState({ isLogout: true });
+                    this.doLogout(userinfo.token);
+                  }}
+                >
+                  {this.state.isLogout ? (
+                    <div className={styles["loader-container-logout"]}>
+                      <div className={styles.spinnerLogout}></div>
+                    </div>
+                  ) : (
+                    "YES"
+                  )}
+                </button>
+                <button
+                  className={styles.button}
+                  onClick={() => {
+                    this.setState({ setLogout: false });
+                  }}
+                >
+                  NO
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <header className={styles.navigationBar}>
           <div className={styles.navBar}>
             <div className={styles.leftContent}>
@@ -129,70 +191,96 @@ class NavbarMobile extends React.Component {
                 </Link>
               </ol>
             </div>
-            <div
-              className={
-                this.state.searchToogle == "pembungkus-block"
-                  ? styles.onSearch
-                  : styles.rightContent
-              }
-            >
-              <div className={styles[this.state.searchToogle]}>
-                <div className={styles["Nav-Search"]}>
-                  <i
-                    className={`fa-solid fa-magnifying-glass ${styles["new-Navsearch"]}`}
-                  ></i>
-                  <input
-                    className={styles.searchh}
-                    id="searchProduct"
-                    type="text"
-                    placeholder="Search"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        this.onSearchHandler(e.target.value);
-                      }
-                    }}
-                  />
-                  <i
-                    className={`fa-solid fa-xmark ${styles["close-icon"]}`}
-                    onClick={() => {
-                      this.setState({
-                        searchbtn: "search",
-                        searchToogle: "pembungkus-none",
-                      });
-                    }}
-                  ></i>
-                </div>
-              </div>
-              <img
-                className={styles[this.state.searchbtn]}
-                src={search}
-                alt=""
-                onClick={() => {
-                  this.setState({
-                    searchToogle: "pembungkus-block",
-                    searchbtn: "search-display",
-                  });
-                }}
-              />
-              <img
+            {userinfo ? (
+              <div
                 className={
-                  this.state.searchToogle === "pembungkus-block"
-                    ? styles.icon2
-                    : styles.icon1
+                  this.state.searchToogle == "pembungkus-block"
+                    ? styles.onSearch
+                    : styles.rightContent
                 }
-                src={chat}
-                alt=""
-              />
-              <Link to={"/profile"}>
+              >
+                <div className={styles[this.state.searchToogle]}>
+                  <div className={styles["Nav-Search"]}>
+                    <i
+                      className={`fa-solid fa-magnifying-glass ${styles["new-Navsearch"]}`}
+                    ></i>
+                    <input
+                      className={styles.searchh}
+                      id="searchProduct"
+                      type="text"
+                      placeholder="Search"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          this.onSearchHandler(e.target.value);
+                        }
+                      }}
+                    />
+                    <i
+                      className={`fa-solid fa-xmark ${styles["close-icon"]}`}
+                      onClick={() => {
+                        this.setState({
+                          searchbtn: "search",
+                          searchToogle: "pembungkus-none",
+                        });
+                      }}
+                    ></i>
+                  </div>
+                </div>
                 <img
-                  className={styles.pp}
-                  src={
-                    this.state.display ? this.state.display : this.state.pictrue
-                  }
+                  className={styles[this.state.searchbtn]}
+                  src={search}
                   alt=""
+                  onClick={() => {
+                    this.setState({
+                      searchToogle: "pembungkus-block",
+                      searchbtn: "search-display",
+                    });
+                  }}
                 />
-              </Link>
-            </div>
+                {!admin ? (
+                  <>
+                    <img
+                      className={
+                        this.state.searchToogle === "pembungkus-block"
+                          ? styles.icon2
+                          : styles.icon1
+                      }
+                      src={chat}
+                      alt=""
+                    />
+                    <Link to={"/profile"}>
+                      <img
+                        className={styles.pp}
+                        src={
+                          this.state.display
+                            ? this.state.display
+                            : this.state.pictrue
+                        }
+                        alt=""
+                      />
+                    </Link>
+                  </>
+                ) : (
+                  <div
+                    className={styles.btn}
+                    onClick={() => {
+                      this.setState({ setLogout: true });
+                    }}
+                  >
+                    <p>LOGOUT</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className={styles["btn-navbar"]}>
+                <Link className={styles["btn-login"]} to={"/login"}>
+                  Login
+                </Link>
+                <Link to={"/register"}>
+                  <button className={styles["btn-signup"]}>Sign Up</button>
+                </Link>
+              </div>
+            )}
           </div>
         </header>
       </div>

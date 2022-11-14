@@ -26,18 +26,18 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: (
-      <NonLogin>
-        <Login />
-      </NonLogin>
+      // <NonLogin>
+      <Login />
+      // </NonLogin>
     ),
     errorElement: <Error />,
   },
   {
     path: "/register",
     element: (
-      <NonLogin>
-        <Register />
-      </NonLogin>
+      // <NonLogin>
+      <Register />
+      // </NonLogin>
     ),
     errorElement: <Error />,
   },
@@ -89,7 +89,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/product/add-promo",
+    path: "/promo/new",
     element: (
       <PrivateRoute allowedRoles={["admin"]}>
         <AddPromo />
@@ -98,7 +98,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/product/add-product",
+    path: "/product/new",
     element: (
       <PrivateRoute allowedRoles={["admin"]}>
         <AddProduct />
@@ -107,7 +107,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/product/edit-product/:id",
+    path: "/product/:id/edit",
     element: (
       <PrivateRoute allowedRoles={["admin"]}>
         <EditProduct />
@@ -116,7 +116,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/product/edit-promo/:id",
+    path: "/promo/:id/edit",
     element: (
       <PrivateRoute allowedRoles={["admin"]}>
         <EditPromo />

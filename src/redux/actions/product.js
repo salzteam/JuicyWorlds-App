@@ -11,6 +11,7 @@ import {
   createProduct,
   editProduct,
   getProductAll,
+  deleteProduct,
 } from "../../http/product";
 
 const getProductAction = (limit) => {
@@ -26,7 +27,6 @@ const getProductAllAction = () => {
   };
 };
 const getProductSelectAction = (params, limit) => {
-  console.log(params);
   return {
     type: actionStrings.getProducts,
     payload: getProductSelect(params, limit),
@@ -86,6 +86,12 @@ const editProductAction = (data, token, id) => {
     payload: editProduct(data, token, id),
   };
 };
+const deleteProductAction = (token, id) => {
+  return {
+    type: actionStrings.deleteProduct,
+    payload: deleteProduct(token, id),
+  };
+};
 
 const productAction = {
   getProductAction,
@@ -100,6 +106,7 @@ const productAction = {
   createProductAction,
   editProductAction,
   getProductAllAction,
+  deleteProductAction,
 };
 
 export default productAction;

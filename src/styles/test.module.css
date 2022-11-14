@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;800&display=swap');
+
 @media screen and (max-width: 768px) {
     .navBar {
         display: flex;
@@ -154,6 +156,7 @@
     width: 28px;
     height: 28px;
 }
+
 .icon2 {
     margin-right: 34px;
     margin-top: 3px;
@@ -214,4 +217,168 @@
     margin-right: 35px;
     align-items: center;
     cursor: pointer;
+}
+
+.btn {
+    background-color: #FFBA33;
+    color: #6A4029;
+    text-align: center;
+    display: flex;
+    font-weight: 500;
+    font-size: 17px;
+    font-family: Rubik;
+    user-select: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
+
+.btn:active {
+    background-color: #ffaa01;
+}
+
+.btn-login {
+    text-decoration: none;
+    color: #0B132A;
+    padding-right: 50px;
+    font-weight: 500;
+    font-size: 16px;
+    padding-top: 0.7rem;
+}
+
+.btn-signup a {
+    font-family: 'Rubik', sans-serif;
+}
+
+.btn-signup {
+    text-decoration: none;
+    border: none;
+    color: #6A4029;
+    font-weight: 500;
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    width: 150px;
+    height: 45px;
+    border-radius: 50px;
+    background-color: #FFBA33;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+}
+
+.modalLogout {
+    position: fixed;
+    z-index: 2;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    width: 600px;
+    background-color: #ffffff;
+    text-align: center;
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.modal-header,
+.modal-footer {
+    padding: 10px;
+}
+
+.modal-title {
+    margin: 0px;
+    font-size: 35px;
+    font-family: "Poppins";
+}
+
+.modal-body {
+    padding: 0px;
+    font-size: 30px;
+    font-family: "Poppins";
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+
+.button {
+    width: 130px;
+    height: 60px;
+    font-family: 'Poppins';
+    font-size: 25px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: 1px solid #6A4029;
+    color: #6A4029;
+}
+
+.button:active {
+    background-color: #6A4029;
+    color: #ffffff;
+}
+
+.loader-container-logout {
+    top: 50%;
+    bottom: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.spinnerLogout {
+    width: 30px;
+    height: 30px;
+    border: 8px solid;
+    border-color: #6a4029 transparent #ffba33 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+    user-select: none;
+    cursor: not-allowed;
+}
+
+.loader-container {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.spinner {
+    width: 55px;
+    height: 55px;
+    border: 8px solid;
+    border-color: #6a4029 transparent #ffba33 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

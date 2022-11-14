@@ -57,6 +57,12 @@
     align-items: center;
 }
 
+.content-left-adm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .content-left img {
     /* width: 40%;
     height: 65%; */
@@ -67,6 +73,18 @@
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
+}
+
+.content-left-adm img {
+    border-radius: 25rem;
+    margin-left: 5rem;
+    margin-top: 7rem;
+    width: 25rem;
+    height: 25rem;
+    -webkit-border-radius: 25rem;
+    -moz-border-radius: 25rem;
+    -ms-border-radius: 25rem;
+    -o-border-radius: 25rem;
 }
 
 .container-delivery {
@@ -677,24 +695,110 @@ input[type="time"]:focus:before {
     align-items: center;
 }
 
-.loader-container {
-    background-color: black;
-    opacity: 0.8;
+.modalLogout {
     position: fixed;
-    top: 27%;
-    width: 21%;
+    z-index: 2;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
     align-items: center;
-    height: 34%;
+    justify-content: center;
+}
+
+.modal-content {
+    width: 600px;
+    background-color: #ffffff;
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 30px;
+    align-items: center;
+    padding-bottom: 30px;
+}
+
+.modal-header,
+.modal-footer {
+    padding: 10px;
+}
+
+.modal-title {
+    margin: 0px;
+    font-size: 30px;
+    font-family: "Poppins";
+}
+
+.modal-body {
+    padding: 0px;
+    font-size: 30px;
+    font-family: "Poppins";
+    width: 25rem;
+    padding-top: 2rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    gap: 4rem;
+}
+
+.button {
+    width: 130px;
+    height: 60px;
+    font-family: 'Poppins';
+    font-size: 25px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: 1px solid #6A4029;
+    color: #6A4029;
+}
+
+.button:active {
+    background-color: #6A4029;
+    color: #ffffff;
+}
+
+.loader-container-logout {
+    top: 50%;
+    bottom: 50%;
+    width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.spinnerLogout {
+    width: 30px;
+    height: 30px;
+    border: 8px solid;
+    border-color: #6a4029 transparent #ffba33 transparent;
+    border-radius: 50%;
+    animation: spin-anim 1.2s linear infinite;
+    user-select: none;
+    cursor: not-allowed;
+}
+
+.loader-container {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 1;
 }
 
 .spinner {
-    width: 64px;
-    height: 64px;
+    width: 55px;
+    height: 55px;
     border: 8px solid;
-    z-index: 1;
     border-color: #6a4029 transparent #ffba33 transparent;
     border-radius: 50%;
     animation: spin-anim 1.2s linear infinite;

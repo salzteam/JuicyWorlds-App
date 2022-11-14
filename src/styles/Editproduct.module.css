@@ -163,13 +163,12 @@ form .input-title {
 
 .box-btn-methods {
     display: flex;
-    gap: 2rem;
+    gap: 2.7rem;
     user-select: none;
     text-align: center;
     font-family: Rubik;
     font-weight: 700;
     font-size: 20px;
-    margin-bottom: 3rem;
 }
 
 .btn-methods {
@@ -180,8 +179,9 @@ form .input-title {
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
+    font-size: 17px;
     padding: 20px;
-    width: 12rem;
+    width: 8rem;
 }
 
 .select {
@@ -190,6 +190,7 @@ form .input-title {
 
 .nonSelect {
     background-color: #BABABA59;
+    color: #4F5665;
 }
 
 .select-title {

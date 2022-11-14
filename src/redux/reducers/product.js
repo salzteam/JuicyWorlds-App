@@ -19,6 +19,8 @@ const initialState = {
   prev: null,
   isLoading: false,
   isError: false,
+  delLoading: false,
+  dataDel: [],
   err: null,
   errCreate: null,
   errEdit: null,
@@ -55,6 +57,13 @@ const productsReducer = (prevState = initialState, action) => {
       return {
         ...prevState,
         isLoading: true,
+        isError: false,
+      };
+    case actionStrings.deleteProduct + actionStrings.pending:
+      return {
+        ...prevState,
+        isLoading: true,
+        delLoading: true,
         isError: false,
       };
     case actionStrings.getProducts + actionStrings.rejected:
@@ -97,12 +106,21 @@ const productsReducer = (prevState = initialState, action) => {
     case actionStrings.editProduct + actionStrings.rejected:
       const errorResponseEdit = action.payload;
       // const errorMessageEdit = errorResponseEdit.response;
-      console.log(errorResponseEdit);
       return {
         ...prevState,
         isError: true,
         isLoading: false,
         errEdit: errorResponseEdit,
+      };
+    case actionStrings.deleteProduct + actionStrings.rejected:
+      const errorResponsedelete = action.payload;
+      console.log(errorResponsedelete);
+      return {
+        ...prevState,
+        isError: true,
+        delLoading: false,
+        isLoading: false,
+        errEdit: errorResponsedelete,
       };
     case actionStrings.getProducts + actionStrings.fulfilled:
       const response = action.payload;
@@ -138,8 +156,6 @@ const productsReducer = (prevState = initialState, action) => {
     case actionStrings.createProduct + actionStrings.fulfilled:
       const responseCreate = action.payload;
       const resultCreate = responseCreate.data.data;
-      console.log(responseCreate);
-      console.log(resultCreate);
       return {
         ...prevState,
         isLoading: false,
@@ -160,6 +176,15 @@ const productsReducer = (prevState = initialState, action) => {
         ...prevState,
         isLoading: false,
         dataAll: resalla,
+      };
+    case actionStrings.deleteProduct + actionStrings.fulfilled:
+      const resdelete = action.payload;
+      const resdeleteall = resdelete.data.data;
+      return {
+        ...prevState,
+        isLoading: false,
+        delLoading: false,
+        dataDel: resdeleteall,
       };
     default:
       return prevState;

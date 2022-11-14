@@ -14,6 +14,7 @@ const registerReducer = (prevState = initialState, action) => {
         ...prevState,
         isLoading: true,
         isError: false,
+        err: null,
       };
     case actionStrings.register + actionStrings.rejected:
       const errorResponse = action.payload;
