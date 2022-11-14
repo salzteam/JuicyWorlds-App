@@ -29,7 +29,8 @@ class NavbarMobile extends React.Component {
     if (!userinfo) {
       if (
         window.location.pathname.includes("/new") ||
-        window.location.pathname.includes("/edit")
+        window.location.pathname.includes("/edit") ||
+        window.location.pathname.includes("/order")
       )
         return this.props.navigate("/login");
     }
