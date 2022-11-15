@@ -42,6 +42,10 @@
         top: 2.8rem;
         right: 0rem;
     }
+
+    .nav {
+        padding-bottom: 2rem;
+    }
 }
 
 .maincontainer {
