@@ -1,3 +1,9 @@
+@media screen and (max-width: 768px) {
+    .mother-border {
+        width: 345px !important;
+    }
+}
+
 .mother-icon img {
     width: 83px;
     height: 92px;
@@ -55,7 +61,7 @@
 .pencil {
     background-color: #6A4029;
     width: 30px;
-    user-select:none;
+    user-select: none;
     height: 30px;
     border-radius: 50px;
     display: flex;

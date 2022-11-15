@@ -1110,4 +1110,16 @@ body {
         display: flex;
         justify-content: space-around;
     }
+
+    .bungkusan {
+        padding-top: 5rem;
+    }
+
+    .title-left-content {
+        padding-top: 1rem;
+    }
+
+    .cardPadding {
+        min-height: 35vh;
+    }
 }

@@ -176,7 +176,7 @@ export class Payment extends Component {
             </div>
           </section>
           <section className={styles["container-side"]}>
-            <div>
+            <div className={styles.middle}>
               <div className={styles["card-three"]}>
                 <aside className={styles["side-left"]}>
                   {/* {this.state.notfound && (

@@ -606,12 +606,12 @@
     }
 
     .side-left {
-        width: 60%;
+        min-width: 24rem;
     }
 
     .side-right {
         margin-left: 0px;
-        width: 41%;
+        width: 100%;
     }
 
     .header-title {
@@ -621,4 +621,34 @@
     .vertical-lineee {
         margin-left: 20%;
     }
+
+    .container-side {
+        /* flex-direction: column; */
+        /* justify-content: center; */
+    }
+
+    .card-three {
+        justify-content: center;
+    }
+
+    .first,
+    .second {
+        display: none;
+    }
+
+    .bottom {
+        width: 20rem;
+        padding: 15px 15px;
+    }
+
+    .btn {
+        margin-top: 15px;
+    }
+
+    /* .middle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    } */
 }

@@ -828,9 +828,10 @@ input[type="time"]:focus:before {
     }
 
     .main {
-        padding: 30px 0;
+        padding: 0 0;
         padding-right: 0px !important;
     }
+
 
     .container-fluid {
         padding-left: 0px;
@@ -855,16 +856,16 @@ input[type="time"]:focus:before {
     }
 
     .divarrow {
-        width: 21% !important;
+        /* width: 21% !important; */
     }
 
     .cold-brew {
-        font-size: 45px;
+        font-size: 40px;
         margin-right: 50px px;
     }
 
     .aboutproduct {
-        width: 95%;
+        width: 100%;
     }
 
     .deliveryonly {
@@ -901,4 +902,47 @@ input[type="time"]:focus:before {
     .title-delivery {
         font-size: 24px;
     }
+
+    .reguler-select,
+    .reguler {
+        width: 40px;
+        height: 40px;
+        font-size: 25px;
+    }
+
+    .large,
+    .large-select {
+        width: 40px;
+        height: 40px;
+        font-size: 25px;
+    }
+
+    .xl,
+    .xl-select {
+        width: 40px;
+        height: 40px;
+        font-size: 25px;
+    }
+
+    .chosee {
+        font-size: 23px;
+        padding-bottom: 0.5rem;
+    }
+
+    .detailsqty {
+        width: 100%;
+        padding-left: 1rem;
+    }
+
+    .stylecold {
+        font-size: 19px;
+    }
+
+    .content-left-adm img {
+        margin-left: 0rem !important;
+        margin-top: 8rem !important;
+        width: 19rem !important;
+        height: 19rem !important;
+    }
+
 }
