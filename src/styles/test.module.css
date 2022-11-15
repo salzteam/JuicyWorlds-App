@@ -43,9 +43,9 @@
         right: 0rem;
     }
 
-    .nav {
+    /* .nav {
         padding-bottom: 2rem;
-    }
+    } */
 }
 
 .maincontainer {
@@ -76,7 +76,7 @@
     color: #333;
     cursor: pointer;
     padding: 0;
-    margin: 0;
+    /* margin: 0; */
 }
 
 .nav li:hover {
