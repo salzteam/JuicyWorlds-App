@@ -59,40 +59,39 @@ export class Payment extends Component {
         product_id: product_id,
       },
       { headers: { "x-access-token": this.state.userinfo.token } }
-    )
-      .then((results) => {})
-      .then((result) => {
-        const size = null;
-        const qty = null;
-        const image = null;
-        const name = null;
-        const price = null;
-        const size_id = null;
-        const subTotal = null;
-        const shipping = null;
-        const sizeCost = null;
-        const delivery = null;
-        const id = null;
-        this.setState({
-          isLoading: false,
-          product: [],
-        });
-        return this.props.dispatch(
-          addCartActions(
-            size,
-            qty,
-            image,
-            name,
-            price,
-            size_id,
-            subTotal,
-            shipping,
-            sizeCost,
-            delivery,
-            id
-          )
-        );
+    ).then((result) => {
+      const size = null;
+      const qty = null;
+      const image = null;
+      const name = null;
+      const price = null;
+      const size_id = null;
+      const subTotal = null;
+      const shipping = null;
+      const sizeCost = null;
+      const delivery = null;
+      const id = null;
+      this.setState({
+        isLoading: false,
+        product: [],
       });
+      window.open(result.data.redirctUrl, "_blank");
+      return this.props.dispatch(
+        addCartActions(
+          size,
+          qty,
+          image,
+          name,
+          price,
+          size_id,
+          subTotal,
+          shipping,
+          sizeCost,
+          delivery,
+          id
+        )
+      );
+    });
   };
 
   componentDidMount() {
